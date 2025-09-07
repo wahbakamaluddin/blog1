@@ -1,7 +1,7 @@
 import { UserCircleIcon, HomeIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
-import NavLinks from '@/app/ui/NavLinks';
-
+import NavLinks from '@/app/ui/sidenav/NavLinks';
+import SocMedIcons from '@/app/ui/sidenav/SocMedIcons';
 export default function SideNav() {
     return (
         <div className="flex flex-col items-center h-full px-10 py-10 ">
@@ -20,6 +20,8 @@ export default function SideNav() {
             <div>
                 <NavLinks />
             </div>
+            <div className="h-full w-full grow"></div>
+            <SocMedIcons />
         </div>
 
         

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { poppins } from "@/app/ui/fonts";
 import "./globals.css";
-import SideNav from "@/app/ui/sidenav";
+import SideNav from "@/app/ui/sidenav/sidenav";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,15 +29,14 @@ export default function RootLayout({
       <body
         className={`${poppins.className} antialiased`} 
       >
-        <div className="flex py-10 px-50 h-screen flex-col bg-[#121212] md:flex-row md:overflow-hidden ">
+        <div className="flex gap-12 py-20 px-50 h-screen flex-col justify-center bg-[#121212] md:flex-row md:overflow-hidden ">
           <div className="w-full flex-none rounded-xl bg-[#1E1E1F] md:w-64">
             <SideNav />
           </div>
-          <div className="flex-grow p-6 md:overflow-y-auto md:p-12">
+          <div className="flex rounded-xl p-6 md:overflow-y-auto md:p-12 w-250">
             {children}      
           </div>
         </div>
-
       </body>
     </html>
   );
