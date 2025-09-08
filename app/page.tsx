@@ -1,4 +1,3 @@
-import Link from "next/link"
 import SocMedIcons from "@/app/ui/sidenav/SocMedIcons"
 
 const links = ['https://www.linkedin.com/in/wahbakamaluddin/', 'https://github.com/wahbakamaluddin', 'https://www.youtube.com/@wahbakamaluddin']
