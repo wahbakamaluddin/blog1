@@ -1,7 +1,7 @@
 export default function Page () {
     return (
-        <>
-            <h1 className="font-bold text-[30px]">Projects</h1>
-        </>
+        <div className="flex flex-col w-full h-full justify-center items-center">
+            <h1 className="font-bold text-[30px]">Coming Soon</h1>
+        </div>
     )
 }

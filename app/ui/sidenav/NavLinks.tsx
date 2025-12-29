@@ -2,16 +2,18 @@
 
 import { 
     HomeIcon, 
-    PencilSquareIcon, 
-    CodeBracketIcon
+    PencilSquareIcon,
+    LockClosedIcon,
+    CodeBracketIcon,
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import clsx from 'clsx'
+import clsx from 'clsx';
 
 const links = [
     { name: 'Home', href: '/', icon: HomeIcon},
-    { name: 'Writings', href: '/writings', icon: PencilSquareIcon},
+    { name: 'General', href: '/general', icon: PencilSquareIcon},
+    { name: 'Security', href: '/security', icon: LockClosedIcon},
     { name: 'Projects', href: '/projects', icon: CodeBracketIcon}
 ];
 
