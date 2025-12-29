@@ -1,7 +1,7 @@
 export default function Page () {
     return (
         <>
-            projects
+            <h1 className="font-bold text-[30px]">Projects</h1>
         </>
     )
 }
