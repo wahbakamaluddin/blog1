@@ -10,7 +10,7 @@ export default function SideNav() {
         <div className="block md:hidden">
             <NavLinks />
         </div>
-        <div className="flex-col items-center justify-between p-4 rounded-xl hidden md:flex h-full w-58">
+        <div className="flex-col h-full items-center justify-between p-4 hidden md:flex w-58">
             <div className='hidden md:block'>
                 <UserCircleIcon className="h-28 w-28 text-emerald-500" strokeWidth={0.8} />
             </div>
