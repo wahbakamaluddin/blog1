@@ -34,7 +34,7 @@ export default function RootLayout({
           >
             <SideNav />
           </div>
-          <div className="w-full overflow-y-auto">
+          <div className="w-full md:w-3/4 overflow-y-auto">
             <div className="max-w-2xl mx-auto my-32 p-2">
               {children}      
             </div>
