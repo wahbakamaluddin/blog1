@@ -22,6 +22,30 @@ export default function Page () {
         just to get my speaker working (typical linux user activity). 
         And I'm hooked ever since. Do checkout my social media:`}
       </p>
+      <p className="mb-4">
+        {`I'm an undergrad cybersecurity student at Universiti 
+        Sains Islam Malaysia (USIM). Back during COVID-19,
+        I started using Linux Mint as my main OS just to see what's the fuss is about. 
+        For days, I got my hands dirty with terminal, tweaking all sort of stuff
+        just to get my speaker working (typical linux user activity). 
+        And I'm hooked ever since. Do checkout my social media:`}
+      </p>
+      <p className="mb-4">
+        {`I'm an undergrad cybersecurity student at Universiti 
+        Sains Islam Malaysia (USIM). Back during COVID-19,
+        I started using Linux Mint as my main OS just to see what's the fuss is about. 
+        For days, I got my hands dirty with terminal, tweaking all sort of stuff
+        just to get my speaker working (typical linux user activity). 
+        And I'm hooked ever since. Do checkout my social media:`}
+      </p>
+      <p className="mb-4">
+        {`I'm an undergrad cybersecurity student at Universiti 
+        Sains Islam Malaysia (USIM). Back during COVID-19,
+        I started using Linux Mint as my main OS just to see what's the fuss is about. 
+        For days, I got my hands dirty with terminal, tweaking all sort of stuff
+        just to get my speaker working (typical linux user activity). 
+        And I'm hooked ever since. Do checkout my social media:`}
+      </p>
 
       <SocMedIcons />
       </motion.div>
