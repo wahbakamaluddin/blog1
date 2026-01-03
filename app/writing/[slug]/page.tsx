@@ -4,7 +4,7 @@ import { formatDate, getBlogPosts } from '@/app/writing/utils'
 // import { baseUrl } from 'app/sitemap'
 
 export async function generateStaticParams() {
-  let posts = getBlogPosts()
+  const posts = getBlogPosts()
 
   // add slug params for each blog post
   return posts.map((post) => ({
@@ -54,8 +54,8 @@ export async function generateStaticParams() {
 // }
 
 export default async function Blog({ params }) {
-  let { slug } = await params
-  let post = getBlogPosts().find((post) => post.slug === slug)
+  const { slug } = await params
+  const post = getBlogPosts().find((post) => post.slug === slug)
 
   if (!post) {
     notFound()

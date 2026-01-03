@@ -10,10 +10,10 @@ type TableData = {
 };
 
 function Table({ data }: { data: TableData }) {
-  let headers = data.headers.map((header, index) => (
+  const headers = data.headers.map((header, index) => (
     <th key={index}>{header}</th>
   ))
-  let rows = data.rows.map((row, index) => (
+  const rows = data.rows.map((row, index) => (
     <tr key={index}>
       {row.map((cell, cellIndex) => (
         <td key={cellIndex}>{cell}</td>
@@ -32,7 +32,7 @@ function Table({ data }: { data: TableData }) {
 }
 
 function CustomLink(props) {
-  let href = props.href
+  const href = props.href
 
   if (href.startsWith('/')) {
     return (
@@ -54,7 +54,7 @@ function RoundedImage(props) {
 }
 
 function Code({ children, ...props }) {
-  let codeHTML = highlight(children)
+  const codeHTML = highlight(children)
   return <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />
 }
 
@@ -71,7 +71,7 @@ function slugify(str) {
 
 function createHeading(level) {
   const Heading = ({ children }) => {
-    let slug = slugify(children)
+    const slug = slugify(children)
     const headingSizes = {
       1: 'text-2xl font-bold mt-8 mb-4',
       2: 'text-xl font-bold mt-6 mb-3',
@@ -103,7 +103,7 @@ function Paragraph(props) {
   return <p className="mb-4 leading-7" {...props} />
 }
 
-let components = {
+const components = {
   h1: createHeading(1),
   h2: createHeading(2),
   h3: createHeading(3),
