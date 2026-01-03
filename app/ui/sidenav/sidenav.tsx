@@ -1,35 +1,44 @@
 "use client";
 
-import { UserCircleIcon } from '@heroicons/react/24/outline';
+import Image from 'next/image';
 import Link from 'next/link';
 import NavLinks from '@/app/ui/sidenav/NavLinks';
 import SocMedIcons from '@/app/ui/sidenav/SocMedIcons';
 export default function SideNav() {
     return (
         <>
-        <div className="block md:hidden">
-            <NavLinks />
-        </div>
-        <div className="flex-col h-full items-center justify-between p-4 hidden md:flex w-58">
-            <div className='hidden md:block'>
-                <UserCircleIcon className="h-28 w-28 text-emerald-500" strokeWidth={0.8} />
-            </div>
+        <div className="flex flex-col justify-center items-center md:hidden h-full">
             <div>
-                <Link 
-                    href="/"
-                    className="flex flex-col items-center"
-                >
-                    <p className="font-bold text-[24px]">Wahba </p> 
-                </Link>
-            </div>
-            <div className="">
                 <NavLinks />
             </div>
-            <div className="py-6">
-                <SocMedIcons />
-            </div>
-            
         </div>
+        <div className='flex justify-end hidden md:block'>
+            <div className="flex-col h-full items-center justify-start p-4 gap-3 flex">
+                <div className='pt-20 hidden md:block'>
+                    <Image 
+                    src="/profile1.jpeg" 
+                    alt="Profile Pitcure" 
+                    width={120}
+                    height={15}
+                    className='rounded-full border-1 shadow-lg'
+                    />
+                </div>
+                <div>
+                    <Link href="/">
+                        <p className="font-bold text-[20px]">Wahba </p> 
+                    </Link>
+                </div>
+                <div className=''>
+                    <p className="text-[13px]">Cybersecurity student from  🇮🇩</p> 
+                </div>
+                <div className="">
+                    <NavLinks />
+                </div>
+                <div className="">
+                    <SocMedIcons />
+                </div>
+            </div>
+        </div>  
         </>
     )
 }
