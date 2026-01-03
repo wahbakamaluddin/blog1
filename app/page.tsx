@@ -1,15 +1,22 @@
-import SocMedIcons from "@/app/ui/sidenav/SocMedIcons"
+import SocMedIcons from "./ui/sidenav/SocMedIcons";
 
 export default function Page () {
- return (
-    <div className="py-24 px-32">
-        <h1 className="font-bold text-[30px]">{ "whoami" }</h1>
-        <div>
-            <p className="font-small pt-6">{ "A cybersecurity student focusing on web application security." }</p>
-            <p className="font-small pt-6">{ "Checkout my social media profiles:" }</p>
-            <div className="pt-6"><SocMedIcons /></div>
-        </div>
+  return (
+    <section>
+      <h1 className="mb-8 text-2xl font-bold tracking-tight">
+        whoami
+      </h1>
+      <p className="mb-4">
+        {`I'm an undergrad cybersecurity student at Universiti 
+        Sains Islam Malaysia (USIM). I started my geek journey
+        during COVID-19, where i started using Linux Mint as my OS. 
+        There, I started to get my hands dirty with terminal, tweaking all sort of stuffs for days
+        to get my laptop speaker to work (typical linux user 
+        activity). And I'm hooked ever since. Do checkout my social media:`}
+      </p>
 
-    </div>
- )
+      <SocMedIcons />
+    </section>
+    
+  );
 }

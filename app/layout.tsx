@@ -19,11 +19,22 @@ export default function RootLayout({
       <body
         className={`${poppins.className} antialiased`} 
       >
-        <div className="flex p-2 gap-2 h-screen bg-[#121212] md:flex-row md:overflow-hidden items-center">
-          <div>
+        <div 
+        className="flex h-screen bg-[#121212] md:flex-row md:overflow-hidden"
+        style={{
+          backgroundImage: "radial-gradient(#ffff1110 1px, transparent 1px)",
+          backgroundSize: "24px 24px",
+        }}
+        >
+          <div
+          className="w-1/4"
+          style={{
+            borderRight: "1px solid grey"
+          }}
+          >
             <SideNav />
           </div>
-          <div className="flex h-full rounded-md bg-[#1E1E1F] md:overflow-y-auto flex-1">
+          <div className="max-w-xl mx-auto my-32 px-2 md:px-0">
             {children}      
           </div>
         </div>
