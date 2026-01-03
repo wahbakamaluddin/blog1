@@ -13,13 +13,12 @@ export default function SideNav() {
         transition={{ type: 'spring', stiffness: 80, damping: 20 }}
         className="h-full"
         >
-        <div className="flex flex-col justify-center items-center md:hidden h-full">
-            <div>
-                <NavLinks />
+            <div className="flex flex-col justify-center items-center md:hidden h-full">
+                <div>
+                    <NavLinks />
+                </div>
             </div>
-        </div>
-        <div className='flex justify-end hidden md:block'>
-            <div className="flex-col h-full items-center justify-start p-4 gap-3 flex">
+            <div className="hidden md:flex flex-col h-full items-center justify-start p-4 gap-3 flex">
                 <div className='pt-20 hidden md:block'>
                     <Image 
                     src="/profile1.jpeg" 
@@ -43,8 +42,11 @@ export default function SideNav() {
                 <div className="">
                     <SocMedIcons />
                 </div>
+                <div className='h-full flex flex-col justify-end'>
+                    <p className="text-[10px] text-gray-500">© 2026 Wahba Kamaluddin</p>
+                </div>
             </div>
-        </div>  
+
         </motion.div>
     )
 }
