@@ -19,7 +19,7 @@ export default function SideNav() {
                 </div>
             </div>
             <div className="hidden md:flex flex-col h-full items-center justify-start p-4 gap-3 flex">
-                <div className='pt-20 hidden md:block'>
+                <div className='pt-20 hidden md:block hover:scale-105 transition-transform duration-200'>
                     <Image 
                     src="/profile1.jpeg" 
                     alt="Profile Pitcure" 
@@ -34,12 +34,12 @@ export default function SideNav() {
                     </Link>
                 </div>
                 <div className=''>
-                    <p className="text-[13px]">Cybersecurity student from  🇮🇩</p> 
+                    <p className="text-[13px] text-gray-300">Cybersecurity student from  🇮🇩</p> 
                 </div>
                 <div className="">
                     <NavLinks />
                 </div>
-                <div className="">
+                <div className="h-full flex items-end pb-4">
                     <SocMedIcons />
                 </div>
                 <div className='h-full flex flex-col justify-end'>
