@@ -1,12 +1,18 @@
 "use client";
 
+import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import NavLinks from '@/app/ui/sidenav/NavLinks';
 import SocMedIcons from '@/app/ui/sidenav/SocMedIcons';
 export default function SideNav() {
     return (
-        <>
+        <motion.div
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ type: 'spring', stiffness: 80, damping: 20 }}
+        className="h-full"
+        >
         <div className="flex flex-col justify-center items-center md:hidden h-full">
             <div>
                 <NavLinks />
@@ -39,6 +45,6 @@ export default function SideNav() {
                 </div>
             </div>
         </div>  
-        </>
+        </motion.div>
     )
 }

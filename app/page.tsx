@@ -1,8 +1,16 @@
+"use client";
+
+import { motion } from "framer-motion";
 import SocMedIcons from "./ui/sidenav/SocMedIcons";
 
 export default function Page () {
   return (
     <section>
+      <motion.div
+      initial={{ y: 20, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ type: 'spring', stiffness: 80, damping: 20 }}
+      >
       <h1 className="mb-8 text-2xl font-bold tracking-tight">
         whoami
       </h1>
@@ -16,6 +24,7 @@ export default function Page () {
       </p>
 
       <SocMedIcons />
+      </motion.div>
     </section>
     
   );
