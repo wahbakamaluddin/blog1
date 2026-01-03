@@ -3,7 +3,6 @@ import Image from 'next/image'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import { highlight } from 'sugar-high'
 import React from 'react'
-import { p } from 'framer-motion/client'
 
 function Table({ data }) {
   let headers = data.headers.map((header, index) => (
@@ -99,8 +98,25 @@ function createHeading(level) {
   return Heading
 }
 
-function Paragraph(props) {
+function paragraph(props) {
   return <p className="mb-4 leading-7" {...props} />
+}
+
+function blockquote(props) {
+  return (
+    <blockquote
+      className="pl-4 border-l-4 border-neutral-300 dark:border-neutral-600 italic my-6"
+      {...props}
+    />
+  )
+}
+
+function li(props) {
+  return <li className="mb-2" {...props} />
+}
+
+function ol(props) {
+  return <ol className="list-decimal list-inside mb-4" {...props} />
 }
 
 let components = {
@@ -110,9 +126,12 @@ let components = {
   h4: createHeading(4),
   h5: createHeading(5),
   h6: createHeading(6),
+  p: paragraph,
+  li: li,
+  ol: ol,
+  blockquote: blockquote,
   Image: RoundedImage,
   a: CustomLink,
-  p: Paragraph,
   code: Code,
   Table,
 }
