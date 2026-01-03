@@ -19,8 +19,7 @@ export default function SideNav() {
                     href="/"
                     className="flex flex-col items-center"
                 >
-                    <p className="font-medium text-[24px]">Wahba </p> 
-                    <p className="font-medium text-[24px]">Kamaluddin</p>
+                    <p className="font-bold text-[24px]">Wahba </p> 
                 </Link>
             </div>
             <div className="">

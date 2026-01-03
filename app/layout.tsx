@@ -20,7 +20,7 @@ export default function RootLayout({
         className={`${poppins.className} antialiased`} 
       >
         <div 
-        className="flex p-2 gap-2 h-screen bg-[#121212] md:flex-row md:overflow-hidden items-center"
+        className="flex h-screen bg-[#121212] md:flex-row md:overflow-hidden items-center"
         style={{
           backgroundImage: "radial-gradient(#ffff1110 1px, transparent 1px)",
           backgroundSize: "24px 24px",
