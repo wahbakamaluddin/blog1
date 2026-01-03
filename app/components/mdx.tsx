@@ -1,14 +1,19 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { MDXRemote } from 'next-mdx-remote/rsc'
+import { MDXRemote, MDXRemoteProps } from 'next-mdx-remote/rsc'
 import { highlight } from 'sugar-high'
 import React from 'react'
 
-function Table({ data }) {
-  let headers = data.headers.map((header, index) => (
+interface TableData {
+  headers: string[];
+  rows: string[][];
+}
+
+function Table({ data }: { data: TableData }) {
+  const headers = data.headers.map((header, index) => (
     <th key={index}>{header}</th>
   ))
-  let rows = data.rows.map((row, index) => (
+  const rows = data.rows.map((row, index) => (
     <tr key={index}>
       {row.map((cell, cellIndex) => (
         <td key={cellIndex}>{cell}</td>
@@ -26,9 +31,7 @@ function Table({ data }) {
   )
 }
 
-function CustomLink(props) {
-  let href = props.href
-
+function CustomLink({ href, ...props }: React.AnchorHTMLAttributes<HTMLAnchorElement> & { href: string }) {
   if (href.startsWith('/')) {
     return (
       <Link href={href} {...props}>
@@ -38,22 +41,22 @@ function CustomLink(props) {
   }
 
   if (href.startsWith('#')) {
-    return <a {...props} />
+    return <a href={href} {...props} />
   }
 
-  return <a target="_blank" rel="noopener noreferrer" {...props} />
+  return <a href={href} target="_blank" rel="noopener noreferrer" {...props} />
 }
 
-function RoundedImage(props) {
-  return <Image alt={props.alt} className="rounded-lg" {...props} />
+function RoundedImage({ alt, ...props }: React.ComponentProps<typeof Image>) {
+  return <Image alt={alt} className="rounded-lg" {...props} />
 }
 
-function Code({ children, ...props }) {
-  let codeHTML = highlight(children)
+function Code({ children, ...props }: { children: string } & React.HTMLAttributes<HTMLElement>) {
+  const codeHTML = highlight(children)
   return <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />
 }
 
-function slugify(str) {
+function slugify(str: string): string {
   return str
     .toString()
     .toLowerCase()
@@ -64,11 +67,11 @@ function slugify(str) {
     .replace(/\-\-+/g, '-') // Replace multiple - with single -
 }
 // create heading components that automatically generate ids based on their text content
-function createHeading(level) {
-  const Heading = ({ children }) => {
-    let slug = slugify(children)
+function createHeading(level: number) {
+  const Heading = ({ children }: { children: string }) => {
+    const slug = slugify(children)
 
-    const sizeClasses = {
+    const sizeClasses: Record<number, string> = {
       1: 'text-2xl',
       2: 'text-xl',
       3: 'text-lg',
@@ -98,11 +101,11 @@ function createHeading(level) {
   return Heading
 }
 
-function paragraph(props) {
+function paragraph(props: MDXRemoteProps) {
   return <p className="mb-4 leading-7" {...props} />
 }
 
-function blockquote(props) {
+function blockquote(props: MDXRemoteProps) {
   return (
     <blockquote
       className="pl-4 border-l-4 border-neutral-300 dark:border-neutral-600 italic my-6"
@@ -111,15 +114,15 @@ function blockquote(props) {
   )
 }
 
-function li(props) {
+function li(props: MDXRemoteProps) {
   return <li className="mb-2" {...props} />
 }
 
-function ol(props) {
+function ol(props: MDXRemoteProps) {
   return <ol className="list-decimal list-inside mb-4" {...props} />
 }
 
-let components = {
+const components = {
   h1: createHeading(1),
   h2: createHeading(2),
   h3: createHeading(3),
@@ -136,7 +139,7 @@ let components = {
   Table,
 }
 
-export function CustomMDX(props) {
+export function CustomMDX(props: MDXRemoteProps) {
   return (
     <MDXRemote
       // spread props object into individual props to pass to MDXRemote

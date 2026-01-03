@@ -52,7 +52,7 @@ export async function generateStaticParams() {
 //   }
 // }
 
-export default async function Blog({ params }) {
+export default async function Blog({ params }: { params: Promise<{ slug: string }> }) {
   let { slug } = await params
   let post = getBlogPosts().find((post) => post.slug === slug)
 
