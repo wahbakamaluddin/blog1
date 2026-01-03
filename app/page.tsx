@@ -16,11 +16,11 @@ export default function Page () {
       </h1>
       <p className="mb-4">
         {`I'm an undergrad cybersecurity student at Universiti 
-        Sains Islam Malaysia (USIM). I started my geek journey
-        during COVID-19, where i started using Linux Mint as my OS. 
-        There, I started to get my hands dirty with terminal, tweaking all sort of stuffs for days
-        to get my laptop speaker to work (typical linux user 
-        activity). And I'm hooked ever since. Do checkout my social media:`}
+        Sains Islam Malaysia (USIM). Back during COVID-19,
+        I started using Linux Mint as my main OS just to see what's the fuss is about. 
+        For days, I got my hands dirty with terminal, tweaking all sort of stuff
+        just to get my speaker to work (typical linux user activity). 
+        And I'm hooked ever since. Do checkout my social media:`}
       </p>
 
       <SocMedIcons />
