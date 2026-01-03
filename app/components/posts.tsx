@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { formatDate, getBlogPosts } from '@/app/writing/utils'
+import { Key, ReactElement, JSXElementConstructor, ReactNode, ReactPortal } from 'react'
 
 export function BlogPosts() {
   const allBlogs = getBlogPosts()
@@ -7,7 +8,7 @@ export function BlogPosts() {
   return (
     <div>
       {allBlogs
-        .sort((a, b) => {
+        .sort((a: { metadata: { publishedAt: string | number | Date } }, b: { metadata: { publishedAt: string | number | Date } }) => {
           if (
             new Date(a.metadata.publishedAt) > new Date(b.metadata.publishedAt)
           ) {
@@ -15,7 +16,7 @@ export function BlogPosts() {
           }
           return 1
         })
-        .map((post) => (
+        .map((post: { slug: Key | null | undefined; metadata: { publishedAt: string; title: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined } }) => (
           <Link
             key={post.slug}
             className="flex flex-col space-y-1 mb-4"

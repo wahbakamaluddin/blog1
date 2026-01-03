@@ -53,9 +53,26 @@ export async function generateStaticParams() {
 //   }
 // }
 
-export default async function Blog({ params }) {
+export default async function Blog({ params }: any) {
   const { slug } = await params
-  const post = getBlogPosts().find((post) => post.slug === slug)
+  interface BlogPost {
+    slug: string
+    metadata: {
+      title: string
+      publishedAt: string
+      summary: string
+      image?: string
+    }
+    content: string
+  }
+
+  interface Params {
+    slug: string
+  }
+
+  export default async function Blog({ params }: { params: Params }) {
+    const { slug } = await params
+    const post: BlogPost | undefined = getBlogPosts().find((post: BlogPost) => post.slug === slug)
 
   if (!post) {
     notFound()

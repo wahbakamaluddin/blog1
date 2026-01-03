@@ -31,7 +31,7 @@ function Table({ data }: { data: TableData }) {
   )
 }
 
-function CustomLink(props) {
+function CustomLink(props: any): any {
   const href = props.href
 
   if (href.startsWith('/')) {
@@ -49,16 +49,16 @@ function CustomLink(props) {
   return <a target="_blank" rel="noopener noreferrer" {...props} />
 }
 
-function RoundedImage(props) {
+function RoundedImage(props: any): any {
   return <Image alt={props.alt} className="rounded-lg" {...props} />
 }
 
-function Code({ children, ...props }) {
+function Code({ children, ...props }: any): any {
   const codeHTML = highlight(children)
   return <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />
 }
 
-function slugify(str) {
+function slugify(str: any): string {
   return str
     .toString()
     .toLowerCase()
@@ -69,8 +69,8 @@ function slugify(str) {
     .replace(/\-\-+/g, '-') // Replace multiple - with single -
 }
 
-function createHeading(level) {
-  const Heading = ({ children }) => {
+function createHeading(level: number): any {
+  const Heading = ({ children }: any) => {
     const slug = slugify(children)
     const headingSizes = {
       1: 'text-2xl font-bold mt-8 mb-4',
@@ -82,7 +82,7 @@ function createHeading(level) {
     }
     return React.createElement(
       `h${level}`,
-      { id: slug, className: headingSizes[level] },
+      { id: slug, className: headingSizes[level as keyof typeof headingSizes] },
       [
         React.createElement('a', {
           href: `#${slug}`,
@@ -99,7 +99,7 @@ function createHeading(level) {
   return Heading
 }
 
-function Paragraph(props) {
+function Paragraph(props: any): any {
   return <p className="mb-4 leading-7" {...props} />
 }
 
@@ -117,7 +117,7 @@ const components = {
   p: Paragraph,
 }
 
-export function CustomMDX(props) {
+export function CustomMDX(props: any): any {
   return (
     <MDXRemote
       {...props}
