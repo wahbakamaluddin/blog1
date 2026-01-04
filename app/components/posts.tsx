@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 
 export type Category = 'notes' | 'ctf' | 'general' | 'research'
-export type Competition = 'hkcert25' | 'other'
+export type Competition = 'hkcert25' | 'curtinctf25' | 'other'
 
 export interface Metadata {
   title: string
@@ -32,6 +32,7 @@ const categories: { key: Category | 'all'; label: string }[] = [
 const competitions: { key: Competition | 'all'; label: string }[] = [
   { key: 'all', label: 'All CTF' },
   { key: 'hkcert25', label: 'HKCERT25' },
+  { key: 'curtinctf25', label: 'CurtinCTF25' },
   { key: 'other', label: 'Other' },
 ]
 
@@ -40,11 +41,6 @@ const categoryColors: Record<Category, string> = {
   ctf: 'bg-red-500/20 text-red-400',
   general: 'bg-green-500/20 text-green-400',
   research: 'bg-purple-500/20 text-purple-400',
-}
-
-const competitionColors: Record<Competition, string> = {
-  hkcert25: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
-  other: 'bg-gray-500/20 text-gray-400 border-gray-500/30',
 }
 
 function formatDate(date: string, includeRelative = false): string {
@@ -71,7 +67,7 @@ function formatDate(date: string, includeRelative = false): string {
   }
 
   const fullDate = targetDate.toLocaleString('en-us', {
-    month: 'long',
+    month: 'numeric',
     day: 'numeric',
     year: 'numeric',
   })
@@ -155,7 +151,7 @@ export function BlogPosts({ posts }: { posts: BlogPost[] }) {
               href={`/writing/${post.slug}`}
             >
               <div className="w-full flex flex-col md:flex-row md:items-center space-x-0 md:space-x-2">
-                <p className="text-neutral-600 dark:text-neutral-400 w-[150px] tabular-nums shrink-0">
+                <p className="text-neutral-600 dark:text-neutral-400 w-[100px] tabular-nums shrink-0">
                   {formatDate(post.metadata.publishedAt, false)}
                 </p>
                 <p className="text-neutral-900 dark:text-neutral-100 tracking-tight group-hover:underline">
@@ -168,7 +164,7 @@ export function BlogPosts({ posts }: { posts: BlogPost[] }) {
                     </span>
                   )}
                   {post.metadata.competition && (
-                    <span className={`text-xs px-2 py-0.5 rounded border ${competitionColors[post.metadata.competition]}`}>
+                    <span className={`text-xs px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-400`}>
                       {competitions.find((c) => c.key === post.metadata.competition)?.label || post.metadata.competition}
                     </span>
                   )}
