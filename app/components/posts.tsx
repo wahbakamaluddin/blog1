@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 
 export type Category = 'notes' | 'ctf' | 'general' | 'research'
-export type Competition = 'htb' | 'thm' | 'picoctf' | 'ctftime' | 'other'
+export type Competition = 'hkcert25' | 'other'
 
 export interface Metadata {
   title: string
@@ -31,10 +31,7 @@ const categories: { key: Category | 'all'; label: string }[] = [
 
 const competitions: { key: Competition | 'all'; label: string }[] = [
   { key: 'all', label: 'All CTF' },
-  { key: 'htb', label: 'HackTheBox' },
-  { key: 'thm', label: 'TryHackMe' },
-  { key: 'picoctf', label: 'PicoCTF' },
-  { key: 'ctftime', label: 'CTFtime' },
+  { key: 'hkcert25', label: 'HKCERT25' },
   { key: 'other', label: 'Other' },
 ]
 
@@ -46,7 +43,7 @@ const categoryColors: Record<Category, string> = {
 }
 
 const competitionColors: Record<Competition, string> = {
-  htb: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
+  hkcert25: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
   thm: 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30',
   picoctf: 'bg-orange-500/20 text-orange-400 border-orange-500/30',
   ctftime: 'bg-pink-500/20 text-pink-400 border-pink-500/30',
