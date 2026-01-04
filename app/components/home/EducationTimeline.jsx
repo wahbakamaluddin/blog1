@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { School } from "lucide-react";
 
 const experiences = [
@@ -10,8 +9,8 @@ const experiences = [
     current: true,
   },
   {
-    company: "Asean Cyber Shield Education",
-    role: "",
+    company: "Korea Internet and Security Agency (KISA)",
+    role: "ASEAN Cyber Shield Education",
     duration: "5mos",
     date: "Sep 2024 – Jan 2025",
     current: false,
