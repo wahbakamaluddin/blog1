@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import SocMedIcons from "./ui/sidenav/SocMedIcons";
+import EducationTimeline from "@/app/components/home/EducationTimeline";
 
 export default function Page () {
   return (
@@ -24,6 +25,11 @@ export default function Page () {
       </p>
 
       <SocMedIcons />
+      <div className="pt-10">
+        <EducationTimeline />
+      </div>
+    
+
       </motion.div>
     </section>
     
