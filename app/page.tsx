@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import SocMedIcons from "./ui/sidenav/SocMedIcons";
 import EducationTimeline from "@/app/components/home/EducationTimeline";
+import Certifications from "@/app/components/home/Certifications";
 
 export default function Page () {
   return (
@@ -27,6 +28,9 @@ export default function Page () {
       <SocMedIcons />
       <div className="pt-10">
         <EducationTimeline />
+      </div>
+      <div className="pt-10">
+        <Certifications />
       </div>
     
 
