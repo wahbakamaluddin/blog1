@@ -17,6 +17,9 @@ export default function Page () {
       <h1 className="mb-8 text-2xl font-bold tracking-tight">
         $whoami
       </h1>
+      <h1 className="text-2xl block md:hidden py-10">
+          Psst... it looks better on a larger screen!  
+      </h1>
       <p className="mb-4">
         {`I'm an undergrad cybersecurity student at Universiti 
         Sains Islam Malaysia (USIM). Back during COVID-19,
