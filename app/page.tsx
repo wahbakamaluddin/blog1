@@ -23,10 +23,13 @@ export default function Page () {
       <p className="mb-4">
         {`I'm an undergrad cybersecurity student at Universiti 
         Sains Islam Malaysia (USIM). Back during COVID-19,
-        I started using Linux Mint as my main OS just to see what's the fuss is about. 
-        For days, I got my hands dirty with terminal, tweaking all sort of stuff
-        just to get my speaker working (typical linux user activity). 
-        And I'm hooked ever since. Do checkout my social media:`}
+        I started using Linux Mint as my main OS just to see what the fuss is about. 
+        For days, I juggled around in terminal, tweaking all sorts of stuff
+        just to get my speakers working (typical linux user activity). 
+        And I've been hooked ever since.`}
+      </p>
+      <p className="mb-4">
+        {`Apart from consuming brainrot, I spend most of my time learning web application security, joining CTF competitions, and doing web development on the side. I'm also an avid reader; most of the general stuff I post on my blog is based on what I've read.`}
       </p>
 
       <SocMedIcons />
