@@ -17,8 +17,8 @@ export default function Page () {
       <h1 className="mb-8 text-2xl font-bold tracking-tight">
         $whoami
       </h1>
-      <h1 className="text-2xl block md:hidden py-10">
-          Psst... it looks better on a larger screen!  
+      <h1 className="text-l block md:hidden py-10">
+          Psst... it looks better on a bigger screen!  
       </h1>
       <p className="mb-4">
         {`I'm an undergrad cybersecurity student at Universiti 
@@ -29,7 +29,7 @@ export default function Page () {
         And I've been hooked ever since.`}
       </p>
       <p className="mb-4">
-        {`Apart from consuming brainrot, I spend most of my time learning web application security, joining CTF competitions, and doing web development on the side. I'm also an avid reader; most of the general stuff I post on my blog is based on what I've read.`}
+        {`I love learning web application security, joining CTF competitions, and doing web development on the side. I'm also an avid reader; most of the general stuff I post on my blog is based on what I've read.`}
       </p>
 
       <SocMedIcons />
