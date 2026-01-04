@@ -2,9 +2,7 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
-
-export type Category = 'notes' | 'ctf' | 'general' | 'research'
-export type Competition = 'hkcert25' | 'curtinctf25' | 'other'
+import { Category, Competition } from '@/app/writing/utils';
 
 export interface Metadata {
   title: string
@@ -31,6 +29,8 @@ const categories: { key: Category | 'all'; label: string }[] = [
 
 const competitions: { key: Competition | 'all'; label: string }[] = [
   { key: 'all', label: 'All CTF' },
+  { key: 'wargames23', label: 'Wargames23' },
+  { key: 'hkcert24', label: 'HKCERT24' },
   { key: 'hkcert25', label: 'HKCERT25' },
   { key: 'curtinctf25', label: 'CurtinCTF25' },
   { key: 'other', label: 'Other' },
