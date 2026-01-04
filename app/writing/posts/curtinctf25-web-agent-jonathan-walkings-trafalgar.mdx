@@ -1,0 +1,86 @@
+---
+title: 'CurtinCTF25 (Web) - Agent Trafalgar'
+publishedAt: '2025-12-06'
+summary: 'NJRat Malware Analysis'
+category: 'ctf'
+competition: 'curtinctf25'
+---
+## 1. Challenge Information
+
+- Challenge Name: Agent Jonathan Walkins Trafalgar
+- Category: Web - JWT algorithm confustion attack
+- Difficulty: Medium
+
+## 2. TL;DR Solution Summary
+
+> The backend is vulnerable to JWT algorithm confusion attack (RS265 → HS265), allowing JWT token’s signature to be signed using public key instead of secret/ private key.
+> 
+
+## 3. Recon / Initial Analysis
+
+### 3.1 Files/ Informations Provided
+
+- A public key in PEM format
+    
+    ```xml
+    -----BEGIN PUBLIC KEY-----
+    MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzzh4QcrzhduRn3K1af38
+    WTQMw1QRDjLTjeQKBiQPxyME2piCb+XKUq5WFJOS0VfpDEaSLTJ1W/S662ANgIAy
+    6qw6Y3iovB7C8WwIC1dZ2/5VdKTX8yjoVYaofjzZGKnoHMxoBkELmH7z7GFoNZB4
+    AJ8XSJx1Ibl4f+Y1TtGN+8xhg+2F8KbbuJhHxYiPPoMGxLNyPvay+t0A8Fxf/Qk8
+    LGwxjIN6qnMDCnpZ6MhOj60Poh493EhZ03/1YhGGXE2S0SYm3jOetnueAc4cXxPT
+    OCe4yS8u+pDg89swqlR/sEtO1H99pojRGv1LceD2m93isiLqLqvkJAuvmOJ6z9a9
+    uQIDAQAB
+    -----END PUBLIC KEY-----
+    ```
+    
+- The algorithm used is RS265 (an asymmetric algorithm)
+
+## 4. Vulnerability Breakdown
+
+![Screenshot 2025-12-09 at 21.30.01.png](/image/writing/competition/curtinctf25-web-agent-jonathan-walkings-trafalgar/0.png)
+
+- Json Web Token (JWT) is a method to verify users.  A JWT is JSON data secured with cryptographic signature
+- The signing can be done using symmetric or asymmetric cryptography.
+- Algorithm confusion attack is to trick the server into validating the signature using different algorithm (in this case, it’s verifying RS265 — a asymmetric algorithm — using HS256 — a symmetric algorithm)
+
+## 5. Exploitation
+
+### 5.1 Method / Tools Used
+
+- Burpsuite
+- JSON Web Tokens (Burpsuite extension)
+- JWT editor (Burpsuite extension)
+
+### 5.2 Walkthrough
+
+- Encode the public key into base64, ensure to add a newline character at the end of the key (by pressing Enter key)
+    
+    ![image.png](/image/writing/competition/curtinctf25-web-agent-jonathan-walkings-trafalgar/1.png)
+    
+- Under JWT Editor tab, click New Symmetric Key → Generate, paste the base64 encoded public key into “k”
+    
+    ![image.png](/image/writing/competition/curtinctf25-web-agent-jonathan-walkings-trafalgar/2.png)
+    
+- Under repeater tab, change the “alg” into HS256, and add “admin”: true under the payload then sign the message using the previously created key
+    
+    ![image.png](/image/writing/competition/curtinctf25-web-agent-jonathan-walkings-trafalgar/3.png)
+    
+    ![Screenshot 2025-12-06 at 19.00.58.png](/image/writing/competition/curtinctf25-web-agent-jonathan-walkings-trafalgar/4.png)
+    
+
+## 6. Flag
+
+- `CURTIN_CTF{alg_c0nfus10n_wlth_publ1c_k3y_1s_c001}`
+
+## 7. Key Takeways
+
+- Make sure the public key is in the proper form before encoding it to base 64. This includes all the newlines, especially at the end of the public key.
+
+## 8. Appendix
+
+- References
+    - [https://www.youtube.com/watch?v=4roTwhGSWZY](/image/writing/competition/curtinctf25-web-agent-jonathan-walkings-trafalgar/https://www.youtube.com/watch?v=4roTwhGSWZY)
+    - [https://www.geeksforgeeks.org/web-tech/json-web-token-jwt/](/image/writing/competition/curtinctf25-web-agent-jonathan-walkings-trafalgar/https://www.geeksforgeeks.org/web-tech/json-web-token-jwt/)
+    - [https://portswigger.net/web-security/jwt/algorithm-confusion](/image/writing/competition/curtinctf25-web-agent-jonathan-walkings-trafalgar/https://portswigger.net/web-security/jwt/algorithm-confusion)
+    - [https://siunam321.github.io/ctf/portswigger-labs/JWT/jwt-7/](/image/writing/competition/curtinctf25-web-agent-jonathan-walkings-trafalgar/https://siunam321.github.io/ctf/portswigger-labs/JWT/jwt-7/)
