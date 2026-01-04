@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { School } from "lucide-react";
 
 const experiences = [
