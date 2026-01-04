@@ -54,7 +54,7 @@ export default function Certifications() {
       
       <div className="grid gap-4">
         {certifications.map((cert, idx) => (
-          <div key={idx} className="flex gap-4 p-4 rounded-lg border border-gray-700 bg-gray-800/50 items-center">
+          <div key={idx} className="flex gap-4 p-4 rounded-lg bg-[#2f2f30]/50 border border-gray-700 items-center">
             {/* Badge/Logo */}
             {cert.badge && (
               <button

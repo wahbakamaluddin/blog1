@@ -57,13 +57,13 @@ export default function EducationTimeline() {
           <div key={idx} className="flex gap-4 relative">
 
             {/* logo */}
-            <div className="h-10 w-10 bg-gray-800 rounded-md flex items-center justify-center">
+            <div className="h-10 w-10 bg-[#2f2f30] rounded-md flex items-center justify-center">
                 <School size={25}/>
             </div>
        
             {/* Timeline line */}
             {idx !== educations.length - 1 && (
-              <div className="absolute left-5 top-10 w-px h-full bg-gray-500" />
+              <div className="absolute left-5 top-10 w-px h-full bg-gray-500 border-solid " />
             )}
 
             {/* content */}
