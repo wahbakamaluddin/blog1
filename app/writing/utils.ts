@@ -2,12 +2,14 @@ import fs from 'fs'
 import path from 'path'
 
 export type Category = 'notes' | 'ctf' | 'general' | 'research'
+export type Competition = 'htb' | 'thm' | 'picoctf' | 'ctftime' | 'other'
 
 export type Metadata = {
   title: string
   publishedAt: string
   summary: string
   category?: Category
+  competition?: Competition
   image?: string
 }
 

@@ -4,12 +4,14 @@ import Link from 'next/link'
 import { useState } from 'react'
 
 export type Category = 'notes' | 'ctf' | 'general' | 'research'
+export type Competition = 'htb' | 'thm' | 'picoctf' | 'ctftime' | 'other'
 
 export interface Metadata {
   title: string
   publishedAt: string
   summary: string
   category?: Category
+  competition?: Competition
   image?: string
 }
 
@@ -27,11 +29,28 @@ const categories: { key: Category | 'all'; label: string }[] = [
   { key: 'general', label: 'General' },
 ]
 
+const competitions: { key: Competition | 'all'; label: string }[] = [
+  { key: 'all', label: 'All CTF' },
+  { key: 'htb', label: 'HackTheBox' },
+  { key: 'thm', label: 'TryHackMe' },
+  { key: 'picoctf', label: 'PicoCTF' },
+  { key: 'ctftime', label: 'CTFtime' },
+  { key: 'other', label: 'Other' },
+]
+
 const categoryColors: Record<Category, string> = {
   notes: 'bg-blue-500/20 text-blue-400',
   ctf: 'bg-red-500/20 text-red-400',
   general: 'bg-green-500/20 text-green-400',
   research: 'bg-purple-500/20 text-purple-400',
+}
+
+const competitionColors: Record<Competition, string> = {
+  htb: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
+  thm: 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30',
+  picoctf: 'bg-orange-500/20 text-orange-400 border-orange-500/30',
+  ctftime: 'bg-pink-500/20 text-pink-400 border-pink-500/30',
+  other: 'bg-gray-500/20 text-gray-400 border-gray-500/30',
 }
 
 function formatDate(date: string, includeRelative = false): string {
@@ -72,9 +91,14 @@ function formatDate(date: string, includeRelative = false): string {
 
 export function BlogPosts({ posts }: { posts: BlogPost[] }) {
   const [activeCategory, setActiveCategory] = useState<Category | 'all'>('all')
+  const [activeCompetition, setActiveCompetition] = useState<Competition | 'all'>('all')
 
   const filteredPosts = posts
-    .filter((post) => activeCategory === 'all' || post.metadata.category === activeCategory)
+    .filter((post) => {
+      const categoryMatch = activeCategory === 'all' || post.metadata.category === activeCategory
+      const competitionMatch = activeCategory !== 'ctf' || activeCompetition === 'all' || post.metadata.competition === activeCompetition
+      return categoryMatch && competitionMatch
+    })
     .sort((a, b) => {
       if (new Date(a.metadata.publishedAt) > new Date(b.metadata.publishedAt)) {
         return -1
@@ -89,7 +113,12 @@ export function BlogPosts({ posts }: { posts: BlogPost[] }) {
         {categories.map((cat) => (
           <button
             key={cat.key}
-            onClick={() => setActiveCategory(cat.key)}
+            onClick={() => {
+              setActiveCategory(cat.key)
+              if (cat.key !== 'ctf') {
+                setActiveCompetition('all')
+              }
+            }}
             className={`px-3 py-1 text-sm rounded-full border transition-colors ${
               activeCategory === cat.key
                 ? 'border-emerald-500 text-emerald-500'
@@ -100,6 +129,25 @@ export function BlogPosts({ posts }: { posts: BlogPost[] }) {
           </button>
         ))}
       </div>
+
+      {/* Competition Filter (only show when CTF is active) */}
+      {activeCategory === 'ctf' && (
+        <div className="flex flex-wrap gap-2 mb-6 ml-4">
+          {competitions.map((comp) => (
+            <button
+              key={comp.key}
+              onClick={() => setActiveCompetition(comp.key)}
+              className={`px-2.5 py-1 text-xs rounded border transition-colors ${
+                activeCompetition === comp.key
+                  ? 'border-cyan-500 text-cyan-500 bg-cyan-500/10'
+                  : 'border-gray-600 text-gray-400 hover:border-cyan-500 hover:text-cyan-500 hover:bg-[#2f2f30]'
+              }`}
+            >
+              {comp.label}
+            </button>
+          ))}
+        </div>
+      )}
 
       {/* Posts List */}
       <div>
@@ -119,11 +167,18 @@ export function BlogPosts({ posts }: { posts: BlogPost[] }) {
                 <p className="text-neutral-900 dark:text-neutral-100 tracking-tight group-hover:underline">
                   {post.metadata.title}
                 </p>
-                {post.metadata.category && (
-                  <span className={`text-xs px-2 py-0.5 rounded-full ${categoryColors[post.metadata.category]}`}>
-                    {post.metadata.category}
-                  </span>
-                )}
+                <div className="flex gap-2 items-center">
+                  {post.metadata.category && (
+                    <span className={`text-xs px-2 py-0.5 rounded-full ${categoryColors[post.metadata.category]}`}>
+                      {post.metadata.category}
+                    </span>
+                  )}
+                  {post.metadata.competition && (
+                    <span className={`text-xs px-2 py-0.5 rounded border ${competitionColors[post.metadata.competition]}`}>
+                      {competitions.find((c) => c.key === post.metadata.competition)?.label || post.metadata.competition}
+                    </span>
+                  )}
+                </div>
               </div>
             </Link>
           ))
