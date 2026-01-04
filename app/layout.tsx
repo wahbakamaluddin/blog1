@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { poppins } from "@/app/ui/fonts";
 import "./globals.css";
 import SideNav from "@/app/ui/sidenav/sidenav";
+import Breadcrumb from "@/app/components/Breadcrumb";
 
 
 export const metadata: Metadata = {
@@ -36,6 +37,7 @@ export default function RootLayout({
           </div>
           <div className="w-full md:w-3/4 overflow-y-auto">
             <div className="max-w-2xl mx-auto my-32 p-2">
+              <Breadcrumb />
               {children}      
             </div>
           </div>
