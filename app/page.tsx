@@ -28,15 +28,14 @@ export default function Page () {
 
       <SocMedIcons />
       <div className="pt-10">
+        <Skills />
+      </div>
+      <div className="pt-10">
         <EducationTimeline />
       </div>
       <div className="pt-10">
         <Certifications />
       </div>
-      <div className="pt-10">
-        <Skills />
-      </div>
-    
 
       </motion.div>
     </section>
