@@ -44,9 +44,6 @@ const categoryColors: Record<Category, string> = {
 
 const competitionColors: Record<Competition, string> = {
   hkcert25: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
-  thm: 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30',
-  picoctf: 'bg-orange-500/20 text-orange-400 border-orange-500/30',
-  ctftime: 'bg-pink-500/20 text-pink-400 border-pink-500/30',
   other: 'bg-gray-500/20 text-gray-400 border-gray-500/30',
 }
 
