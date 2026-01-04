@@ -49,7 +49,7 @@ export default function Certifications() {
   return (
     <section className="max-w-xl">
       <h2 className="mb-6 text-sm tracking-widest text-gray-400">
-        Certificates
+        CERTIFICATE
       </h2>
       
       <div className="grid gap-4">
@@ -59,7 +59,7 @@ export default function Certifications() {
             {cert.badge && (
               <button
                 onClick={() => setSelectedImage(cert.badge!)}
-                className="shrink-0 rounded-lg overflow-hidden flex items-center justify-center cursor-zoom-in hover:ring-2 hover:ring-gray-500 transition-all"
+                className="shrink-0 rounded-lg overflow-hidden flex items-center justify-center cursor-zoom-in hover:ring-2 hover:ring-emerald-500 transition-all"
               >
                 <Image
                     src={cert.badge}

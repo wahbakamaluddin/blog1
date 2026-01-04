@@ -49,7 +49,7 @@ export default function EducationTimeline() {
   return (
     <section className="max-w-xl">
       <h2 className="mb-6 text-sm tracking-widest text-gray-400">
-        Education
+        EDUCATION
       </h2>
 
       <div className="space-y-6">
