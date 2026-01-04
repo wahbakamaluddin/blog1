@@ -15,7 +15,7 @@ export default function Page () {
       transition={{ type: 'spring', stiffness: 80, damping: 20 }}
       >
       <h1 className="mb-8 text-2xl font-bold tracking-tight">
-        whoami
+        $whoami
       </h1>
       <p className="mb-4">
         {`I'm an undergrad cybersecurity student at Universiti 
