@@ -28,10 +28,17 @@ const certifications: Certification[] = [
     badge: "/image/certificates/cisco-ethical-hacker.png",
   },
   {
-    title: "CompTIA Security+",
-    issuer: "CompTIA",
-    date: "2024",
-    badge: "/badges/comptia.png",
+    title: "Certificate of Excellence (ASEAN Cyber Shield 2024)",
+    issuer: "Korea Internet and Security Agency (KISA)",
+    date: "2025",
+    badge: "/image/certificates/ACS-excellence.png",
+  },
+  {
+    title: "Certified Appsec Practitioner (CAP)",
+    issuer: "The SecOps Group",
+    date: "2025",
+    link: "https://www.credly.com/badges/5f2f3f6e-3d3b-4f6a- ninety-four 8-5e3b2f8d2e6a",
+    badge: "/image/certificates/cap.png",
   },
 ];
 
