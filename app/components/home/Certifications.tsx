@@ -30,6 +30,7 @@ const certifications: Certification[] = [
   {
     title: "Certificate of Excellence (ASEAN Cyber Shield 2024)",
     issuer: "Korea Internet and Security Agency (KISA)",
+    link: "https://www.youtube.com/watch?v=bK6axYNI41A",
     date: "2025",
     badge: "/image/certificates/ACS-excellence.png",
   },
@@ -37,7 +38,7 @@ const certifications: Certification[] = [
     title: "Certified Appsec Practitioner (CAP)",
     issuer: "The SecOps Group",
     date: "2025",
-    link: "https://www.credly.com/badges/5f2f3f6e-3d3b-4f6a- ninety-four 8-5e3b2f8d2e6a",
+    link: "https://candidate.speedexam.net/certificate.aspx?SSTATE=am4131EniU8ntjp4bO5mXRuAWPUhlG4OLxB+fpaC25Arrn3/alZRudTEfH7lVCQjl9mgh9oxEOE97Gkt+gXJnZBcyGIUubaPvRi2v4uLieM=",
     badge: "/image/certificates/cap.png",
   },
 ];
