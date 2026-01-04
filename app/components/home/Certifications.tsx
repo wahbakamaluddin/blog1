@@ -14,7 +14,7 @@ interface Certification {
 
 const certifications: Certification[] = [
   {
-    title: "Google Cybersecurity Certificate",
+    title: "Google Cybersecurity",
     issuer: "Google",
     link: "https://www.coursera.org/account/accomplishments/specialization/certificate/VGP17IIU43XM",
     date: "2025",
