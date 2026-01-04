@@ -44,7 +44,7 @@ function CustomLink({ href, ...props }: React.AnchorHTMLAttributes<HTMLAnchorEle
     return <a href={href} {...props} />
   }
 
-  return <a href={href} target="_blank" rel="noopener noreferrer" {...props} />
+  return <a href={href} target="_blank" rel="noopener noreferrer" {...props} className='text-blue-500' />
 }
 
 function RoundedImage({ alt, ...props }: React.ComponentProps<typeof Image>) {
@@ -115,7 +115,7 @@ function blockquote(props: MDXRemoteProps) {
 }
 
 function li(props: MDXRemoteProps) {
-  return <li className="mb-2" {...props} />
+  return <li className="mb-2 list-disc list-inside" {...props} />
 }
 
 function ol(props: MDXRemoteProps) {
