@@ -1,10 +1,13 @@
 import fs from 'fs'
 import path from 'path'
 
-type Metadata = {
+export type Category = 'notes' | 'ctf' | 'general' | 'research'
+
+export type Metadata = {
   title: string
   publishedAt: string
   summary: string
+  category?: Category
   image?: string
 }
 
@@ -20,7 +23,7 @@ function parseFrontmatter(fileContent: string) {
     const [key, ...valueArr] = line.split(': ')
     let value = valueArr.join(': ').trim()
     value = value.replace(/^['"](.*)['"]$/, '$1') // Remove quotes
-    metadata[key.trim() as keyof Metadata] = value
+    ;(metadata as Record<string, string>)[key.trim()] = value
   })
 
   return { metadata: metadata as Metadata, content }
