@@ -78,7 +78,7 @@ export default function Certifications() {
               {cert.link && (
                 <button 
                   onClick={() => window.open(cert.link, '_blank')} 
-                  className="mt-2 px-3 py-1 text-xs text-blue-400 border border-blue-400/50 rounded-full hover:bg-blue-400/10 transition-colors"
+                  className="mt-2 px-3 py-1 text-xs text-emerald-500 border border-emerald-500/50 rounded-full hover:bg-emerald-500/10 transition-colors"
                 >
                   View Certificate
                 </button>
