@@ -115,11 +115,15 @@ function blockquote(props: MDXRemoteProps) {
 }
 
 function li(props: MDXRemoteProps) {
-  return <li className="mb-2 list-disc list-inside" {...props} />
+  return <li className="ml-4" {...props} />
+}
+
+function ul(props: MDXRemoteProps) {
+  return <ul className="list-disc mb-4" {...props} />
 }
 
 function ol(props: MDXRemoteProps) {
-  return <ol className="list-decimal list-inside mb-4" {...props} />
+  return <ol className="list-decimal mb-4" {...props} />
 }
 
 const components = {
@@ -131,6 +135,7 @@ const components = {
   h6: createHeading(6),
   p: paragraph,
   li: li,
+  ul: ul,
   ol: ol,
   blockquote: blockquote,
   Image: RoundedImage,

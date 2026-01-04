@@ -1,0 +1,41 @@
+---
+title: 'HKCERT25 (WEB) - easy lua'
+publishedAt: '2025-12-12'
+summary: 'NJRat Malware Analysis'
+category: 'ctf'
+competition: 'hkcert25'
+---
+## 1. Challenge Information
+
+![Screenshot 2025-12-19 at 21.39.30.png](/image/writing/competition/hkcert25-easy-lua/1.png)
+
+- Category: Web
+- Difficulty: Easy
+- Challenge Description / Prompt:
+    
+    ```
+    A Lua online executor
+    ```
+    
+## 2. TL;DR Solution Summary
+
+> There’s a secret function that can execute os command that can be used to read flag.txt
+> 
+
+## 3. Exploitation
+
+- The app allows user to execute Lua codes
+- My initial guess is to use `os.execute()` function to run some shell commands, but when I try it, returns an error suggesting that the os module is deliberately removed from the environment (Lua includes os module by default)
+- Lua stores modules in `_G` variables, so i write a for loop to loop through all modules in the environment:
+    
+    ```lua
+    for k, v in pairs(_G) do
+      print(k, type(v))
+    end
+    ```
+    
+- The app returned list of modules, one interesting entry is `S3cr3t0sEx3cFun function`
+- Since it’s a function, my guess is that it behave the same as os function, where it takes shell command as it input
+- I use it to traverse the file system, and then retrieve the flag using `print(S3cr3t0sEx3cFun(”cat ../flag”))`
+    
+    ![Screenshot 2025-12-20 at 06.14.12.png](/image/writing/competition/hkcert25-easy-lua/2.png)
