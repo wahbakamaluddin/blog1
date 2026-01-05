@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { MDXRemote, MDXRemoteProps } from 'next-mdx-remote/rsc'
 import { highlight } from 'sugar-high'
 import React from 'react'
+import { CopyButton } from '@/app/components/CopyButton'
 
 interface TableData {
   headers: string[];
@@ -53,7 +54,43 @@ function RoundedImage({ alt, ...props }: React.ComponentProps<typeof Image>) {
 
 function Code({ children, ...props }: { children: string } & React.HTMLAttributes<HTMLElement>) {
   const codeHTML = highlight(children)
-  return <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />
+  const isMultiLine = children.includes('\n')
+
+  // Inline code styling
+  if (!isMultiLine) {
+    return (
+      <code
+        className="bg-neutral-100 dark:bg-neutral-800 rounded-md px-1 py-0.5 font-mono text-sm"
+        dangerouslySetInnerHTML={{ __html: codeHTML }}
+        {...props}
+      />
+    )
+  }
+
+  // Console-like block code styling
+  return (
+    <div className="my-4 rounded-lg overflow-hidden border border-neutral-700 bg-neutral-900">
+      {/* Title bar */}
+      <div className="flex items-center justify-between px-4 py-2 bg-neutral-800 border-b border-neutral-700">
+        <div className="flex items-center gap-2">
+          <div className="flex gap-1.5">
+            <span className="w-3 h-3 rounded-full bg-red-500" />
+            <span className="w-3 h-3 rounded-full bg-yellow-500" />
+            <span className="w-3 h-3 rounded-full bg-green-500" />
+          </div>
+        </div>
+        <CopyButton text={children} />
+      </div>
+      {/* Code content */}
+      <pre className="p-4 overflow-x-auto">
+        <code
+          className="font-mono text-xs text-neutral-100"
+          dangerouslySetInnerHTML={{ __html: codeHTML }}
+          {...props}
+        />
+      </pre>
+    </div>
+  )
 }
 
 function slugify(str: string): string {
