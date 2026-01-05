@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/next";
 import { poppins } from "@/app/ui/fonts";
 import "./globals.css";
 import SideNav from "@/app/ui/sidenav/sidenav";
@@ -44,6 +45,7 @@ export default function RootLayout({
           </div>
         </div>
         <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );
