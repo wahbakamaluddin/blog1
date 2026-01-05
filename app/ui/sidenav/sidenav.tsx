@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import NavLinks from '@/app/ui/sidenav/NavLinks';
 import SocMedIcons from '@/app/ui/sidenav/SocMedIcons';
+import TypewriterText from '@/app/ui/sidenav/TypewriterText';
 export default function SideNav() {
     return (
         <motion.div
@@ -34,7 +35,9 @@ export default function SideNav() {
                     </Link>
                 </div>
                 <div className=''>
-                    <p className="text-[13px] text-gray-300">Cybersecurity student from  🇮🇩</p> 
+                    <p className="text-[13px] text-gray-300">
+                        Cybersecurity <TypewriterText words={['student', 'learner', 'enthusiast']} /> from 🇮🇩
+                    </p> 
                 </div>
                 <div className="">
                     <NavLinks />
