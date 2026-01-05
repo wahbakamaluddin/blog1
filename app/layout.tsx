@@ -5,6 +5,7 @@ import { poppins } from "@/app/ui/fonts";
 import "./globals.css";
 import SideNav from "@/app/ui/sidenav/sidenav";
 import Breadcrumb from "@/app/components/Breadcrumb";
+import { ThemeProvider } from "@/app/components/ThemeProvider";
 
 
 export const metadata: Metadata = {
@@ -18,32 +19,27 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${poppins.className} antialiased`} 
       >
-        <div 
-        className="flex h-screen bg-[#121212] md:flex-row"
-        style={{
-          backgroundImage: "radial-gradient(#ffff1110 1px, transparent 1px)",
-          backgroundSize: "24px 24px",
-        }}
-        >
-          <div
-          className="md:w-1/4 h-screen overflow-hidden"
-          style={{
-            borderRight: "1px solid grey"
-          }}
+        <ThemeProvider>
+          <div 
+            className="flex h-screen md:flex-row bg-white dark:bg-[#121212] text-gray-900 dark:text-gray-100 dot-pattern"
           >
-            <SideNav />
-          </div>
-          <div className="w-full md:w-3/4 overflow-y-auto">
-            <div className="max-w-2xl mx-auto my-32 p-2">
-              <Breadcrumb />
-              {children}      
+            <div
+              className="md:w-1/4 h-screen overflow-hidden border-r border-gray-200 dark:border-gray-700"
+            >
+              <SideNav />
+            </div>
+            <div className="w-full md:w-3/4 overflow-y-auto">
+              <div className="max-w-2xl mx-auto my-32 p-2">
+                <Breadcrumb />
+                {children}      
+              </div>
             </div>
           </div>
-        </div>
+        </ThemeProvider>
         <SpeedInsights />
         <Analytics />
       </body>

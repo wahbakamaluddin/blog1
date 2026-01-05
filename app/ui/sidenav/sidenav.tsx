@@ -6,6 +6,8 @@ import Link from 'next/link';
 import NavLinks from '@/app/ui/sidenav/NavLinks';
 import SocMedIcons from '@/app/ui/sidenav/SocMedIcons';
 import TypewriterText from '@/app/ui/sidenav/TypewriterText';
+import ThemeToggle from '@/app/components/ThemeToggle';
+
 export default function SideNav() {
     return (
         <motion.div
@@ -18,8 +20,14 @@ export default function SideNav() {
                 <div>
                     <NavLinks />
                 </div>
+                <div className="mt-4">
+                    <ThemeToggle />
+                </div>
             </div>
-            <div className="hidden md:flex flex-col h-full items-center justify-start p-4 gap-3 flex">
+            <div className="hidden md:flex flex-col h-full items-center justify-start p-4 gap-3">
+                <div className="absolute top-4 right-4">
+                    <ThemeToggle />
+                </div>
                 <div className='pt-20 hidden md:block hover:scale-105 transition-transform duration-200'>
                     <Image 
                     src="/profile1.jpeg" 
@@ -35,7 +43,7 @@ export default function SideNav() {
                     </Link>
                 </div>
                 <div className=''>
-                    <p className="text-[13px] text-gray-300">
+                    <p className="text-[13px] text-gray-600 dark:text-gray-300">
                         Cybersecurity <TypewriterText words={['student', 'learner', 'enthusiast']} /> from 🇮🇩
                     </p> 
                 </div>
