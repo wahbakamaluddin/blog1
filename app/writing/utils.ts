@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 
 export type Category = 'notes' | 'ctf' | 'general' | 'research'
-export type Competition = 'hkcert24' | 'hkcert25' | 'curtinctf25' | 'other'
+export type Competition = 'wargames23' | 'hkcert24' | 'hkcert25' | 'curtinctf25' | 'other'
 
 export type Metadata = {
   title: string

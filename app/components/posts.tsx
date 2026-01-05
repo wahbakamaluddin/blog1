@@ -2,9 +2,7 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
-
-export type Category = 'notes' | 'ctf' | 'general' | 'research'
-export type Competition = 'hkcert25' | 'curtinctf25' | 'other'
+import { Category, Competition } from '@/app/writing/utils'
 
 export interface Metadata {
   title: string
