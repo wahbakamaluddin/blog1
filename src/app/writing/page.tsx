@@ -1,5 +1,5 @@
-import { BlogPosts } from '@/app/components/posts'
-import { getBlogPosts } from '@/app/writing/utils'
+import { BlogPosts } from '@/src/components/writing/posts'
+import { getBlogPosts } from '@/src/lib/post-utils'
 
 export const metadata = {
   title: 'Blog',

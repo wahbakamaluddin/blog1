@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
-import { Category, Competition } from '@/app/writing/utils'
+import { Category, Competition } from '@/src/lib/post-utils'
 
 export interface Metadata {
   title: string

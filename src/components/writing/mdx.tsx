@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { MDXRemote, MDXRemoteProps } from 'next-mdx-remote/rsc'
 import { highlight } from 'sugar-high'
 import React from 'react'
-import { CopyButton } from '@/app/components/CopyButton'
+import { CopyButton } from '@/src/components/writing/CopyButton'
 
 interface TableData {
   headers: string[];
