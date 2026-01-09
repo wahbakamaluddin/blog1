@@ -5,6 +5,7 @@ import SocMedIcons from "@/src/components/layout/sidenav/SocMedIcons";
 import EducationTimeline from "@/src/components/home/EducationTimeline";
 import Certifications from "@/src/components/home/Certifications";
 import Skills from "@/src/components/home/Skills";
+import TopPart from "@/src/components/layout/sidenav/TopPart";
 
 export default function Page () {
   return (
@@ -14,9 +15,13 @@ export default function Page () {
       animate={{ y: 0, opacity: 1 }}
       transition={{ type: 'spring', stiffness: 80, damping: 20 }}
       >
-      <h1 className="mb-8 text-2xl font-bold tracking-tight">
+      <h1 className="md:block hidden mb-8 text-2xl font-bold tracking-tight">
         $whoami
       </h1>
+      <div className="md:hidden block">
+          <TopPart />
+      </div>
+
       <h1 className="text-l block md:hidden py-10">
           Psst... it looks better on a bigger screen!  
       </h1>

@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
+import TopPart from '@/src/components/layout/sidenav/TopPart';
 import NavLinks from '@/src/components/layout/sidenav/NavLinks';
 import SocMedIcons from '@/src/components/layout/sidenav/SocMedIcons';
 import TypewriterText from '@/src/components/layout/sidenav/TypewriterText';
@@ -28,25 +29,7 @@ export default function SideNav() {
                 {/* <div className="absolute top-4 right-4">
                     <ThemeToggle />
                 </div> */}
-                <div className='pt-20 hidden md:block hover:scale-105 transition-transform duration-200'>
-                    <Image 
-                    src="/profile1.jpeg" 
-                    alt="Profile Pitcure" 
-                    width={120}
-                    height={15}
-                    className='rounded-full border-1 shadow-lg'
-                    />
-                </div>
-                <div>
-                    <Link href="/">
-                        <p className="font-bold text-[20px]">Wahba </p> 
-                    </Link>
-                </div>
-                <div className=''>
-                    <p className="text-[13px] text-gray-600 dark:text-gray-300">
-                        Cybersecurity <TypewriterText words={['student', 'learner', 'enthusiast']} /> from 🇮🇩
-                    </p> 
-                </div>
+               <TopPart />
                 <div className="">
                     <NavLinks />
                 </div>
