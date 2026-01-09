@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation'
-import { CustomMDX } from '@/app/components/mdx'
-import { formatDate, getBlogPosts } from '@/app/writing/utils'
-import { baseUrl } from '@/app/sitemap'
+import { CustomMDX } from '@/src/components/writing/mdx'
+import { formatDate, getBlogPosts } from '@/src/lib/post-utils'
+import { baseUrl } from '@/src/lib/sitemap'
 
 interface BlogPost {
   slug: string

@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
-import { poppins } from "@/app/ui/fonts";
-import "./globals.css";
-import SideNav from "@/app/ui/sidenav/sidenav";
-import Breadcrumb from "@/app/components/Breadcrumb";
-import { ThemeProvider } from "@/app/components/ThemeProvider";
+import { poppins } from "@/src/styles/fonts";
+import "@/src/styles/globals.css";
+import SideNav from "@/src/components/layout/sidenav/sidenav";
+import Breadcrumb from "@/src/components/layout/Breadcrumb";
+import { ThemeProvider } from "@/src/components/layout/theme/ThemeProvider";
 
 
 export const metadata: Metadata = {

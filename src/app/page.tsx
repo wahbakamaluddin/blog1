@@ -1,10 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import SocMedIcons from "./ui/sidenav/SocMedIcons";
-import EducationTimeline from "@/app/components/home/EducationTimeline";
-import Certifications from "@/app/components/home/Certifications";
-import Skills from "@/app/components/home/Skills";
+import SocMedIcons from "@/src/components/layout/sidenav/SocMedIcons";
+import EducationTimeline from "@/src/components/home/EducationTimeline";
+import Certifications from "@/src/components/home/Certifications";
+import Skills from "@/src/components/home/Skills";
 
 export default function Page () {
   return (

@@ -3,9 +3,9 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import NavLinks from '@/app/ui/sidenav/NavLinks';
-import SocMedIcons from '@/app/ui/sidenav/SocMedIcons';
-import TypewriterText from '@/app/ui/sidenav/TypewriterText';
+import NavLinks from '@/src/components/layout/sidenav/NavLinks';
+import SocMedIcons from '@/src/components/layout/sidenav/SocMedIcons';
+import TypewriterText from '@/src/components/layout/sidenav/TypewriterText';
 // import ThemeToggle from '@/app/components/ThemeToggle';
 
 export default function SideNav() {

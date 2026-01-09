@@ -1,4 +1,4 @@
-import { getBlogPosts } from '@/app/writing/utils'
+import { getBlogPosts } from '@/src/lib/post-utils'
 
 export const baseUrl = 'https://wahbakamaluddin.dev'
 
