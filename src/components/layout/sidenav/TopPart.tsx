@@ -6,13 +6,13 @@ export default function TopPart() {
   return (
         <div className='md:pt-20 flex flex-col items-center justify-start gap-3'> 
             <div className='hover:scale-105 transition-transform duration-200'>
-                            <Image 
-                            src="/profile1.jpeg" 
-                            alt="Profile Pitcure" 
-                            width={120}
-                            height={15}
-                            className='rounded-full border-1 shadow-lg'
-                            />
+                <Image 
+                src="/profile1.jpeg" 
+                alt="Profile Pitcure" 
+                width={120}
+                height={150}
+                className='rounded-full border-1 shadow-lg'
+                />
             </div>      
             <div>
                 <Link href="/">
