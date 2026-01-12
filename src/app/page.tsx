@@ -22,9 +22,9 @@ export default function Page () {
           <TopPart />
       </div>
 
-      <h1 className="text-l block md:hidden py-10">
+      <p className="block md:hidden py-4 italic !text-gray-500">
           Psst... it looks better on a bigger screen!  
-      </h1>
+      </p>
       <p className="mb-4">
         {`I'm an undergrad cybersecurity student at Universiti 
         Sains Islam Malaysia (USIM). Back during COVID-19,
