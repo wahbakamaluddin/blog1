@@ -152,15 +152,15 @@ function blockquote(props: MDXRemoteProps) {
 }
 
 function li(props: MDXRemoteProps) {
-  return <li className="ml-4" {...props} />
+  return <li className="ml-4 leading-7 text-sm md:text-base" {...props} />
 }
 
 function ul(props: MDXRemoteProps) {
-  return <ul className="list-disc mb-4" {...props} />
+  return <ul className="list-disc mb-4 leading-7 text-sm md:text-base" {...props} />
 }
 
 function ol(props: MDXRemoteProps) {
-  return <ol className="list-decimal mb-4" {...props} />
+  return <ol className="list-decimal mb-4 leading-7 text-sm md:text-base" {...props} />
 }
 
 const components = {
