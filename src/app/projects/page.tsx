@@ -62,9 +62,6 @@ export default function Projects() {
 
   return (
     <>
-      <h1 className="md:block hidden mb-8 text-2xl font-bold tracking-tight">
-        My projects
-      </h1>
       <section className="max-w-xl">
         <div className="grid grid-cols-1 gap-4">
           {projects.map((project) => {
