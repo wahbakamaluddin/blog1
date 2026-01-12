@@ -33,3 +33,15 @@ body {
 .dark .dot-pattern {
   background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
 }
+
+p {
+  color: #D1D5DB;
+}
+
+@media (max-width: 768px) {
+  p {
+    color: #D1D5DB;
+    font-size: 14px;
+  }
+}
+

@@ -145,7 +145,7 @@ function paragraph(props: MDXRemoteProps) {
 function blockquote(props: MDXRemoteProps) {
   return (
     <blockquote
-      className="pl-4 border-l-4 border-neutral-300 dark:border-neutral-600 italic my-6"
+      className="mt-6 border-l-2 pl-6 italic"
       {...props}
     />
   )
