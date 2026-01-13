@@ -1,20 +1,15 @@
-"use client";
-
-import { motion } from 'framer-motion';
-import Image from 'next/image';
-import Link from 'next/link';
 import TopPart from '@/src/components/layout/sidenav/TopPart';
 import NavLinks from '@/src/components/layout/sidenav/NavLinks';
 import SocMedIcons from '@/src/components/layout/sidenav/SocMedIcons';
-import TypewriterText from '@/src/components/layout/sidenav/TypewriterText';
+import ClientMotion from '@/src/components/ui/ClientMotion';
 // import ThemeToggle from '@/app/components/ThemeToggle';
 
 export default function SideNav() {
     return (
-        <motion.div
+        <ClientMotion
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ type: 'spring', stiffness: 80, damping: 20 }}
+        transition={{ duration: 0.3, ease: "easeOut" }}
         className="h-full"
         >
             <div className="flex flex-col justify-center items-center md:hidden h-full">
@@ -41,6 +36,6 @@ export default function SideNav() {
                 </div>
             </div>
 
-        </motion.div>
+        </ClientMotion>
     )
 }

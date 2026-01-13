@@ -1,19 +1,17 @@
-"use client";
-
-import { motion } from "framer-motion";
 import SocMedIcons from "@/src/components/layout/sidenav/SocMedIcons";
 import EducationTimeline from "@/src/components/home/EducationTimeline";
 import Certifications from "@/src/components/home/Certifications";
 import Skills from "@/src/components/home/Skills";
 import TopPart from "@/src/components/layout/sidenav/TopPart";
+import ClientMotion from "@/src/components/ui/ClientMotion";
 
 export default function Page () {
   return (
     <section>
-      <motion.div
+      <ClientMotion
       initial={{ y: 20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ type: 'spring', stiffness: 80, damping: 20 }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
       >
       <h1 className="md:block hidden mb-8 text-2xl font-bold tracking-tight">
         $whoami
@@ -48,7 +46,7 @@ export default function Page () {
         <Certifications />
       </div>
 
-      </motion.div>
+      </ClientMotion>
     </section>
     
   );
