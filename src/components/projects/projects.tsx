@@ -18,7 +18,7 @@ const projects: Project[] = [
     id: 1,
     title: "Network Intrusion Detection System (NIDS)",
     description:
-      "A lightweight ml-based anomaly based NIDS for end devices using machine learning",
+      "A lightweight anomaly-based NIDS for end devices using machine learning, developed in Python. It monitors network traffic in real-time to detect DoS, Port Scan, Brute Force, and Web Attack. The machine learning component is trained on CIC-IDS2017 dataset. Evaluated on Raspberry Pi 4B for resource efficiency.",
     image: "/image/projects/1.png",
     tags: ["Python", "Machine Learning", "Cybersecurity", "Networking"],
     github: "https://github.com/wahbakamaluddin/nids8",
