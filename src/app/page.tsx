@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import SocMedIcons from "@/src/components/layout/sidenav/SocMedIcons";
 import EducationTimeline from "@/src/components/home/EducationTimeline";
 import Certifications from "@/src/components/home/Certifications";
@@ -5,7 +6,44 @@ import Skills from "@/src/components/home/Skills";
 import TopPart from "@/src/components/layout/sidenav/TopPart";
 import ClientMotion from "@/src/components/ui/ClientMotion";
 
-export default function Page () {
+export const metadata: Metadata = {
+  title: "Wahba Kamaluddin | Cybersecurity Student & Web Developer",
+  description:
+    "Portfolio and blog of Wahba Kamaluddin — cybersecurity student at USIM, CTF enthusiast, and web developer. Exploring web application security, Linux, and more.",
+  keywords: [
+    "cybersecurity",
+    "CTF",
+    "web security",
+    "web development",
+    "USIM",
+    "Wahba Kamaluddin",
+    "blog",
+    "portfolio",
+  ],
+  authors: [{ name: "Wahba Kamaluddin" }],
+  creator: "Wahba Kamaluddin",
+  openGraph: {
+    title: "Wahba Kamaluddin | Cybersecurity Student & Web Developer",
+    description:
+      "Portfolio and blog of Wahba Kamaluddin — cybersecurity student at USIM, CTF enthusiast, and web developer.",
+    url: "/",
+    siteName: "Wahba Kamaluddin",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Wahba Kamaluddin | Cybersecurity Student & Web Developer",
+    description:
+      "Portfolio and blog of Wahba Kamaluddin — cybersecurity student at USIM, CTF enthusiast, and web developer.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
+
+export default function Page() {
   return (
     <section>
       <ClientMotion
