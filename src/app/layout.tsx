@@ -26,7 +26,7 @@ export default function RootLayout({
       >
         <ThemeProvider>
           <div 
-            className="flex h-screen md:flex-row bg-white dark:bg-[#121212] text-gray-900 dark:text-gray-100 dot-pattern"
+            className="flex h-screen md:flex-row bg-neutral-100/50 dark:bg-black/20 text-gray-900 dark:text-gray-100 dot-pattern"
           >
             <div className={layout.sidebar}>
               <SideNav />
