@@ -7,7 +7,7 @@ import TopPart from "@/src/components/layout/sidenav/TopPart";
 import ClientMotion from "@/src/components/ui/ClientMotion";
 
 export const metadata: Metadata = {
-  title: "Wahba Kamaluddin",
+  title: "Wahba Kamaluddin",  
   description:
     "Portfolio and blog of Wahba Kamaluddin — cybersecurity student. Exploring web application security, Linux, and more.",
   keywords: [
