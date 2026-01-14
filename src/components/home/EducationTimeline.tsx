@@ -1,49 +1,6 @@
 import { School } from "lucide-react";
 import { typography, components as themeComponents } from "@/src/styles/theme";
-
-interface  Education{
-  institution: string;
-  level: string;
-  duration: string;
-  date: string;
-  grade: string;
-  current: boolean;
-}
-
-const educations: Education[] = [
-  {
-    institution: "Universiti Sains Islam Malaysia (USIM)",
-    level: "BCompSc Information Security and Assurance",
-    duration: "4yrs",
-    date: "Oct 2022 – Present",
-    grade: "CGPA (current): 3.84/4.00",
-    current: true,
-  },
-  {
-    institution: "Korea Internet and Security Agency (KISA)",
-    level: "ASEAN Cyber Shield Education",
-    duration: "5mos",
-    date: "Sep 2024 – Jan 2025",
-    grade: "Excellence Award",
-    current: false,
-  },
-  {
-    institution: "Universiti Sains Islam Malaysia (USIM)",
-    level: "Foundation in Science",
-    duration: "1yr",
-    date: "Jul 2021 – Jul 2022",
-    grade: "CGPA: 3.79/4.00",
-    current: false,
-  },
-  {
-    institution: "Sekolah Menengah Kebangsaan Desa Cempaka",
-    level: "Secondary School",
-    duration: "5yrs",
-    date: "Jan 2016 – Dec 2020",
-    grade: "SPM: 11As, Valedictorian",
-    current: false,
-  },
-];
+import { educations } from "@/src/content/data";
 
 export default function EducationTimeline() {
   return (

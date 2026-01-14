@@ -3,46 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { typography, components as themeComponents } from "@/src/styles/theme";
-
-interface Certification {
-  title: string;
-  issuer: string;
-  description?: string;
-  link?: string;
-  date: string;
-  badge?: string;
-}
-
-const certifications: Certification[] = [
-  {
-    title: "Google Cybersecurity",
-    issuer: "Google",
-    link: "https://www.coursera.org/account/accomplishments/specialization/certificate/VGP17IIU43XM",
-    date: "2025",
-    badge: "/image/certificates/google-cybersecurity.png",
-  },
-  {
-    title: "Cisco Ethical Hacker",
-    issuer: "Cisco Networking Academy",
-    link: "https://www.credly.com/badges/de263913-c2a6-4500-91d2-ce8bfc052c38",
-    date: "2025",
-    badge: "/image/certificates/cisco-ethical-hacker.png",
-  },
-  {
-    title: "Certificate of Excellence (ASEAN Cyber Shield 2024)",
-    issuer: "Korea Internet and Security Agency (KISA)",
-    link: "https://www.youtube.com/watch?v=bK6axYNI41A",
-    date: "2025",
-    badge: "/image/certificates/ACS-excellence.png",
-  },
-  {
-    title: "Certified Appsec Practitioner (CAP)",
-    issuer: "The SecOps Group",
-    date: "2025",
-    link: "https://candidate.speedexam.net/certificate.aspx?SSTATE=am4131EniU8ntjp4bO5mXRuAWPUhlG4OLxB+fpaC25Arrn3/alZRudTEfH7lVCQjl9mgh9oxEOE97Gkt+gXJnZBcyGIUubaPvRi2v4uLieM=",
-    badge: "/image/certificates/cap.png",
-  },
-];
+import { certifications } from "@/src/content/data";
 
 export default function Certifications() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);

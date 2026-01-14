@@ -1,8 +1,8 @@
 import fs from 'fs'
 import path from 'path'
 
-export type Category = 'notes' | 'ctf' | 'general' | 'research'
-export type Competition = 'wargames23' | 'hkcert24' | 'hkcert25' | 'curtinctf25' | 'other'
+export type { Category, Competition } from '@/src/content/data'
+import type { Category, Competition } from '@/src/content/data'
 
 export type Metadata = {
   title: string

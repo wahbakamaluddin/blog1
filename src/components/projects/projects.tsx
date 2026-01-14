@@ -3,37 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { typography, components as themeComponents } from "@/src/styles/theme";
-
-interface Project {
-  id: number;
-  title: string;
-  description: string;
-  image: string;
-  tags: string[];
-  link?: string;
-  github?: string;
-}
-
-const projects: Project[] = [
-  {
-    id: 1,
-    title: "Network Intrusion Detection System (NIDS)",
-    description:
-      "A lightweight anomaly-based NIDS for end devices using machine learning, developed in Python. It monitors network traffic in real-time to detect DoS, Port Scan, Brute Force, and Web Attack. The machine learning component is trained on CIC-IDS2017 dataset. Evaluated on Raspberry Pi 4B for resource efficiency.",
-    image: "/image/projects/1.png",
-    tags: ["Python", "Machine Learning", "Cybersecurity", "Networking"],
-    github: "https://github.com/wahbakamaluddin/nids8",
-  },
-  {
-    id: 2,
-    title: "n8n-cryptobot",
-    description:
-      "An n8n workflow that analyzes crypto market sentiment and price movements to suggest buy or sell decisions with target prices, accessible via Telegram bot.",
-    image: "/image/projects/2.png",
-    tags: ["n8n", "Telegram", "Crypto", "ML trading"],
-    github: "https://github.com/wahbakamaluddin/n8n-cryptobot",
-  },
-];
+import { projects } from "@/src/content/data";
 
 function Gradient({
   className,
