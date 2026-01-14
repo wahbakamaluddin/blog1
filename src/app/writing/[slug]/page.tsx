@@ -85,6 +85,7 @@ export default async function Blog({ params }: PageProps) {
 
   return (
     <section>
+      <TableOfContents content={post.content} />
       <script
         type="application/ld+json"
         suppressHydrationWarning
@@ -115,7 +116,6 @@ export default async function Blog({ params }: PageProps) {
           {formatDate(post.metadata.publishedAt)} · {getReadingTime(post.content)}
         </p>
       </div>
-      <TableOfContents content={post.content} />
       <article className="prose">
         <CustomMDX source={post.content} />
       </article>

@@ -1,7 +1,6 @@
 export default function BioParagraph() {
     return (
         <>
-
         <p className="block md:hidden py-4 italic !text-gray-500">
             Psst... it looks better on a bigger screen!  
         </p>

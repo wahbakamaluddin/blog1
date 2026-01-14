@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { colors } from '@/src/styles/theme';
 
 interface TOCItem {
   id: string;
@@ -45,46 +46,99 @@ function extractHeadings(content: string): TOCItem[] {
 }
 
 export function TableOfContents({ content }: TableOfContentsProps) {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [activeId, setActiveId] = useState<string>('');
   const headings = extractHeadings(content);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveId(entry.target.id);
+          }
+        });
+      },
+      { rootMargin: '-20% 0px -35% 0px' }
+    );
+
+    headings.forEach((heading) => {
+      const element = document.getElementById(heading.id);
+      if (element) {
+        observer.observe(element);
+      }
+    });
+
+    return () => observer.disconnect();
+  }, [headings]);
 
   if (headings.length === 0) {
     return null;
   }
 
   return (
-    <nav className="mb-8 p-4 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900">
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center justify-between w-full text-left font-semibold text-neutral-900 dark:text-neutral-100"
+    <aside
+      className="fixed top-1/2 -translate-y-1/2 right-4 z-40 hidden md:block"
+      onMouseEnter={() => setIsExpanded(true)}
+      onMouseLeave={() => setIsExpanded(false)}
+    >
+      <nav
+        className={`
+          transition-all duration-150 ease-in-out rounded-l-xl overflow-hidden
+          ${isExpanded 
+            ? 'w-64 max-h-[70vh] bg-white/80 dark:bg-neutral-900/50 backdrop-blur-md shadow-2xl' 
+            : 'w-5 bg-transparent'
+          }
+        `}
       >
-        <span>In This Page</span>
-        <svg
-          className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-        </svg>
-      </button>
-      {isOpen && (
-        <ul className="mt-3 space-y-2">
-          {headings.map((heading, index) => (
-            <li
-              key={`${heading.id}-${index}`}
-              className={heading.level === 3 ? 'ml-4' : ''}
-            >
-              <a
-                href={`#${heading.id}`}
-                className="text-sm text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
+        {/* Collapsed indicator - subtle line showing sections */}
+        <div className={`transition-opacity duration-300 ${isExpanded ? 'opacity-0 hidden' : 'opacity-100'}`}>
+          <div className="flex flex-col items-center py-3 gap-1.5">
+            {headings.slice(0, 8).map((heading, index) => (
+              <div
+                key={`indicator-${index}`}
+                className={`
+                  transition-all duration-200 rounded-full
+                  ${heading.level === 3 ? 'w-2 h-1' : 'w-3 h-1'}
+                  ${activeId === heading.id 
+                    ? 'bg-neutral-900 dark:bg-neutral-100' 
+                    : 'bg-neutral-300 dark:bg-neutral-600'
+                  }
+                `}
+              />
+            ))}
+            {headings.length > 8 && (
+              <div className="w-1 h-1 rounded-full bg-neutral-400 dark:bg-neutral-500" />
+            )}
+          </div>
+        </div>
+
+        {/* Expanded content */}
+        <div className={`transition-opacity duration-300 ${isExpanded ? 'opacity-100' : 'opacity-0 hidden'}`}>
+          <ul className="p-3 space-y-0.5 max-h">
+            {headings.map((heading, index) => (
+              <li
+                key={`${heading.id}-${index}`}
               >
-                {heading.text}
-              </a>
-            </li>
-          ))}
-        </ul>
-      )}
-    </nav>
+                <a
+                  href={`#${heading.id}`}
+                  className={`
+                    block text-sm py-1.5 px-3 rounded-lg transition-all duration-200
+                    ${heading.level === 3 ? 'ml-3 text-xs' : ''}
+                    ${
+                      activeId === heading.id
+                        ? `text-${colors.accent.DEFAULT} font-medium`
+                        : `text-neutral-500 dark:text-neutral-400 hover:text-${colors.accent.DEFAULT} hover:bg-neutral-50 dark:hover:bg-neutral-800/50`
+                    }
+                  `}
+                >
+                  {heading.text}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </nav>
+    </aside>
   );
 }
