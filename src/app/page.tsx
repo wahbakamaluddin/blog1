@@ -66,7 +66,7 @@ export default function Page() {
         I started using Linux Mint as my main OS just to see what the fuss is about. 
           For days, I juggled around in terminal, tweaking all sorts of stuff
           just to get my speakers working, which led to my very first <a href="https://techy-dudes.blogspot.com/2020/05/in-this-tutorial-im-going-to-show-you.html" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">blog post</a>. 
-        And I've been hooked ever since.
+        And I&apos;ve been hooked ever since.
       </p>
       <p className="mb-4">
         I love learning web application security, joining CTF competitions, and doing web development on the side. I also love to read; most of the general stuff I post on my blog is based on what I&apos;ve read.
