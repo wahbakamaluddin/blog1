@@ -7,9 +7,9 @@ import TopPart from "@/src/components/layout/sidenav/TopPart";
 import ClientMotion from "@/src/components/ui/ClientMotion";
 
 export const metadata: Metadata = {
-  title: "Wahba Kamaluddin | Cybersecurity Student & Web Developer",
+  title: "Wahba Kamaluddin",
   description:
-    "Portfolio and blog of Wahba Kamaluddin — cybersecurity student at USIM, CTF enthusiast, and web developer. Exploring web application security, Linux, and more.",
+    "Portfolio and blog of Wahba Kamaluddin — cybersecurity student. Exploring web application security, Linux, and more.",
   keywords: [
     "cybersecurity",
     "CTF",
@@ -23,19 +23,18 @@ export const metadata: Metadata = {
   authors: [{ name: "Wahba Kamaluddin" }],
   creator: "Wahba Kamaluddin",
   openGraph: {
-    title: "Wahba Kamaluddin | Cybersecurity Student & Web Developer",
+    title: "Wahba Kamaluddin | Cybersecurity Student",
     description:
-      "Portfolio and blog of Wahba Kamaluddin — cybersecurity student at USIM, CTF enthusiast, and web developer.",
-    url: "/",
+      "Portfolio and blog of Wahba Kamaluddin — cybersecurity student",
     siteName: "Wahba Kamaluddin",
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Wahba Kamaluddin | Cybersecurity Student & Web Developer",
+    title: "Wahba Kamaluddin | Cybersecurity Student",
     description:
-      "Portfolio and blog of Wahba Kamaluddin — cybersecurity student at USIM, CTF enthusiast, and web developer.",
+      "Portfolio and blog of Wahba Kamaluddin — cybersecurity student.",
   },
   robots: {
     index: true,
