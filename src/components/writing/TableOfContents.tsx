@@ -86,7 +86,7 @@ export function TableOfContents({ content }: TableOfContentsProps) {
         className={`
           transition-all duration-150 ease-in-out rounded-l-xl overflow-hidden
           ${isExpanded 
-            ? 'w-64 max-h-[70vh] bg-white/80 dark:bg-neutral-900/50 backdrop-blur-md shadow-2xl' 
+            ? 'w-60 max-h-[70vh] bg-white/80 dark:bg-neutral-900/50 backdrop-blur-md shadow-2xl' 
             : 'w-5 bg-transparent'
           }
         `}
