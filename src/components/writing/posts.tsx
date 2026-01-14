@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
-import { Category, Competition } from '@/src/lib/post-utils'
+import { Category, Competition, categories, competitions } from '@/src/content/data'
 import { getFilterChipClass, getSecondaryFilterChipClass, categoryColors as themeCategoryColors, typography } from '@/src/styles/theme'
 
 export interface Metadata {
@@ -19,21 +19,6 @@ interface BlogPost {
   metadata: Metadata
   content: string
 }
-
-const categories: { key: Category | 'all'; label: string }[] = [
-  { key: 'all', label: 'All' },
-  { key: 'notes', label: 'Notes' },
-  { key: 'research', label: 'Research' },
-  { key: 'ctf', label: 'CTF Writeups' },
-  { key: 'general', label: 'General' },
-]
-
-const competitions: { key: Competition | 'all'; label: string }[] = [
-  { key: 'all', label: 'All CTF' },
-  { key: 'hkcert25', label: 'HKCERT25' },
-  { key: 'curtinctf25', label: 'CurtinCTF25' },
-  { key: 'other', label: 'Other' },
-]
 
 function formatDate(date: string, includeRelative = false): string {
   const currentDate = new Date()

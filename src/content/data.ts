@@ -6,6 +6,23 @@
 export type Category = 'notes' | 'ctf' | 'general' | 'research';
 export type Competition = 'wargames23' | 'hkcert24' | 'hkcert25' | 'curtinctf25' | 'other';
 
+export const categories: { key: Category | 'all'; label: string }[] = [
+  { key: 'all', label: 'All' },
+  { key: 'notes', label: 'Notes' },
+  { key: 'research', label: 'Research' },
+  { key: 'ctf', label: 'CTF Writeups' },
+  { key: 'general', label: 'General' },
+];
+
+export const competitions: { key: Competition | 'all'; label: string }[] = [
+  { key: 'all', label: 'All CTF' },
+  { key: 'wargames23', label: 'Wargames23' },
+  { key: 'hkcert24', label: 'HKCERT24' },
+  { key: 'hkcert25', label: 'HKCERT25' },
+  { key: 'curtinctf25', label: 'CurtinCTF25' },
+  { key: 'other', label: 'Other' },
+];
+
 export type SkillCategory = "Development" | "Security";
 
 export interface Skill {
@@ -77,27 +94,6 @@ export const siteMetadata: SiteMetadata = {
   ],
   author: "Wahba Kamaluddin",
   siteUrl: "https://wahbakamaluddin.dev",
-};
-
-// =============================================================================
-// HOME PAGE CONTENT
-// =============================================================================
-
-export const homeContent: HomeContent = {
-  greeting: "$whoami",
-  bio: [
-    "I'm an undergrad cybersecurity student at Universiti Sains Islam Malaysia (USIM). Back during COVID-19, I started using Linux Mint as my main OS just to see what the fuss is about. For days, I juggled around in terminal, tweaking all sorts of stuff just to get my speakers working, which led to my very first {{firstBlogPost}}. And I've been hooked ever since.",
-    "I love learning web application security, joining CTF competitions, and doing web development on the side. I also love to read; most of the general stuff I post on my blog is based on what I've read.",
-  ],
-  mobileHint: "Psst... it looks better on a bigger screen!",
-  links: {
-    firstBlogPost: "https://techy-dudes.blogspot.com/2020/05/in-this-tutorial-im-going-to-show-you.html",
-  },
-};
-
-// Link display text mapping
-export const linkLabels: Record<string, string> = {
-  firstBlogPost: "blog post",
 };
 
 // =============================================================================
