@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation'
 import { CustomMDX } from '@/src/components/writing/mdx'
+import { TableOfContents } from '@/src/components/writing/TableOfContents'
 import { formatDate, getBlogPosts } from '@/src/lib/post-utils'
 import { baseUrl } from '@/src/lib/sitemap'
 
@@ -107,6 +108,7 @@ export default async function Blog({ params }: PageProps) {
           {formatDate(post.metadata.publishedAt)}
         </p>
       </div>
+      <TableOfContents content={post.content} />
       <article className="prose">
         <CustomMDX source={post.content} />
       </article>
