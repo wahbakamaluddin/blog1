@@ -28,7 +28,7 @@ export default function Breadcrumb() {
   });
 
   return (
-    <nav className="text-sm text-neutral-500 mb-6">
+    <nav className="text-sm text-neutral-600 dark:text-neutral-500 mb-6">
       <ol className="flex items-center gap-1 flex-wrap">
         <li>
           <Link
@@ -40,9 +40,9 @@ export default function Breadcrumb() {
         </li>
         {breadcrumbs.map((crumb) => (
           <li key={crumb.href} className="flex items-center gap-1">
-            <span className="text-neutral-600">/</span>
+            <span className="text-neutral-400 dark:text-neutral-600">/</span>
             {crumb.isLast ? (
-              <span className="text-neutral-400">{crumb.label}</span>
+              <span className="text-neutral-500 dark:text-neutral-400">{crumb.label}</span>
             ) : (
               <Link
                 href={crumb.href}

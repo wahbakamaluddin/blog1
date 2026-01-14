@@ -1,6 +1,7 @@
 import { BlogPosts } from '@/src/components/writing/posts'
 import { getBlogPosts } from '@/src/lib/post-utils'
 import ClientMotion from '@/src/components/ui/ClientMotion'
+import { animations } from '@/src/styles/theme'
 
 export const metadata = {
   title: 'Blog',
@@ -12,11 +13,7 @@ export default function Page() {
 
   return (
     <section>
-      <ClientMotion
-        initial={{ y: 20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.3, ease: "easeOut" }}
-      >
+      <ClientMotion {...animations.fadeInUp}>
       <BlogPosts posts={posts} />
       </ClientMotion>
     </section>

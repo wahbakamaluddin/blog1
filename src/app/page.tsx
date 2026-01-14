@@ -5,6 +5,7 @@ import Certifications from "@/src/components/home/Certifications";
 import Skills from "@/src/components/home/Skills";
 import TopPart from "@/src/components/layout/sidenav/TopPart";
 import ClientMotion from "@/src/components/ui/ClientMotion";
+import { animations, typography, components as themeComponents } from "@/src/styles/theme";
 
 export const metadata: Metadata = {
   title: "Wahba Kamaluddin",  
@@ -45,12 +46,8 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <section>
-      <ClientMotion
-      initial={{ y: 20, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.3, ease: "easeOut" }}
-      >
-      <h1 className="md:block hidden mb-8 text-2xl font-bold tracking-tight">
+      <ClientMotion {...animations.fadeInUp}>
+      <h1 className={`md:block hidden ${typography.pageTitle}`}>
         $whoami
       </h1>
       <div className="md:hidden block">
@@ -65,7 +62,7 @@ export default function Page() {
         Sains Islam Malaysia (USIM). Back during COVID-19,
         I started using Linux Mint as my main OS just to see what the fuss is about. 
           For days, I juggled around in terminal, tweaking all sorts of stuff
-          just to get my speakers working, which led to my very first <a href="https://techy-dudes.blogspot.com/2020/05/in-this-tutorial-im-going-to-show-you.html" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">blog post</a>. 
+          just to get my speakers working, which led to my very first <a href="https://techy-dudes.blogspot.com/2020/05/in-this-tutorial-im-going-to-show-you.html" target="_blank" rel="noopener noreferrer" className={typography.link}>blog post</a>. 
         And I&apos;ve been hooked ever since.
       </p>
       <p className="mb-4">
@@ -73,13 +70,13 @@ export default function Page() {
       </p>
 
       <SocMedIcons />
-      <div className="pt-10">
+      <div className={themeComponents.sectionSpacing}>
         <Skills />
       </div>
-      <div className="pt-10">
+      <div className={themeComponents.sectionSpacing}>
         <EducationTimeline />
       </div>
-      <div className="pt-10">
+      <div className={themeComponents.sectionSpacing}>
         <Certifications />
       </div>
 

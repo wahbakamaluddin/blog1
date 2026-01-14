@@ -1,14 +1,11 @@
 import ClientMotion from "@/src/components/ui/ClientMotion";
 import Projects from "@/src/components/projects/projects";
+import { animations } from "@/src/styles/theme";
 
 export default function Page() {
     return (
         <section>
-        <ClientMotion
-        initial={{ y: 20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.3, ease: "easeOut" }}
-        >
+        <ClientMotion {...animations.fadeInUp}>
             <Projects />
         </ClientMotion>
         </section>

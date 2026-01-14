@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { Category, Competition } from '@/src/lib/post-utils'
+import { getFilterChipClass, getSecondaryFilterChipClass, categoryColors as themeCategoryColors, typography } from '@/src/styles/theme'
 
 export interface Metadata {
   title: string
@@ -33,13 +34,6 @@ const competitions: { key: Competition | 'all'; label: string }[] = [
   { key: 'curtinctf25', label: 'CurtinCTF25' },
   { key: 'other', label: 'Other' },
 ]
-
-const categoryColors: Record<Category, string> = {
-  notes: 'bg-blue-500/20 text-blue-400',
-  ctf: 'bg-red-500/20 text-red-400',
-  general: 'bg-green-500/20 text-green-400',
-  research: 'bg-purple-500/20 text-purple-400',
-}
 
 function formatDate(date: string, includeRelative = false): string {
   const currentDate = new Date()
@@ -107,11 +101,7 @@ export function BlogPosts({ posts }: { posts: BlogPost[] }) {
                 setActiveCompetition('all')
               }
             }}
-            className={`px-3 py-1 text-sm rounded-full border transition-colors ${
-              activeCategory === cat.key
-                ? 'border-emerald-500 text-emerald-500'
-                : 'border-gray-600 text-gray-400 hover:border-emerald-500 hover:text-emerald-500 hover:bg-[#2f2f30]'
-            }`}
+            className={getFilterChipClass(activeCategory === cat.key)}
           >
             {cat.label}
           </button>
@@ -125,11 +115,7 @@ export function BlogPosts({ posts }: { posts: BlogPost[] }) {
             <button
               key={comp.key}
               onClick={() => setActiveCompetition(comp.key)}
-              className={`px-2.5 py-1 text-xs rounded border transition-colors ${
-                activeCompetition === comp.key
-                  ? 'border-cyan-500 text-cyan-500 bg-cyan-500/10'
-                  : 'border-gray-600 text-gray-400 hover:border-cyan-500 hover:text-cyan-500 hover:bg-[#2f2f30]'
-              }`}
+              className={getSecondaryFilterChipClass(activeCompetition === comp.key)}
             >
               {comp.label}
             </button>
@@ -140,7 +126,7 @@ export function BlogPosts({ posts }: { posts: BlogPost[] }) {
       {/* Posts List */}
       <div>
         {filteredPosts.length === 0 ? (
-          <p className="text-gray-500">No posts in this category yet.</p>
+          <p className={typography.caption}>No posts in this category yet.</p>
         ) : (
           filteredPosts.map((post) => (
             <Link
@@ -157,12 +143,12 @@ export function BlogPosts({ posts }: { posts: BlogPost[] }) {
                 </p>
                 <div className="flex gap-2 items-center">
                   {post.metadata.category && (
-                    <span className={`text-xs px-2 py-0.5 rounded-full ${categoryColors[post.metadata.category]}`}>
+                    <span className={`text-xs px-2 py-0.5 rounded-full ${themeCategoryColors.posts[post.metadata.category]}`}>
                       {post.metadata.category}
                     </span>
                   )}
                   {post.metadata.competition && (
-                    <span className={`text-xs px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-400`}>
+                    <span className={`text-xs px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-600 dark:text-cyan-400`}>
                       {competitions.find((c) => c.key === post.metadata.competition)?.label || post.metadata.competition}
                     </span>
                   )}

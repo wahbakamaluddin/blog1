@@ -6,6 +6,7 @@ import "@/src/styles/globals.css";
 import SideNav from "@/src/components/layout/sidenav/sidenav";
 import Breadcrumb from "@/src/components/layout/Breadcrumb";
 import { ThemeProvider } from "@/src/components/layout/theme/ThemeProvider";
+import { layout } from "@/src/styles/theme";
 
 
 export const metadata: Metadata = {
@@ -27,13 +28,11 @@ export default function RootLayout({
           <div 
             className="flex h-screen md:flex-row bg-white dark:bg-[#121212] text-gray-900 dark:text-gray-100 dot-pattern"
           >
-            <div
-              className="md:w-1/4 h-screen overflow-hidden border-r border-gray-200 dark:border-gray-700"
-            >
+            <div className={layout.sidebar}>
               <SideNav />
             </div>
-            <div className="w-full md:w-3/4 overflow-y-auto">
-              <div className="max-w-2xl mx-auto my-32 p-2">
+            <div className={layout.mainArea}>
+              <div className={layout.contentContainer}>
                 <Breadcrumb />
                 {children}      
               </div>

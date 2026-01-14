@@ -34,13 +34,17 @@ body {
   background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
 }
 
+/* Paragraph text colors - theme aware */
 p {
-  color: #D1D5DB;
+  color: #374151; /* gray-700 for light mode */
+}
+
+.dark p {
+  color: #D1D5DB; /* gray-300 for dark mode */
 }
 
 @media (max-width: 768px) {
   p {
-    color: #D1D5DB;
     font-size: 14px;
   }
 }

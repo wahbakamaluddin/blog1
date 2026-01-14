@@ -1,5 +1,5 @@
 import { School } from "lucide-react";
-
+import { typography, components as themeComponents } from "@/src/styles/theme";
 
 interface  Education{
   institution: string;
@@ -47,8 +47,8 @@ const educations: Education[] = [
 
 export default function EducationTimeline() {
   return (
-    <section className="max-w-xl">
-      <h2 className="mb-6 text-sm tracking-widest text-gray-400">
+    <section className={themeComponents.section}>
+      <h2 className={typography.sectionHeading}>
         EDUCATION
       </h2>
 
@@ -57,7 +57,7 @@ export default function EducationTimeline() {
           <div key={idx} className="flex gap-4 relative">
 
             {/* logo */}
-            <div className="h-10 w-10 bg-[#2f2f30] rounded-md flex items-center justify-center">
+            <div className={themeComponents.iconBox}>
                 <School size={25}/>
             </div>
        
@@ -71,18 +71,18 @@ export default function EducationTimeline() {
               <div className="flex items-center gap-2 flex-wrap">
                 <h3 className="font">{ed.institution}</h3>
                 {ed.current && (
-                  <span className="rounded bg-green-600/20 px-2 py-0.5 text-xs text-green-400">
+                  <span className={themeComponents.statusBadge.current}>
                     Current
                   </span>
                 )}
-                <span className="ml-auto text-xs text-gray-400">
+                <span className={`ml-auto ${typography.caption}`}>
                   {ed.duration}
                 </span>
               </div>
 
-              <p className="text-sm text-gray-300">{ed.level}</p>
-              <p className="italic text-sm text-gray-300">{ed.grade}</p>
-              <p className="text-xs text-gray-500">{ed.date}</p>
+              <p className={typography.body}>{ed.level}</p>
+              <p className={`italic ${typography.body}`}>{ed.grade}</p>
+              <p className={typography.caption}>{ed.date}</p>
             </div>
           </div>
         ))}

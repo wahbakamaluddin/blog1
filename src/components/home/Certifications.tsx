@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import { typography, components as themeComponents } from "@/src/styles/theme";
 
 interface Certification {
   title: string;
@@ -47,14 +48,14 @@ export default function Certifications() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   return (
-    <section className="max-w-xl">
-      <h2 className="mb-6 text-sm tracking-widest text-gray-400">
+    <section className={themeComponents.section}>
+      <h2 className={typography.sectionHeading}>
         CERTIFICATE
       </h2>
       
       <div className="grid gap-4">
         {certifications.map((cert, idx) => (
-          <div key={idx} className="flex gap-4 p-4 rounded-lg bg-[#2f2f30]/50 border border-gray-700 items-center">
+          <div key={idx} className={themeComponents.card}>
             {/* Badge/Logo */}
             {cert.badge && (
               <button
@@ -73,13 +74,13 @@ export default function Certifications() {
             
             {/* Content */}
             <div className="flex-1">
-              <h3 className="font-semibold">{cert.title}</h3>
-              <p className="text-sm text-gray-400">{cert.issuer}</p>
-              <p className="text-xs text-gray-500">{cert.date}</p>
+              <h3 className={typography.cardTitle}>{cert.title}</h3>
+              <p className={typography.subtitle}>{cert.issuer}</p>
+              <p className={typography.caption}>{cert.date}</p>
               {cert.link && (
                 <button 
                   onClick={() => window.open(cert.link, '_blank')} 
-                  className="mt-2 px-3 py-1 text-xs text-emerald-500 border border-emerald-500/50 rounded-full hover:bg-emerald-500/10 transition-colors"
+                  className={themeComponents.buttonPrimary + " mt-2"}
                 >
                   View Certificate
                 </button>

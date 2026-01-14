@@ -115,7 +115,7 @@ export default function Projects() {
                     {project.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="px-2 py-0.5 text-xs bg-emerald-500/20 text-emerald-400 rounded-full"
+                        className="px-2 py-0.5 text-xs bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 rounded-full"
                       >
                         {tag}
                       </span>
@@ -123,7 +123,7 @@ export default function Projects() {
                   </div>
 
                   {/* Description */}
-                  <p className="text-sm text-gray-400 leading-relaxed mb-3">
+                  <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-3">
                     {project.description}
                   </p>
 
@@ -135,7 +135,7 @@ export default function Projects() {
                           e.stopPropagation();
                           window.open(project.github, "_blank");
                         }}
-                        className="px-3 py-1.5 text-xs text-gray-300 border border-gray-600 rounded-full hover:bg-gray-700 transition-colors inline-flex items-center gap-1.5 cursor-pointer"
+                        className="px-3 py-1.5 text-xs text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors inline-flex items-center gap-1.5 cursor-pointer"
                       >
                         <svg
                           className="w-3.5 h-3.5"
@@ -153,7 +153,7 @@ export default function Projects() {
                           e.stopPropagation();
                           window.open(project.link, "_blank");
                         }}
-                        className="px-3 py-1.5 text-xs text-emerald-400 border border-emerald-500/50 rounded-full hover:bg-emerald-500/10 transition-colors cursor-pointer"
+                        className="px-3 py-1.5 text-xs text-emerald-600 dark:text-emerald-400 border border-emerald-500/50 rounded-full hover:bg-emerald-500/10 transition-colors cursor-pointer"
                       >
                         Live Demo
                       </span>

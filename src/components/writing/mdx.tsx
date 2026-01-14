@@ -4,6 +4,7 @@ import { MDXRemote, MDXRemoteProps } from 'next-mdx-remote/rsc'
 import { highlight } from 'sugar-high'
 import React from 'react'
 import { CopyButton } from '@/src/components/writing/CopyButton'
+import { typography } from '@/src/styles/theme'
 
 interface TableData {
   headers: string[];
@@ -45,7 +46,7 @@ function CustomLink({ href, ...props }: React.AnchorHTMLAttributes<HTMLAnchorEle
     return <a href={href} {...props} />
   }
 
-  return <a href={href} target="_blank" rel="noopener noreferrer" {...props} className='text-blue-500' />
+  return <a href={href} target="_blank" rel="noopener noreferrer" {...props} className={typography.link} />
 }
 
 function RoundedImage({ alt, ...props }: React.ComponentProps<typeof Image>) {
@@ -139,7 +140,7 @@ function createHeading(level: number) {
 }
 
 function paragraph(props: MDXRemoteProps) {
-  return <p className="mb-4 leading-7" {...props} />
+  return <p className={typography.prose.paragraph} {...props} />
 }
 
 function blockquote(props: MDXRemoteProps) {
@@ -152,15 +153,15 @@ function blockquote(props: MDXRemoteProps) {
 }
 
 function li(props: MDXRemoteProps) {
-  return <li className="ml-4 leading-7 text-sm md:text-base" {...props} />
+  return <li className={typography.prose.listItem} {...props} />
 }
 
 function ul(props: MDXRemoteProps) {
-  return <ul className="list-disc mb-4 leading-7 text-sm md:text-base" {...props} />
+  return <ul className={typography.prose.list} {...props} />
 }
 
 function ol(props: MDXRemoteProps) {
-  return <ol className="list-decimal mb-4 leading-7 text-sm md:text-base" {...props} />
+  return <ol className={`list-decimal ${typography.prose.list}`} {...props} />
 }
 
 const components = {
