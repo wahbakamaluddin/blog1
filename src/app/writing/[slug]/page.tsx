@@ -4,6 +4,13 @@ import { TableOfContents } from '@/src/components/writing/TableOfContents'
 import { formatDate, getBlogPosts } from '@/src/lib/post-utils'
 import { baseUrl } from '@/src/lib/sitemap'
 
+function getReadingTime(content: string): string {
+  const wordsPerMinute = 200
+  const words = content.trim().split(/\s+/).length
+  const minutes = Math.ceil(words / wordsPerMinute)
+  return `${minutes} min read`
+}
+
 interface BlogPost {
   slug: string
   content: string
@@ -105,7 +112,7 @@ export default async function Blog({ params }: PageProps) {
       </h1>
       <div className="flex justify-between items-center mt-2 mb-8 text-sm">
         <p className="text-sm text-neutral-600 dark:text-neutral-400">
-          {formatDate(post.metadata.publishedAt)}
+          {formatDate(post.metadata.publishedAt)} · {getReadingTime(post.content)}
         </p>
       </div>
       <TableOfContents content={post.content} />
