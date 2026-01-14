@@ -58,7 +58,7 @@ export function TableOfContents({ content }: TableOfContentsProps) {
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center justify-between w-full text-left font-semibold text-neutral-900 dark:text-neutral-100"
       >
-        <span>Table of Contents</span>
+        <span>In This Page</span>
         <svg
           className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`}
           fill="none"
