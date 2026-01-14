@@ -19,7 +19,7 @@ export default function TypewriterText({
   typingSpeed = 200,
   deletingSpeed = 100,
   pauseDuration = 5000,
-  className = 'italic text-white/80',
+  className = 'italic text-black/50 dark:text-white/80',
 }: TypewriterTextProps) {
   const [currentWordIndex, setCurrentWordIndex] = useState(0)
   const [currentText, setCurrentText] = useState('')
