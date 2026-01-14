@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import { typography, components as themeComponents } from "@/src/styles/theme";
 
 interface Project {
   id: number;
@@ -43,12 +44,10 @@ function Gradient({
 }) {
   return (
     <div
-      className={`absolute z-10 inset-0 size-full pointer-events-none transition-opacity duration-500 ${
-        isExpanded ? "opacity-100" : "opacity-0 group-hover:opacity-100"
-      } ${className}`}
-      style={{
-        background: `linear-gradient(to bottom, rgba(16,16,16,0.1) 0%, rgba(16,16,16,0.4) 50%, rgba(16,16,16,0.9) 100%)`,
-      }}
+      className={`absolute z-10 inset-0 size-full pointer-events-none transition-opacity duration-500 
+        bg-gradient-to-b from-transparent via-black/20 to-black/70
+        dark:from-transparent dark:via-black/40 dark:to-black/90
+        ${isExpanded ? "opacity-100" : "opacity-0 group-hover:opacity-100"} ${className}`}
     />
   );
 }
@@ -62,18 +61,22 @@ export default function Projects() {
 
   return (
     <>
-      <section className="max-w-xl">
+      <section className={themeComponents.section}>
+        <h2 className={typography.sectionHeading}>
+          PROJECTS
+        </h2>
         <div className="grid grid-cols-1 gap-4">
           {projects.map((project) => {
             const isExpanded = expandedId === project.id;
             return (
-              <button
+              <div
                 key={project.id}
-                onClick={() => toggleExpand(project.id)}
-                className="relative overflow-hidden group p-3 flex flex-col border border-gray-700/50 rounded-[14px] bg-[#1a1a1a]/50 text-left cursor-pointer transition-all duration-300"
-              >
+                className="relative overflow-hidden group p-4 flex flex-col bg-gray-100 dark:bg-[#2f2f30]/50 border border-gray-300 dark:border-gray-700 rounded-lg text-left transition-all duration-300">
                 {/* Project Image */}
-                <div className="relative w-full overflow-hidden rounded-lg">
+                <button
+                  onClick={() => toggleExpand(project.id)}
+                  className="relative w-full overflow-hidden rounded-lg cursor-pointer"
+                >
                   <Image
                     src={project.image}
                     alt={project.title}
@@ -81,8 +84,8 @@ export default function Projects() {
                     height={400}
                     className={`w-full h-auto rounded-lg pointer-events-none transition-all duration-400 ${
                       isExpanded
-                        ? "opacity-90"
-                        : "opacity-70 group-hover:opacity-90"
+                        ? "opacity-100"
+                        : "opacity-90 dark:opacity-70 group-hover:opacity-100"
                     }`}
                   />
 
@@ -102,14 +105,17 @@ export default function Projects() {
                       </span>
                     </div>
                   </div>
-                </div>
+                </button>
 
                 {/* Expandable Content */}
                 <div
                   className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                    isExpanded ? "max-h-96 opacity-100 mt-3" : "max-h-0 opacity-0"
+                    isExpanded ? "max-h-96 opacity-100 mt-4" : "max-h-0 opacity-0"
                   }`}
                 >
+                  {/* Title */}
+                  <h3 className={typography.cardTitle + " mb-2"}>{project.title}</h3>
+
                   {/* Tags */}
                   <div className="flex flex-wrap gap-1.5 mb-3">
                     {project.tags.map((tag) => (
@@ -123,7 +129,7 @@ export default function Projects() {
                   </div>
 
                   {/* Description */}
-                  <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-3">
+                  <p className={typography.subtitle + " leading-relaxed mb-3"}>
                     {project.description}
                   </p>
 
@@ -135,7 +141,7 @@ export default function Projects() {
                           e.stopPropagation();
                           window.open(project.github, "_blank");
                         }}
-                        className="px-3 py-1.5 text-xs text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors inline-flex items-center gap-1.5 cursor-pointer"
+                        className={themeComponents.buttonPrimary + " inline-flex items-center gap-1.5 cursor-pointer"}
                       >
                         <svg
                           className="w-3.5 h-3.5"
@@ -153,14 +159,14 @@ export default function Projects() {
                           e.stopPropagation();
                           window.open(project.link, "_blank");
                         }}
-                        className="px-3 py-1.5 text-xs text-emerald-600 dark:text-emerald-400 border border-emerald-500/50 rounded-full hover:bg-emerald-500/10 transition-colors cursor-pointer"
+                        className={themeComponents.buttonPrimary + " cursor-pointer"}
                       >
                         Live Demo
                       </span>
                     )}
                   </div>
                 </div>
-              </button>
+              </div>
             );
           })}
         </div>
