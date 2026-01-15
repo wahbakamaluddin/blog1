@@ -4,6 +4,7 @@ import { MDXRemote, MDXRemoteProps } from 'next-mdx-remote/rsc'
 import { highlight } from 'sugar-high'
 import React from 'react'
 import { CopyButton } from '@/src/components/writing/CopyButton'
+import { ZoomableImage } from '@/src/components/writing/ZoomableImage'
 import { typography } from '@/src/styles/theme'
 
 interface TableData {
@@ -49,8 +50,27 @@ function CustomLink({ href, ...props }: React.AnchorHTMLAttributes<HTMLAnchorEle
   return <a href={href} target="_blank" rel="noopener noreferrer" {...props} className={typography.link} />
 }
 
-function RoundedImage({ alt, ...props }: React.ComponentProps<typeof Image>) {
-  return <Image alt={alt} className="rounded-lg" {...props} />
+function RoundedImage({ alt, src, width, height, ...props }: React.ComponentProps<typeof Image>) {
+  return (
+    <ZoomableImage 
+      src={src as string} 
+      alt={alt} 
+      width={typeof width === 'number' ? width : 800} 
+      height={typeof height === 'number' ? height : 600} 
+    />
+  )
+}
+
+// Handle markdown image syntax ![alt](src)
+function MarkdownImage({ alt, src }: React.ImgHTMLAttributes<HTMLImageElement>) {
+  return (
+    <ZoomableImage 
+      src={typeof src === 'string' ? src : ''} 
+      alt={alt || ''} 
+      width={800} 
+      height={600} 
+    />
+  )
 }
 
 function Code({ children, ...props }: { children: string } & React.HTMLAttributes<HTMLElement>) {
@@ -178,6 +198,7 @@ const components = {
   ol: ol,
   blockquote: blockquote,
   Image: RoundedImage,
+  img: MarkdownImage,
   a: CustomLink,
   code: Code,
   Table,
