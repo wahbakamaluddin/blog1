@@ -78,27 +78,27 @@ export function TableOfContents({ content }: TableOfContentsProps) {
 
   return (
     <aside
-      className="fixed top-1/2 -translate-y-1/2 right-4 z-40 hidden md:block"
+      className="fixed top-1/2 -translate-y-1/2 right-8 z-40 hidden md:block"
       onMouseEnter={() => setIsExpanded(true)}
       onMouseLeave={() => setIsExpanded(false)}
     >
       <nav
         className={`
-          transition-all duration-150 ease-in-out rounded-l-xl overflow-hidden
+          transition-all duration-150 ease-in-out rounded-xl overflow-hidden
           ${isExpanded 
-            ? 'w-60 max-h-[70vh] bg-white/80 dark:bg-neutral-900/50 backdrop-blur-md shadow-2xl' 
-            : 'w-5 bg-transparent'
+            ? 'w-60 max-h-[80vh] bg-white/80 dark:bg-neutral-900/50 backdrop-blur-md shadow-2xl overflow-y-auto' 
+            : 'bg-transparent'
           }
         `}
       >
         {/* Collapsed indicator - subtle line showing sections */}
-        <div className={`transition-opacity duration-300 ${isExpanded ? 'opacity-0 hidden' : 'opacity-100'}`}>
-          <div className="flex flex-col items-center py-3 gap-1.5">
+        <div className={`transition-opacity duration-150 ${isExpanded ? 'opacity-0 hidden' : 'opacity-100'}`}>
+          <div className="flex flex-col items-end py-5 gap-2">
             {headings.slice(0, 8).map((heading, index) => (
               <div
                 key={`indicator-${index}`}
                 className={`
-                  transition-all duration-200 rounded-full
+                  transition-all duration-200 rounded-full align-
                   ${heading.level === 3 ? 'w-2 h-1' : 'w-3 h-1'}
                   ${activeId === heading.id 
                     ? 'bg-neutral-900 dark:bg-neutral-100' 
