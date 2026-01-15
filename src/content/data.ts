@@ -114,7 +114,8 @@ export const skills: Skill[] = [
   { name: "Next.js", category: "Development" },
 
   // Security Tools & Skills
-  { name: "Web Application Security", category: "Security" },
+  { name: "Web-App Security", category: "Security" },
+  { name: "Digital Forensic", category: "Security" },
   { name: "Burp Suite", category: "Security" },
   { name: "OWASP ZAP", category: "Security" },
   { name: "Nmap", category: "Security" },

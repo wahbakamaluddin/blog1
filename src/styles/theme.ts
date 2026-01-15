@@ -117,13 +117,13 @@ export const animations = {
   fadeInUp: {
     initial: { y: 20, opacity: 0 },
     animate: { y: 0, opacity: 1 },
-    transition: { duration: 0.3, ease: 'easeOut' as const },
+    transition: { duration: 0.2, ease: 'easeOut' as const },
   },
   // Fade in only
   fadeIn: {
     initial: { opacity: 0 },
     animate: { opacity: 1 },
-    transition: { duration: 0.3, ease: 'easeOut' as const },
+    transition: { duration: 0.2, ease: 'easeOut' as const },
   },
   // Scale up
   scaleIn: {
