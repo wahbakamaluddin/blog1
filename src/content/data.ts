@@ -191,7 +191,7 @@ export const certifications: Certification[] = [
   {
     title: "Certificate of Excellence (ASEAN Cyber Shield 2024)",
     issuer: "Korea Internet and Security Agency (KISA)",
-    link: "https://www.youtube.com/watch?v=bK6axYNI41A",
+    link: "https://www.linkedin.com/posts/akcf_akcf-cybersecurity-acsbootcamp-ugcPost-7336233557683515393-RpXP?utm_source=share&utm_medium=member_desktop&rcm=ACoAADcrK1cBfd3a60trqt0DcFfr-ygcue1Zcws",
     date: "2025",
     badge: "/image/certificates/ACS-excellence.png",
   },
