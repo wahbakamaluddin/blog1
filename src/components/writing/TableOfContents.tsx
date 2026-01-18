@@ -99,7 +99,7 @@ export function TableOfContents({ content }: TableOfContentsProps) {
                 key={`indicator-${index}`}
                 className={`
                   transition-all duration-200 rounded-full align-
-                  ${heading.level === 3 ? 'w-2 h-1' : 'w-3 h-1'}
+                  ${heading.level === 3 ? 'w-3 h-1' : 'w-4 h-1'}
                   ${activeId === heading.id 
                     ? 'bg-neutral-900 dark:bg-neutral-100' 
                     : 'bg-neutral-300 dark:bg-neutral-600'
