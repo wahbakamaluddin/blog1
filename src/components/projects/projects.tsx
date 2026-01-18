@@ -80,7 +80,7 @@ export default function Projects() {
                 {/* Expandable Content */}
                 <div
                   className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                    isExpanded ? "max-h-96 opacity-100 mt-4" : "max-h-0 opacity-0"
+                    isExpanded ? "max-h-150 opacity-100 mt-4" : "max-h-0 opacity-0"
                   }`}
                 >
                   <div className="flex flex-wrap gap-1.5 mb-3">
