@@ -83,10 +83,6 @@ export default function Projects() {
                     isExpanded ? "max-h-96 opacity-100 mt-4" : "max-h-0 opacity-0"
                   }`}
                 >
-                  {/* Title */}
-                  <h3 className={typography.cardTitle + " mb-2"}>{project.title}</h3>
-
-                  {/* Tags */}
                   <div className="flex flex-wrap gap-1.5 mb-3">
                     {project.tags.map((tag) => (
                       <span
