@@ -99,9 +99,10 @@ export default function Projects() {
                   </div>
 
                   {/* Description */}
-                  <p className={typography.subtitle + " leading-relaxed mb-3"}>
-                    {project.description}
-                  </p>
+                  <p 
+                    className={typography.subtitle + " leading-relaxed mb-3"}
+                    dangerouslySetInnerHTML={{ __html: project.description }}
+                  />
 
                   {/* Action Buttons */}
                   <div className="flex gap-2">
