@@ -117,6 +117,7 @@ export const skills: Skill[] = [
   { name: "Web-App Security", category: "Security" },
   { name: "Digital Forensic", category: "Security" },
   { name: "Burp Suite", category: "Security" },
+  { name: "nuclei", category: "Security" },
   { name: "OWASP ZAP", category: "Security" },
   { name: "Nmap", category: "Security" },
   { name: "Wireshark", category: "Security" },
