@@ -165,7 +165,7 @@ export const educations: Education[] = [
     level: "Secondary School",
     duration: "5yrs",
     date: "Jan 2016 – Dec 2020",
-    grade: "SPM: 11As, Valedictorian",
+    grade: "Valedictorian",
     current: false,
   },
 ];
