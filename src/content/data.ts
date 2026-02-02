@@ -141,7 +141,7 @@ export const educations: Education[] = [
     level: "BCompSc Information Security and Assurance",
     duration: "4yrs",
     date: "Oct 2022 – Present",
-    grade: "First Class Honour",
+    grade: "First Class Honours",
     current: true,
   },
   {
@@ -157,7 +157,7 @@ export const educations: Education[] = [
     level: "Foundation in Science",
     duration: "1yr",
     date: "Jul 2021 – Jul 2022",
-    grade: "First Class Honour",
+    grade: "First Class Honours",
     current: false,
   },
   {
