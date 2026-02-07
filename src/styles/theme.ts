@@ -168,7 +168,7 @@ export const categoryColors = {
   // Blog post categories (work well in both light/dark)
   posts: {
     notes: 'bg-blue-500/20 text-blue-600 dark:text-blue-400',
-    ctf: 'bg-red-500/20 text-red-600 dark:text-red-400',
+    writeups: 'bg-red-500/20 text-red-600 dark:text-red-400',
     general: 'bg-green-500/20 text-green-600 dark:text-green-400',
     research: 'bg-purple-500/20 text-purple-600 dark:text-purple-400',
   },
