@@ -63,7 +63,7 @@ export function BlogPosts({ posts }: { posts: BlogPost[] }) {
   const filteredPosts = posts
     .filter((post) => {
       const categoryMatch = activeCategory === 'all' || post.metadata.category === activeCategory
-      const competitionMatch = activeCategory !== 'ctf' || activeCompetition === 'all' || post.metadata.competition === activeCompetition
+      const competitionMatch = activeCategory !== 'writeups' || activeCompetition === 'all' || post.metadata.competition === activeCompetition
       return categoryMatch && competitionMatch
     })
     .sort((a, b) => {
@@ -82,7 +82,7 @@ export function BlogPosts({ posts }: { posts: BlogPost[] }) {
             key={cat.key}
             onClick={() => {
               setActiveCategory(cat.key)
-              if (cat.key !== 'ctf') {
+              if (cat.key !== 'writeups') {
                 setActiveCompetition('all')
               }
             }}
@@ -93,8 +93,8 @@ export function BlogPosts({ posts }: { posts: BlogPost[] }) {
         ))}
       </div>
 
-      {/* Competition Filter (only show when CTF is active) */}
-      {activeCategory === 'ctf' && (
+      {/* Competition Filter (only show when writeups is active) */}
+      {activeCategory === 'writeups' && (
         <div className="flex flex-wrap gap-2 mb-6 ml-4">
           {competitions.map((comp) => (
             <button

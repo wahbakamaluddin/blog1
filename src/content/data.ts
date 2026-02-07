@@ -3,19 +3,20 @@
 // =============================================================================
 
 // Blog post categories and competitions
-export type Category = 'notes' | 'ctf' | 'general' | 'research';
-export type Competition = 'wargames23' | 'hkcert24' | 'hkcert25' | 'curtinctf25' | 'other';
+export type Category = 'notes' | 'writeups' | 'general' | 'research';
+export type Competition = 'htb'|'wargames23' | 'hkcert24' | 'hkcert25' | 'curtinctf25' | 'other';
 
 export const categories: { key: Category | 'all'; label: string }[] = [
   { key: 'all', label: 'All' },
   { key: 'notes', label: 'Notes' },
   { key: 'research', label: 'Research' },
-  { key: 'ctf', label: 'CTF Writeups' },
+  { key: 'writeups', label: 'Writeups' },
   { key: 'general', label: 'General' },
 ];
 
 export const competitions: { key: Competition | 'all'; label: string }[] = [
-  { key: 'all', label: 'All CTF' },
+  { key: 'all', label: 'All' },
+  { key: 'htb', label: 'HTB' },
   { key: 'wargames23', label: 'Wargames23' },
   { key: 'hkcert24', label: 'HKCERT24' },
   { key: 'hkcert25', label: 'HKCERT25' },
