@@ -21,20 +21,18 @@ export function ZoomableImage({ src, alt, width = 800, height = 600 }: ZoomableI
 
   const modal = isZoomed && mounted ? createPortal(
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 cursor-zoom-out"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 cursor-zoom-out p-4"
       onClick={() => setIsZoomed(false)}
     >
-      <div className="relative max-w-[90vw] max-h-[90vh]">
-        <Image
+      <div className="relative w-full h-full flex items-center justify-center">
+        <img
           src={src}
           alt={alt}
-          width={1200}
-          height={900}
-          className="object-contain rounded-lg max-h-[90vh] w-auto"
+          className="object-contain rounded-lg max-w-full max-h-full"
         />
         <button
           onClick={() => setIsZoomed(false)}
-          className="absolute -top-4 -right-4 h-8 w-8 rounded-full bg-gray-800 text-white flex items-center justify-center hover:bg-gray-700"
+          className="absolute top-4 right-4 h-8 w-8 rounded-full bg-gray-800 text-white flex items-center justify-center hover:bg-gray-700"
         >
           ✕
         </button>
