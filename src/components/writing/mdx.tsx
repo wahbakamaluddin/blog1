@@ -105,8 +105,7 @@ function Code({ children, ...props }: { children: string } & React.HTMLAttribute
       {/* Code content */}
       <pre className="p-4 overflow-x-auto">
         <code
-          className="font-mono text-neutral-100"
-          style={{ fontSize: '0.9rem' }}
+          style={{ fontSize: '0.9rem', color: 'white' }}
           dangerouslySetInnerHTML={{ __html: codeHTML }}
           {...props}
         />
