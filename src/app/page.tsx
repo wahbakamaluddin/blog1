@@ -47,9 +47,9 @@ export default function Page() {
         <BioParagraph />
       </div>
       <SocMedIcons />
-      <div className={themeComponents.sectionSpacing}>
+      {/* <div className={themeComponents.sectionSpacing}>
         <Skills />
-      </div>
+      </div> */}
       <div className={themeComponents.sectionSpacing}>
         <EducationTimeline />
       </div>
