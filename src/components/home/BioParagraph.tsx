@@ -13,7 +13,7 @@ export default function BioParagraph() {
             And I&apos;ve been hooked ever since.
         </p>
         <p className="mb-4">
-            I love learning offensive security, joining CTF competitions, and doing web development on the side. I also love to read; most of the general stuff I post on my blog is based on what I&apos;ve read.
+            I love learning offensive security, coding, and reading. I share my notes, writups, and thoughts on my blog.
         </p>
         </>
     );
