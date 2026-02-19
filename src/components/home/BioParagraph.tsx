@@ -13,7 +13,7 @@ export default function BioParagraph() {
             And I&apos;ve been hooked ever since.
         </p>
         <p className="mb-4">
-            I love hacking (ethically), coding, and reading. I share my notes, writups, and thoughts on my blog.
+            I love hacking (ethically), coding, and reading. I share my notes, writeups, and thoughts on my blog.
         </p>
         </>
     );
