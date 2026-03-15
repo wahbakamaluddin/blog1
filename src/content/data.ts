@@ -177,6 +177,13 @@ export const educations: Education[] = [
 
 export const certifications: Certification[] = [
   {
+    title: "Certified Red Team Analyst (CRTA)",
+    issuer: "CyberWarfare Labs",
+    link: "https://labs.cyberwarfare.live/credential/achievement/69b64c9594ef25f00d9e1647",
+    date: "2026",
+    badge: "/image/certificates/CRTA.png",
+  },
+  {
     title: "Google Cybersecurity",
     issuer: "Google",
     link: "https://www.coursera.org/account/accomplishments/specialization/certificate/VGP17IIU43XM",
