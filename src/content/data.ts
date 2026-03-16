@@ -31,6 +31,15 @@ export interface Skill {
   category: SkillCategory;
 }
 
+export interface Experience {
+  company: string;
+  position: string;
+  duration: string;
+  date: string;
+  description: string;
+  current: boolean;
+}
+
 export interface Education {
   institution: string;
   level: string;
@@ -133,6 +142,21 @@ export const skillCategoryLabels: Record<SkillCategory, string> = {
 export const skillCategoryOrder: SkillCategory[] = ["Security", "Development"];
 
 // =============================================================================
+// EXPERIENCE DATA
+// =============================================================================
+
+export const experiences: Experience[] = [
+  {
+    company: "Cybertronium",
+    position: "Penetration Tester Intern",
+    duration: "6mos",
+    date: "Mar 2026 – Present",
+    description: "Responsible for conducting penetration testing and vulnerability assessments on client systems.",
+    current: true,
+  },
+];
+
+// =============================================================================
 // EDUCATION DATA
 // =============================================================================
 
@@ -147,28 +171,28 @@ export const educations: Education[] = [
   },
   {
     institution: "Korea Internet and Security Agency (KISA)",
-    level: "ASEAN Cyber Shield Education",
+    level: "ASEAN Cyber Shield Education (Cybersecurity Training Program)",
     duration: "5mos",
     date: "Sep 2024 – Jan 2025",
     grade: "Excellence Award",
     current: false,
   },
-  {
-    institution: "Universiti Sains Islam Malaysia (USIM)",
-    level: "Foundation in Science",
-    duration: "1yr",
-    date: "Jul 2021 – Jul 2022",
-    grade: "First Class Honours",
-    current: false,
-  },
-  {
-    institution: "Sekolah Menengah Kebangsaan Desa Cempaka",
-    level: "Secondary School",
-    duration: "5yrs",
-    date: "Jan 2016 – Dec 2020",
-    grade: "Valedictorian",
-    current: false,
-  },
+  // {
+  //   institution: "Universiti Sains Islam Malaysia (USIM)",
+  //   level: "Foundation in Science",
+  //   duration: "1yr",
+  //   date: "Jul 2021 – Jul 2022",
+  //   grade: "First Class Honours",
+  //   current: false,
+  // },
+  // {
+  //   institution: "Sekolah Menengah Kebangsaan Desa Cempaka",
+  //   level: "Secondary School",
+  //   duration: "5yrs",
+  //   date: "Jan 2016 – Dec 2020",
+  //   grade: "Valedictorian",
+  //   current: false,
+  // },
 ];
 
 // =============================================================================
@@ -183,20 +207,13 @@ export const certifications: Certification[] = [
     date: "2026",
     badge: "/image/certificates/CRTA.png",
   },
-  {
-    title: "Google Cybersecurity",
-    issuer: "Google",
-    link: "https://www.coursera.org/account/accomplishments/specialization/certificate/VGP17IIU43XM",
-    date: "2025",
-    badge: "/image/certificates/google-cybersecurity.png",
-  },
-  {
-    title: "Cisco Ethical Hacker",
-    issuer: "Cisco Networking Academy",
-    link: "https://www.credly.com/badges/de263913-c2a6-4500-91d2-ce8bfc052c38",
-    date: "2025",
-    badge: "/image/certificates/cisco-ethical-hacker.png",
-  },
+  // {
+  //   title: "Cisco Ethical Hacker",
+  //   issuer: "Cisco Networking Academy",
+  //   link: "https://www.credly.com/badges/de263913-c2a6-4500-91d2-ce8bfc052c38",
+  //   date: "2025",
+  //   badge: "/image/certificates/cisco-ethical-hacker.png",
+  // },
   {
     title: "Certificate of Excellence (ASEAN Cyber Shield 2024)",
     issuer: "Korea Internet and Security Agency (KISA)",
@@ -210,6 +227,13 @@ export const certifications: Certification[] = [
     date: "2025",
     link: "https://candidate.speedexam.net/certificate.aspx?SSTATE=am4131EniU8ntjp4bO5mXRuAWPUhlG4OLxB+fpaC25Arrn3/alZRudTEfH7lVCQjl9mgh9oxEOE97Gkt+gXJnZBcyGIUubaPvRi2v4uLieM=",
     badge: "/image/certificates/cap.png",
+  },
+  {
+    title: "Google Cybersecurity",
+    issuer: "Google",
+    link: "https://www.coursera.org/account/accomplishments/specialization/certificate/VGP17IIU43XM",
+    date: "2025",
+    badge: "/image/certificates/google-cybersecurity.png",
   },
 ];
 

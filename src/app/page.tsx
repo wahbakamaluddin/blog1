@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import SocMedIcons from "@/src/components/layout/sidenav/SocMedIcons";
+import ExperienceTimeline from "@/src/components/home/ExperienceTimeline";
 import EducationTimeline from "@/src/components/home/EducationTimeline";
 import Certifications from "@/src/components/home/Certifications";
 import Skills from "@/src/components/home/Skills";
@@ -49,7 +50,10 @@ export default function Page() {
       <SocMedIcons />
       {/* <div className={themeComponents.sectionSpacing}>
         <Skills />
-      </div> */}
+        </div> */}
+      <div className={themeComponents.sectionSpacing}>
+        <ExperienceTimeline />
+      </div>
       <div className={themeComponents.sectionSpacing}>
         <EducationTimeline />
       </div>
