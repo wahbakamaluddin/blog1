@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { BriefcaseBusiness } from "lucide-react";
 import { typography, components as themeComponents } from "@/src/styles/theme";
 import { experiences } from "@/src/content/data";
@@ -15,7 +16,17 @@ export default function ExperienceTimeline() {
 
             {/* logo */}
             <div className={themeComponents.iconBox}>
-                <BriefcaseBusiness size={25}/>
+              {exp.logo ? (
+                <Image
+                  src={exp.logo}
+                  alt={`${exp.company} logo`}
+                  width={40}
+                  height={40}
+                  className="h-8 w-8 object-contain rounded"
+                />
+              ) : (
+                <BriefcaseBusiness size={25} />
+              )}
             </div>
             
 

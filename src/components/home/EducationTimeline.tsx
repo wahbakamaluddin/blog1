@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { School } from "lucide-react";
 import { typography, components as themeComponents } from "@/src/styles/theme";
 import { educations } from "@/src/content/data";
@@ -15,7 +16,17 @@ export default function EducationTimeline() {
 
             {/* logo */}
             <div className={themeComponents.iconBox}>
-                <School size={25}/>
+              {ed.logo ? (
+                <Image
+                  src={ed.logo}
+                  alt={`${ed.institution} logo`}
+                  width={40}
+                  height={40}
+                  className="h-8 w-8 object-contain rounded"
+                />
+              ) : (
+                <School size={25} />
+              )}
             </div>
        
             {/* Timeline line */}

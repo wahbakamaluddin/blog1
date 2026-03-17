@@ -33,6 +33,7 @@ export interface Skill {
 
 export interface Experience {
   company: string;
+  logo?: string;
   position: string;
   duration: string;
   date: string;
@@ -42,6 +43,7 @@ export interface Experience {
 
 export interface Education {
   institution: string;
+  logo?: string;
   level: string;
   duration: string;
   date: string;
@@ -148,6 +150,7 @@ export const skillCategoryOrder: SkillCategory[] = ["Security", "Development"];
 export const experiences: Experience[] = [
   {
     company: "Cybertronium",
+    logo: "/image/logos/cybertronium_logo.jpg",
     position: "Penetration Tester Intern",
     duration: "6mos",
     date: "Mar 2026 – Present",
@@ -163,6 +166,7 @@ export const experiences: Experience[] = [
 export const educations: Education[] = [
   {
     institution: "Universiti Sains Islam Malaysia (USIM)",
+    logo: "/image/logos/usim_logo.png",
     level: "BCompSc Information Security and Assurance",
     duration: "4yrs",
     date: "Oct 2022 – Present",
@@ -171,6 +175,7 @@ export const educations: Education[] = [
   },
   {
     institution: "Korea Internet and Security Agency (KISA)",
+    logo: "/image/logos/acs_logo.png",
     level: "ASEAN Cyber Shield Education (Cybersecurity Training Program)",
     duration: "5mos",
     date: "Sep 2024 – Jan 2025",
