@@ -166,7 +166,7 @@ export const experiences: Experience[] = [
 export const educations: Education[] = [
   {
     institution: "Universiti Sains Islam Malaysia (USIM)",
-    logo: "/image/logos/usim_logo.png",
+    logo: "/image/logos/usim_logo.jpg",
     level: "BCompSc Information Security and Assurance",
     duration: "4yrs",
     date: "Oct 2022 – Present",
