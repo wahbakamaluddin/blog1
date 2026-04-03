@@ -206,6 +206,13 @@ export const educations: Education[] = [
 
 export const certifications: Certification[] = [
   {
+    title: "Junior Penetration Tester (eJPT)",
+    issuer: "INE",
+    link: "https://certs.ine.com/69604c14-8740-4279-80e8-4419dae6422f",
+    date: "2026",
+    badge: "/image/certificates/eJPT.png",
+  },
+  {
     title: "Certified Red Team Analyst (CRTA)",
     issuer: "CyberWarfare Labs",
     link: "https://labs.cyberwarfare.live/credential/achievement/69b64c9594ef25f00d9e1647",
@@ -219,6 +226,15 @@ export const certifications: Certification[] = [
   //   date: "2025",
   //   badge: "/image/certificates/cisco-ethical-hacker.png",
   // },
+  
+    {
+    title: "Certified Appsec Practitioner (CAP)",
+    issuer: "The SecOps Group",
+    date: "2025",
+    link: "https://candidate.speedexam.net/certificate.aspx?SSTATE=am4131EniU8ntjp4bO5mXRuAWPUhlG4OLxB+fpaC25Arrn3/alZRudTEfH7lVCQjl9mgh9oxEOE97Gkt+gXJnZBcyGIUubaPvRi2v4uLieM=",
+    badge: "/image/certificates/cap.png",
+  },
+  
   {
     title: "Certificate of Excellence (ASEAN Cyber Shield 2024)",
     issuer: "Korea Internet and Security Agency (KISA)",
@@ -226,20 +242,13 @@ export const certifications: Certification[] = [
     date: "2025",
     badge: "/image/certificates/ACS-excellence.png",
   },
-  {
-    title: "Certified Appsec Practitioner (CAP)",
-    issuer: "The SecOps Group",
-    date: "2025",
-    link: "https://candidate.speedexam.net/certificate.aspx?SSTATE=am4131EniU8ntjp4bO5mXRuAWPUhlG4OLxB+fpaC25Arrn3/alZRudTEfH7lVCQjl9mgh9oxEOE97Gkt+gXJnZBcyGIUubaPvRi2v4uLieM=",
-    badge: "/image/certificates/cap.png",
-  },
-  {
-    title: "Google Cybersecurity",
-    issuer: "Google",
-    link: "https://www.coursera.org/account/accomplishments/specialization/certificate/VGP17IIU43XM",
-    date: "2025",
-    badge: "/image/certificates/google-cybersecurity.png",
-  },
+  // {
+  //   title: "Google Cybersecurity",
+  //   issuer: "Google",
+  //   link: "https://www.coursera.org/account/accomplishments/specialization/certificate/VGP17IIU43XM",
+  //   date: "2025",
+  //   badge: "/image/certificates/google-cybersecurity.png",
+  // },
 ];
 
 // =============================================================================
