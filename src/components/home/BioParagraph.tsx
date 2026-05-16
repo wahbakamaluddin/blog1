@@ -5,7 +5,7 @@ export default function BioParagraph() {
             Psst... it looks better on a bigger screen!  
         </p>
         <p className="mb-4">
-            I&apos;m a penetration tester intern at Cybertronium, responsible for conducting security assessmens and penetration testing on web, mobile, network, and LLM-based applications.
+            I&apos;m a penetration tester intern at Cybertronium, responsible for conducting security assessments and penetration testing on web, mobile, network, and LLM-based applications.
         </p>
         <p className="mb-4">    
             Back during COVID-19, I started using Linux Mint as my main OS just to see what the fuss is about. 
