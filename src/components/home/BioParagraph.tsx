@@ -5,9 +5,10 @@ export default function BioParagraph() {
             Psst... it looks better on a bigger screen!  
         </p>
         <p className="mb-4">
-            I&apos;m an undergrad cybersecurity student at Universiti 
-            Sains Islam Malaysia (USIM). Back during COVID-19,
-            I started using Linux Mint as my main OS just to see what the fuss is about. 
+            I&apos;m a penetration tester intern at Cybertronium, responsible for conducting security assessmens and penetration testing on web, mobile, network, and LLM-based applications.
+        </p>
+        <p className="mb-4">    
+            Back during COVID-19, I started using Linux Mint as my main OS just to see what the fuss is about. 
             For days, I juggled around in terminal, tweaking all sorts of stuff
             just to get my speakers working, which led to my very first <a href="https://techy-dudes.blogspot.com/2020/05/in-this-tutorial-im-going-to-show-you.html" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">blog post</a>. 
             And I&apos;ve been hooked ever since.

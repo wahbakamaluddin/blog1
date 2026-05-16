@@ -154,7 +154,7 @@ export const experiences: Experience[] = [
     position: "Penetration Tester Intern",
     duration: "6mos",
     date: "Mar 2026 – Present",
-    description: "Responsible for conducting penetration testing and vulnerability assessments on client systems.",
+    description: "Responsible for conducting penetration testing and security assessments on client systems.",
     current: true,
   },
 ];
