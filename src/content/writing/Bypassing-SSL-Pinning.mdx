@@ -48,7 +48,7 @@ APK file is compiled in a way that allows it to be unpacked, modified, and repac
 apktool d app.apk
 ```
     
-2. Add  `<certificates src="user"/>` into network_security_config.xml so that the app trusts user CAs.
+2. Add  `<certificates src="user"/>` into `network_security_config.xml` so that the app trusts user CAs.
     
 ![image.png](/image/writing/research/bypassing-ssl-pinning/6.png)
     
@@ -70,8 +70,8 @@ As long as the app doesn’t have anti tempering mechanism, and we didn’t brea
 Another option is to install Burp certificate as a system CA:
 
 1. Install Burp certificate through Settings → Security → More security settings → Encryption & credentials → Install a certificate
-2. Open your terminal and enter the Android shell by running `adb shell`
-3. In Android shell run the following command
+2. Open terminal and enter the Android shell by running `adb shell`
+3. In Android shell, run the following command
 - **For Android 14 and below (retrieved from [here](https://app.hextree.io/courses/network-interception/ssl-interception/installing-certificate-in-system-store)):**
     
     ```bash
@@ -150,7 +150,7 @@ Another option is to install Burp certificate as a system CA:
     echo "System certificate injected"
     ```
     
-4. We can then verify that the Burp certificate is now under system CA.
+4. We can then verify that the Burp certificate is now listed under the system CA.
     
     ![image.png](/image/writing/research/bypassing-ssl-pinning/7.png)
     
@@ -173,11 +173,11 @@ Rather than building SSL pinning logic from scratch, developers often utilize li
 
 1. Identify the library used to implement SSL pinning
     
-    To identify the SSL pinning library, we can do static or dynamic analysis. For static analysis, we can decompile the APK file using [jadx](https://github.com/skylot/jadx), and use the use search function to search for commonly used library or related keywords such as *checkServerTrusted*, TrustManager, *CertficatePinner* or *Pinning*. 
+    To identify the SSL pinning library, we can do static or dynamic analysis. For static analysis, we can decompile the APK file using [jadx](https://github.com/skylot/jadx), and use the search function to search for commonly used library or related keywords such as *checkServerTrusted*, TrustManager, *CertficatePinner* or *Pinning*. 
     
     ![image.png](/image/writing/research/bypassing-ssl-pinning/10.png)
     
-    For dynamic analysis, we can use frida-trace to trace function calls, and check for any calls to SSL pinning methods.
+    For dynamic analysis, we can use `frida-trace` to trace function calls, and check for any calls to SSL pinning methods.
     
     ```jsx
     frida-trace -U AppName
@@ -232,7 +232,7 @@ Rather than building SSL pinning logic from scratch, developers often utilize li
 
 ### Option 2: Using Frida codeshare
 
-Instead of manually writing our own Frida code, we can use bypass scripts shared by the community [here](https://codeshare.frida.re/).  We can use it by runnig Frida with codeshare flag:
+Instead of manually writing our own Frida code, we can use bypass scripts shared by the community [here](https://codeshare.frida.re/). To use it, run Frida with the codeshare flag:
 
 ```jsx
 frida -U --codeshare dzonerzy/fridantiroot -f com.app.damnvulnerablebank
@@ -240,7 +240,7 @@ frida -U --codeshare dzonerzy/fridantiroot -f com.app.damnvulnerablebank
 
 ### Option 3: Using Objection
 
-Objection has a feature that automates all the hooking process by running the following command:
+Objection provides a feature that automates all the hooking process by running the following command:
 
 ```bash
 # Attach objection to the app
@@ -254,11 +254,11 @@ android sslpinning disable
 
 ## Bypassing SSL pinning for Flutter applications
 
-Flutter is a framework that allows developing both IoS and Android application using single source code, by compiling it into native machine code. Because of that, hooking into it to modify the SSL pinning logic is not easy.
+Flutter is a framework that allows developing both IoS and Android application using a single source code. The source code will be compiled into native machine code, and because of that, hooking into it to modify the SSL pinning logic is not easy.
 
 ### Option 1: Patching the app using reFlutter
 
-If we unpack the APK file of a Flutter app and look under the lib folder, we can find 2 native library files,  `libapp.so` and `libflutter.so`. libapp.so includes all the application logics, while libflutter.so is a flutter engine responsible for execution and rendering, which also implements the SSL pinning. [reFlutter](https://github.com/Impact-I/reFlutter) is a tool that will replace the `libflutter.so` file with a patched version that disables SSP pinning.
+If we unpack the APK file of a Flutter app and look under the lib folder, we can find 2 native library files,  libapp.so and libflutter.so. libapp.so includes all the application logics, while libflutter.so is a flutter engine responsible for execution and rendering, which also implements the SSL pinning. [reFlutter](https://github.com/Impact-I/reFlutter) is a tool that will replace the libflutter.so file with a patched version that disables SSP pinning.
 
 ![image.png](/image/writing/research/bypassing-ssl-pinning/15.png)
 
