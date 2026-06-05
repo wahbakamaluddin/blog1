@@ -32,7 +32,7 @@ Just like any browser, an Android device maintains a local storage of trusted Ce
 
 ![image.png](/image/writing/research/bypassing-ssl-pinning/4.png)
 
-Android developers can configure their app to trust any of the certificate listed under the Truted ceredntials by defining them in `network_security_config.xml` file. As shown in the example below, this configuration specifies that the app trusts both system CAs and user CAs. If this is not defined, the Android OS uses the default configuration for the application, where only system CAs are trusted, while user CAs are rejected, as described in the [official developer guide](https://developer.android.com/privacy-and-security/security-config#base-config). 
+Android developers can configure their app to trust any of the certificate listed under the Truted credentials by defining them in `network_security_config.xml` file. As shown in the example below, this configuration specifies that the app trusts both system CAs and user CAs. If this is not defined, the Android OS uses the default configuration for the application, where only system CAs are trusted, while user CAs are rejected, as described in the [official developer guide](https://developer.android.com/privacy-and-security/security-config#base-config). 
 
 ![image.png](/image/writing/research/bypassing-ssl-pinning/5.png)
 
