@@ -24,11 +24,14 @@ export function ZoomableImage({ src, alt, width = 800, height = 600 }: ZoomableI
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 cursor-zoom-out p-4"
       onClick={() => setIsZoomed(false)}
     >
-      <div className="relative w-full h-full flex items-center justify-center">
+      <div
+        className="relative flex items-center justify-center"
+        style={{ width: 'min(92vw, 1000px)', height: 'min(82vh, 700px)' }}
+      >
         <img
           src={src}
           alt={alt}
-          className="object-contain rounded-lg max-w-full max-h-full"
+          className="w-full h-full object-contain rounded-lg"
         />
         <button
           onClick={() => setIsZoomed(false)}
