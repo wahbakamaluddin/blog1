@@ -167,7 +167,7 @@ The easiest way is by using [HTTP Toolkit](https://httptoolkit.com/), an open-so
 
 A more secure implementation of SSL pinning is by adding the logic directly into the application’s source code. This allows the developer to configure the app to trust only specific certificates, regardless of whether they come from system or user CAs. As a result, installing Burp Suite as a system CA as we did previously won’t work. To bypass this,  we need to modify the verification logic using dynamic instrumentation tools such as Frida or Objection.
 
-### Option 1: Using Frida to manually hook to the function
+### Option 1: Using Frida to manually hook into the function
 
 Rather than building SSL pinning logic from scratch, developers often utilize libraries that provide such functionality. While different libraries have different implementations, the general approach to bypassing it remains the same.
 
