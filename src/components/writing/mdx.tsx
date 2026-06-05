@@ -89,7 +89,7 @@ function Code({ children, ...props }: { children: string } & React.HTMLAttribute
   if (!isMultiLine) {
     return (
       <code
-        className="break-all bg-neutral-100 dark:bg-neutral-800 rounded-md px-1 py-0.5 font-mono text-sm"
+        className="break-all bg-neutral-100 dark:bg-neutral-800 rounded-md px-1 py-0.5 font-mono text-xs sm:text-sm"
         dangerouslySetInnerHTML={{ __html: codeHTML }}
         {...props}
       />
@@ -114,7 +114,7 @@ function Code({ children, ...props }: { children: string } & React.HTMLAttribute
       <div className="w-full max-w-full overflow-x-hidden">
         <pre className="w-full max-w-full min-w-0 overflow-x-auto overflow-y-hidden p-4">
           <code
-            className="block min-w-0 whitespace-pre font-mono text-[0.85rem] leading-6 text-white sm:text-[0.9rem]"
+            className="block min-w-0 whitespace-pre font-mono text-xs leading-5 text-white sm:text-sm sm:leading-6"
             dangerouslySetInnerHTML={{ __html: codeHTML }}
             {...props}
           />
