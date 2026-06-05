@@ -1,0 +1,296 @@
+---
+title: 'Bypassing SSL Pinning'
+publishedAt: '2026-06-05'
+summary: 'Understanding SSL pinning, how it is implemented, and how to bypass it'
+category: 'research'
+---
+# Introduction
+
+Network interception is a crucial part of mobile application penetration testing. However, most of the time, simply setting up proxy and intercepting the traffic with Burp Suite fails due to SSL pinning. There are many  articles discussing different methods on bypassing it, but not many explain how and why it works. This article aims to break down what SSL pinning is, how it is implemented and how to bypass it.
+
+# Understanding SSL pinning
+
+To understand SSL pinning, we have to look at how the client—in this case, the mobile application—and the server communicates. Similar to a web application, mobile applications rely on HTTPS protocol to establish a secure communication with the server. Establishing a HTTPS connection starts with a TLS handshake, where in one of the processes, the server will present its digital certificate to the client to prove its identity. The client will then verify the certificate, and if the certificate is trusted, both the client and the server will eventually generate session keys, and the HTTPS connection is established successfully. On the other hand, if the certificate is not trusted, the application will terminate the connection.
+
+![image.png](/image/writing/research/bypassing-ssl-pinning/1.png)
+
+This is how SSL pinning prevents network interception. When we set up a proxy pointing to Burp Suite, all the applications on the device are forced to establish a HTTPS connection with Burp Suite instead of their intended server, causing them to initiate a TLS handshake with Burp Suite. However, applications that implement SSL pinning are configured to trust only specific certificates. As a result, they reject the certificate presented by the Burp Suite during the TLS handshake, preventing the connection from being established, and causing the network interception attempt to fail.
+
+![Untitled Diagram.jpg](/image/writing/research/bypassing-ssl-pinning/2.jpg)
+
+When an interception attempt fails, we can observe the error message in the Burp Suite Event Log, where a `certificate_unknown` error indicates that the application rejected the Burp Suite certificate. Despite the failed interception, some applications may continue to function normally, as they simply bypass the proxy and connect directly to their intended server. An easy way to verify this is by exercising the app while capturing the traffic using [PCAPDroid](https://play.google.com/store/apps/details?id=com.emanuelef.remote_capture&hl=en), and then analyze the generated PCAP file with Wireshark.
+
+![image.png](/image/writing/research/bypassing-ssl-pinning/3.png)
+
+# Bypassing SSL Pinning
+
+Bypassing SSL pinning depends on how it is implemented, which is entirely up to the developer. This section—though it is not an exhaustive list—covers common implementation methods along with bypass techniques for each approach. Some applications may combine multiple SSL pinning mechanisms, so a combination of bypass methods may be required.
+
+## Built-in Android SSL Pinning (Network Security Configuration)
+
+Just like any browser, an Android device maintains a local storage of trusted Certificate Authority (CA). It is divided into two categories: system  and user CAs. System CAs are preinstalled on the device, while user CAs are certificates installed by the user through Settings.  The trusted CAs can be viewed in Settings → Security → More security settings → Encryption & credentials → Trusted credentials.
+
+![image.png](/image/writing/research/bypassing-ssl-pinning/4.png)
+
+Android developers can configure their app to trust any of the certificate listed under the Truted ceredntials by defining them in `network_security_config.xml` file. As shown in the example below, this configuration specifies that the app trusts both system CAs and user CAs. If this is not defined, the Android OS uses the default configuration for the application, where only system CAs are trusted, while user CAs are rejected, as described in the [official developer guide](https://developer.android.com/privacy-and-security/security-config#base-config). 
+
+![image.png](/image/writing/research/bypassing-ssl-pinning/5.png)
+
+To bypass this, there are two options:
+
+### Option 1: Repatching the app
+
+APK file is compiled in a way that allows it to be unpacked, modified, and repackaged. Because of this, we can modify the network_security_config.xml file:
+
+1. Decompile using apktool
+    
+```bash
+apktool d app.apk
+```
+    
+2. Add  `<certificates src="user"/>` into network_security_config.xml so that the app trusts user CAs.
+    
+![image.png](/image/writing/research/bypassing-ssl-pinning/6.png)
+    
+3. Repackage the app
+    
+```bash
+# bundle the app
+apktool b
+
+# align and sign the apk
+java -jar uber-apk-signer-1.3.0.jar --apk app.apk 
+```
+
+
+As long as the app doesn’t have anti tempering mechanism, and we didn’t break anything, it should work normally and should now trust user CAs. 
+
+### Option 2: Installing Burp Suite certificate into system CA
+
+Another option is to install Burp certificate as a system CA:
+
+1. Install Burp certificate through Settings → Security → More security settings → Encryption & credentials → Install a certificate
+2. Open your terminal and enter the Android shell by running `adb shell`
+3. In Android shell run the following command
+- **For Android 14 and below (retrieved from [here](https://app.hextree.io/courses/network-interception/ssl-interception/installing-certificate-in-system-store)):**
+    
+    ```bash
+    # Backup the existing system certificates to the user certs folder
+    cp /system/etc/security/cacerts/* /data/misc/user/0/cacerts-added/
+    
+    # Create the in-memory mount on top of the system certs folder
+    mount -t tmpfs tmpfs /system/etc/security/cacerts
+    
+    # copy all system certs and our user cert into the tmpfs system certs folder
+    cp /data/misc/user/0/cacerts-added/* /system/etc/security/cacerts/
+    
+    # Fix any permissions & selinux context labels
+    chown root:root /system/etc/security/cacerts/*
+    chmod 644 /system/etc/security/cacerts/*
+    chcon u:object_r:system_file:s0 /system/etc/security/cacerts/*
+    ```
+    
+- **For Android 14 and above (retrieved from [here](https://httptoolkit.com/blog/android-14-install-system-ca-certificate/)) :**
+    
+    ```bash
+    # Create a separate temp directory, to hold the current certificates
+    # Otherwise, when we add the mount we can't read the current certs anymore.
+    mkdir -p -m 700 /data/local/tmp/tmp-ca-copy
+    
+    # Copy out the existing certificates
+    cp /apex/com.android.conscrypt/cacerts/* /data/local/tmp/tmp-ca-copy/
+    
+    # Create the in-memory mount on top of the system certs folder
+    mount -t tmpfs tmpfs /system/etc/security/cacerts
+    
+    # Copy the existing certs back into the tmpfs, so we keep trusting them
+    mv /data/local/tmp/tmp-ca-copy/* /system/etc/security/cacerts/
+    
+    # Copy our new cert in, so we trust that too
+    cp /data/misc/user/0/cacerts-added/* /system/etc/security/cacerts/
+    
+    # Update the perms & selinux context labels
+    chown root:root /system/etc/security/cacerts/*
+    chmod 644 /system/etc/security/cacerts/*
+    chcon u:object_r:system_file:s0 /system/etc/security/cacerts/*
+    
+    # Deal with the APEX overrides, which need injecting into each namespace:
+    
+    # First we get the Zygote process(es), which launch each app
+    ZYGOTE_PID=$(pidof zygote || true)
+    ZYGOTE64_PID=$(pidof zygote64 || true)
+    # N.b. some devices appear to have both!
+    
+    # Apps inherit the Zygote's mounts at startup, so we inject here to ensure
+    # all newly started apps will see these certs straight away:
+    for Z_PID in "$ZYGOTE_PID" "$ZYGOTE64_PID"; do
+        if [ -n "$Z_PID" ]; then
+            nsenter --mount=/proc/$Z_PID/ns/mnt -- \
+                /bin/mount --bind /system/etc/security/cacerts /apex/com.android.conscrypt/cacerts
+        fi
+    done
+    
+    # Then we inject the mount into all already running apps, so they
+    # too see these CA certs immediately:
+    
+    # Get the PID of every process whose parent is one of the Zygotes:
+    APP_PIDS=$(
+        echo "$ZYGOTE_PID $ZYGOTE64_PID" | \
+        xargs -n1 ps -o 'PID' -P | \
+        grep -v PID
+    )
+    
+    # Inject into the mount namespace of each of those apps:
+    for PID in $APP_PIDS; do
+        nsenter --mount=/proc/$PID/ns/mnt -- \
+            /bin/mount --bind /system/etc/security/cacerts /apex/com.android.conscrypt/cacerts &
+    done
+    wait # Launched in parallel - wait for completion here
+    
+    echo "System certificate injected"
+    ```
+    
+4. We can then verify that the Burp certificate is now under system CA.
+    
+    ![image.png](/image/writing/research/bypassing-ssl-pinning/7.png)
+    
+
+### Option 3: Using HTTP toolkit
+
+The easiest way is by using [HTTP Toolkit](https://httptoolkit.com/), an open-source HTTP debugging tool that provides a one-click feature which automatically setup a proxy, install required certificate, and intercept the traffic. To use it,  click on the *Android Device via Adb* option, and it will start all the process.
+
+![image.png](/image/writing/research/bypassing-ssl-pinning/8.png)
+
+![image.png](/image/writing/research/bypassing-ssl-pinning/9.png)
+
+## Custom SSL pinning
+
+A more secure implementation of SSL pinning is by adding the logic directly into the application’s source code. This allows the developer to configure the app to trust only specific certificates, regardless of whether they come from system or user CAs. As a result, installing Burp Suite as a system CA as we did previously won’t work. To bypass this,  we need to modify the verification logic using dynamic instrumentation tools such as Frida or Objection.
+
+### Option 1: Using Frida to manually hook to the function
+
+Rather than building SSL pinning logic from scratch, developers often utilize libraries that provide such functionality. While different libraries have different implementations, the general approach to bypassing it remains the same.
+
+1. Identify the library used to implement SSL pinning
+    
+    To identify the SSL pinning library, we can do static or dynamic analysis. For static analysis, we can decompile the APK file using [jadx](https://github.com/skylot/jadx), and use the use search function to search for commonly used library or related keywords such as *checkServerTrusted*, TrustManager, *CertficatePinner* or *Pinning*. 
+    
+    ![image.png](/image/writing/research/bypassing-ssl-pinning/10.png)
+    
+    For dynamic analysis, we can use frida-trace to trace function calls, and check for any calls to SSL pinning methods.
+    
+    ```jsx
+    frida-trace -U AppName
+    ```
+    
+    ![image.png](/image/writing/research/bypassing-ssl-pinning/11.png)
+    
+2. Check the official documentation to identify which method to hook into.
+    
+    Once we identify the library used by the app—in this case, OkHttp3—, we can refer to its [official documentation](https://square.github.io/okhttp/3.x/okhttp/okhttp3/CertificatePinner.html) to determine which method of the library to hook into. Based on the OkHttp3 documentation, the  `certificatePinner()` method is responsible for configuring certificate pinning, so it may be a potential target to hook. 
+    
+    ![image.png](/image/writing/research/bypassing-ssl-pinning/12.png)
+    
+3. Identify the full classname of the method
+    
+    To hook into a method using Frida, we need to get the full classname. We can use Java `enumerateMethods()` function to list it down.
+    
+    ```jsx
+    // Start frida
+    frida -U -s FridaTarget
+    
+    // Get the class name
+    Java.enumerateMethods('*okhttp*Builder!')
+    ```
+    
+    ![image.png](/image/writing/research/bypassing-ssl-pinning/13.png)
+    
+4. Build the frida script
+    
+    Once we get the classname, we can prepare a Frida script to hook into the SSL pinning method and modify the logic. The following script will change the certificatePinner() implementation to do nothing, essentially disable the pinning.
+    
+    ```jsx
+    Java.perform(() => { 
+    	// wrap the class
+    	var BuilderClass = Java.use("okhttp3.OkHttpClient$Builder");
+    	// modify the certificatePinner() implementation to do nothing
+    	BuilderClass.certificatePinner.implementation = function() { 
+    		console.log("Certificate pinner called");
+    		return this;
+    	}
+    })
+    ```
+    
+5. Run the app with the script attached:
+    
+    Then we can  run the app with the Frida script attached, which will hook into the certificatePinner method and effectively disable the certificate pinning implementation.
+    
+    ```jsx
+    frida -U -l script.js -l okhttp.js FridaTarget
+    ```
+    
+
+### Option 2: Using Frida codeshare
+
+Instead of manually writing our own Frida code, we can use bypass scripts shared by the community [here](https://codeshare.frida.re/).  We can use it by runnig Frida with codeshare flag:
+
+```jsx
+frida -U --codeshare dzonerzy/fridantiroot -f com.app.damnvulnerablebank
+```
+
+### Option 3: Using Objection
+
+Objection has a feature that automates all the hooking process by running the following command:
+
+```bash
+# Attach objection to the app
+objection -n FridaTarget start
+
+# Automate sslpinning bypass
+android sslpinning disable
+```
+
+![image.png](/image/writing/research/bypassing-ssl-pinning/14.png)
+
+## Bypassing SSL pinning for Flutter applications
+
+Flutter is a framework that allows developing both IoS and Android application using single source code, by compiling it into native machine code. Because of that, hooking into it to modify the SSL pinning logic is not easy.
+
+### Option 1: Patching the app using reFlutter
+
+If we unpack the APK file of a Flutter app and look under the lib folder, we can find 2 native library files,  `libapp.so` and `libflutter.so`. libapp.so includes all the application logics, while libflutter.so is a flutter engine responsible for execution and rendering, which also implements the SSL pinning. [reFlutter](https://github.com/Impact-I/reFlutter) is a tool that will replace the `libflutter.so` file with a patched version that disables SSP pinning.
+
+![image.png](/image/writing/research/bypassing-ssl-pinning/15.png)
+
+To patch the app, download [reFlutter](https://github.com/Impact-I/reFlutter) and run the following command:
+
+```bash
+# patch the app
+reflutter app.apk
+
+# align and sign the apk
+java -jar uber-apk-signer-1.3.0.jar --apk app.apk 
+```
+
+Based on my experience, configuring the proxy using the following emulator command worked best for ensuring that traffic from the patched application could be successfully intercepted.
+
+```bash
+emulator -avd <emulator name> -no-snapshot -http-proxy http://<IP Address>
+```
+
+### Option 2: Using Frida codeshare
+
+There is a Frida script to bypass the Flutter SSL pinning [here](https://github.com/NVISOsecurity/disable-flutter-tls-verification). But based on my experience, reFlutter is the more reliable option.
+
+# Conclusion
+
+This blog explained what SSL pinning is, how it works, and how to bypass it. It may not cover all possible ways of implementing SSL pinning, but the key takeaway is understanding how it is implemented. Based on that, we can narrow our research to bypassing the specific implementation used. If the app is built using a framework, chances are the developer just went with the default SSL implementation, so that’s usually a good place to start.
+
+References:
+
+- [https://app.hextree.io/courses/network-interception/ssl-interception](https://app.hextree.io/courses/network-interception/ssl-interception)
+- [https://httptoolkit.com/blog/android-14-install-system-ca-certificate/](https://httptoolkit.com/blog/android-14-install-system-ca-certificate/)
+- [https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/)
+- [https://mas.owasp.org/MASTG/knowledge/android/MASVS-NETWORK/MASTG-KNOW-0015/#pinning-in-cross-platform-frameworks](https://mas.owasp.org/MASTG/knowledge/android/MASVS-NETWORK/MASTG-KNOW-0015/#pinning-in-cross-platform-frameworks)
+- [https://medium.com/@RoBoHackermann/system-ca-on-android-how-to-install-work-around-modern-restrictions-c570f000ab9a](https://medium.com/@RoBoHackermann/system-ca-on-android-how-to-install-work-around-modern-restrictions-c570f000ab9a)
+- [https://sensepost.com/blog/2025/intercepting-https-communication-in-flutter-going-full-hardcore-mode-with-frida/](https://sensepost.com/blog/2025/intercepting-https-communication-in-flutter-going-full-hardcore-mode-with-frida/)

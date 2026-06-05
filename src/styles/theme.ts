@@ -65,7 +65,7 @@ export const typography = {
   // Prose content
   prose: {
     paragraph: 'mb-4 leading-7',
-    list: 'list-disc mb-4 leading-7 text-sm md:text-base',
+    list: 'mb-4 leading-7 text-sm md:text-base',
     listItem: 'ml-4 leading-7 text-sm md:text-base',
   },
 } as const;

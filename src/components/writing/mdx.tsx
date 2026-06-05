@@ -133,8 +133,8 @@ function createHeading(level: number) {
       1: 'text-2xl',
       2: 'text-xl',
       3: 'text-lg',
-      4: 'text-lg',
-      5: 'text-lg',
+      4: 'text-m',
+      5: 'text-m',
       6: 'text-base',
     }
     return React.createElement(
@@ -177,7 +177,7 @@ function li(props: MDXRemoteProps) {
 }
 
 function ul(props: MDXRemoteProps) {
-  return <ul className={typography.prose.list} {...props} />
+  return <ul className={`list-disc ${typography.prose.list}`} {...props} />
 }
 
 function ol(props: MDXRemoteProps) {

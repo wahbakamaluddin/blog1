@@ -25,21 +25,34 @@ function slugify(str: string): string {
 }
 
 function extractHeadings(content: string): TOCItem[] {
-  const headingRegex = /^(#{1,6})\s+(.+)$/gm;
   const headings: TOCItem[] = [];
-  let match;
+  const lines = content.split('\n');
+  let inCodeBlock = false;
 
-  while ((match = headingRegex.exec(content)) !== null) {
+  for (const line of lines) {
+    const trimmedLine = line.trimStart();
+
+    if (trimmedLine.startsWith('```') || trimmedLine.startsWith('~~~')) {
+      inCodeBlock = !inCodeBlock;
+      continue;
+    }
+
+    if (inCodeBlock) {
+      continue;
+    }
+
+    const match = /^(#{1,6})\s+(.+)$/.exec(line);
+    if (!match) {
+      continue;
+    }
+
     const level = match[1].length;
     const text = match[2].trim();
-    // Only include h2 and h3 for cleaner TOC
-    if (level >= 2 && level <= 3) {
-      headings.push({
-        id: slugify(text),
-        text,
-        level,
-      });
-    }
+    headings.push({
+      id: slugify(text),
+      text,
+      level,
+    });
   }
 
   return headings;
@@ -49,6 +62,11 @@ export function TableOfContents({ content }: TableOfContentsProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [activeId, setActiveId] = useState<string>('');
   const headings = extractHeadings(content);
+  const textSizeClasses: Record<number, string> = {
+    1: 'text-sm',
+    2: 'text-xs',
+    3: 'text-[11px]',
+  };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -123,8 +141,10 @@ export function TableOfContents({ content }: TableOfContentsProps) {
                 <a
                   href={`#${heading.id}`}
                   className={`
-                    block text-sm py-1.5 px-3 rounded-lg transition-all duration-200
-                    ${heading.level === 3 ? 'ml-3 text-xs' : ''}
+                    block py-1.5 px-3 rounded-lg transition-all duration-200
+                    ${heading.level === 2 ? 'ml-2' : ''}
+                    ${heading.level === 3 ? 'ml-4' : ''}
+                    ${textSizeClasses[heading.level] ?? 'text-sm'}
                     ${
                       activeId === heading.id
                         ? `text-${colors.accent.DEFAULT} font-medium`
