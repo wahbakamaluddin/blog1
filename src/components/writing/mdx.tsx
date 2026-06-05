@@ -47,7 +47,15 @@ function CustomLink({ href, ...props }: React.AnchorHTMLAttributes<HTMLAnchorEle
     return <a href={href} {...props} />
   }
 
-  return <a href={href} target="_blank" rel="noopener noreferrer" {...props} className={typography.link} />
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      {...props}
+      className={`${typography.link} break-all`}
+    />
+  )
 }
 
 function RoundedImage({ alt, src, width, height, ...props }: React.ComponentProps<typeof Image>) {

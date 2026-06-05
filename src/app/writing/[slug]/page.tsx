@@ -116,7 +116,7 @@ export default async function Blog({ params }: PageProps) {
           {formatDate(post.metadata.publishedAt)} · {getReadingTime(post.content)}
         </p>
       </div>
-      <article className="prose">
+      <article className="prose max-w-full overflow-x-hidden">
         <CustomMDX source={post.content} />
       </article>
     </section>
