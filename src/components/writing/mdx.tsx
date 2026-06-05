@@ -81,7 +81,7 @@ function Code({ children, ...props }: { children: string } & React.HTMLAttribute
   if (!isMultiLine) {
     return (
       <code
-        className="bg-neutral-100 dark:bg-neutral-800 rounded-md px-1 py-0.5 font-mono text-sm"
+        className="break-all bg-neutral-100 dark:bg-neutral-800 rounded-md px-1 py-0.5 font-mono text-sm"
         dangerouslySetInnerHTML={{ __html: codeHTML }}
         {...props}
       />
@@ -90,7 +90,7 @@ function Code({ children, ...props }: { children: string } & React.HTMLAttribute
 
   // Console-like block code styling
   return (
-    <div className="my-4 rounded-lg overflow-hidden border border-neutral-700 bg-neutral-900">
+    <div className="my-4 w-full max-w-full min-w-0 rounded-lg overflow-hidden border border-neutral-700 bg-neutral-900">
       {/* Title bar */}
       <div className="flex items-center justify-between px-4 py-2 bg-neutral-800 border-b border-neutral-700">
         <div className="flex items-center gap-2">
@@ -103,15 +103,22 @@ function Code({ children, ...props }: { children: string } & React.HTMLAttribute
         <CopyButton text={children} />
       </div>
       {/* Code content */}
-      <pre className="p-4 overflow-x-auto">
-        <code
-          style={{ fontSize: '0.9rem', color: 'white' }}
-          dangerouslySetInnerHTML={{ __html: codeHTML }}
-          {...props}
-        />
-      </pre>
+      <div className="w-full max-w-full overflow-x-hidden">
+        <pre className="w-full max-w-full min-w-0 overflow-x-auto overflow-y-hidden p-4">
+          <code
+            className="block min-w-0 whitespace-pre font-mono text-[0.85rem] leading-6 text-white sm:text-[0.9rem]"
+            dangerouslySetInnerHTML={{ __html: codeHTML }}
+            {...props}
+          />
+        </pre>
+      </div>
     </div>
   )
+}
+
+function Pre({ children }: React.HTMLAttributes<HTMLPreElement>) {
+  // Block code UI is fully rendered by the Code component.
+  return <>{children}</>
 }
 
 function slugify(str: string): string {
@@ -199,6 +206,7 @@ const components = {
   Image: RoundedImage,
   img: MarkdownImage,
   a: CustomLink,
+  pre: Pre,
   code: Code,
   Table,
 }
