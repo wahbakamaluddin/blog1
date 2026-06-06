@@ -14,7 +14,7 @@ To understand SSL pinning, we have to look at how the client—in this case, the
 
 ![image.png](/image/writing/research/bypassing-ssl-pinning/1.png)
 
-This is how SSL pinning prevents network interception. When we set up a proxy pointing to Burp Suite, all the applications on the device are forced to establish a HTTPS connection with Burp Suite instead of their intended server, causing them to initiate a TLS handshake with Burp Suite. However, applications that implement SSL pinning are configured to trust only specific certificates. As a result, they reject the certificate presented by the Burp Suite during the TLS handshake, preventing the connection from being established, and causing the network interception attempt to fail.
+This is how SSL pinning prevents network interception. When we set up a proxy pointing to Burp Suite, all the applications on the device are forced to establish HTTPS connection with Burp Suite instead of their intended server, causing them to initiate a TLS handshake with Burp Suite. However, applications that implement SSL pinning are configured to trust only specific certificates. As a result, they reject the certificate presented by the Burp Suite during the TLS handshake, preventing the connection from being established, and causing the network interception attempt to fail.
 
 ![Untitled Diagram.jpg](/image/writing/research/bypassing-ssl-pinning/2.jpg)
 
@@ -28,7 +28,7 @@ Bypassing SSL pinning depends on how it is implemented, which is entirely up to 
 
 ## Built-in Android SSL Pinning (Network Security Configuration)
 
-Just like any browser, an Android device maintains a local storage of trusted Certificate Authority (CA). It is divided into two categories: system  and user CAs. System CAs are preinstalled on the device, while user CAs are certificates installed by the user through Settings.  The trusted CAs can be viewed in Settings → Security → More security settings → Encryption & credentials → Trusted credentials.
+Just like any browser, Android devices maintain a local storage of trusted Certificate Authority (CA). It is divided into two categories: system  and user CAs. System CAs are preinstalled on the device, while user CAs are certificates installed by the user through Settings.  The trusted CAs can be viewed in Settings → Security → More security settings → Encryption & credentials → Trusted credentials.
 
 ![image.png](/image/writing/research/bypassing-ssl-pinning/4.png)
 
@@ -36,7 +36,7 @@ Android developers can configure their app to trust any of the certificate liste
 
 ![image.png](/image/writing/research/bypassing-ssl-pinning/5.png)
 
-To bypass this, there are two options:
+To bypass this, there are three options:
 
 ### Option 1: Repatching the app
 
@@ -207,7 +207,7 @@ Rather than building SSL pinning logic from scratch, developers often utilize li
     
 4. Build the frida script
     
-    Once we get the classname, we can prepare a Frida script to hook into the SSL pinning method and modify the logic. The following script will change the certificatePinner() implementation to do nothing, essentially disable the pinning.
+    Once we get the classname, we can prepare a Frida script to hook into the SSL pinning method and modify the logic. The following script will change the `certificatePinner()` implementation to do nothing, essentially disable the pinning.
     
     ```jsx
     Java.perform(() => { 
