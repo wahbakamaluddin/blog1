@@ -42,25 +42,27 @@ To bypass this, there are three options:
 
 APK file is compiled in a way that allows it to be unpacked, modified, and repackaged. Because of this, we can modify the network_security_config.xml file:
 
-1. Decompile using apktool
+1. **Decompile the APK file using apktool**
     
-```bash
-apktool d app.apk
-```
+    ```bash
+    apktool d app.apk
+    ```
     
-2. Add  `<certificates src="user"/>` into `network_security_config.xml` so that the app trusts user CAs.
-    
-![image.png](/image/writing/research/bypassing-ssl-pinning/6.png)
-    
-3. Repackage the app
-    
-```bash
-# bundle the app
-apktool b
+2. **Modify the `network_security_config.xml` file**
 
-# align and sign the apk
-java -jar uber-apk-signer-1.3.0.jar --apk app.apk 
-```
+    Add`<certificates src="user"/>` into `network_security_config.xml` so that the app trusts user CAs.
+    
+    ![image.png](/image/writing/research/bypassing-ssl-pinning/6.png)
+    
+3. **Repackage the app**
+    
+    ```bash
+    # bundle the app
+    apktool b
+
+    # align and sign the apk
+    java -jar uber-apk-signer-1.3.0.jar --apk app.apk 
+    ```
 
 
 As long as the app doesn’t have anti tempering mechanism, and we didn’t break anything, it should work normally and should now trust user CAs. 
@@ -69,10 +71,16 @@ As long as the app doesn’t have anti tempering mechanism, and we didn’t brea
 
 Another option is to install Burp certificate as a system CA:
 
-1. Install Burp certificate through Settings → Security → More security settings → Encryption & credentials → Install a certificate
-2. Open terminal and enter the Android shell by running `adb shell`
-3. In Android shell, run the following command
-- **For Android 14 and below (retrieved from [here](https://app.hextree.io/courses/network-interception/ssl-interception/installing-certificate-in-system-store)):**
+1. **Install Burp certificate**
+
+    Install it through Settings → Security → More security settings → Encryption & credentials → Install a certificate
+
+2. **Open terminal and enter the Android shell by running:**
+    ``` bash
+    adb shell
+    ```
+3. **In Android shell, run the following command**
+    - **For Android 14 and below (retrieved from [here](https://app.hextree.io/courses/network-interception/ssl-interception/installing-certificate-in-system-store)):**
     
     ```bash
     # Backup the existing system certificates to the user certs folder
@@ -90,7 +98,7 @@ Another option is to install Burp certificate as a system CA:
     chcon u:object_r:system_file:s0 /system/etc/security/cacerts/*
     ```
     
-- **For Android 14 and above (retrieved from [here](https://httptoolkit.com/blog/android-14-install-system-ca-certificate/)) :**
+    - **For Android 14 and above (retrieved from [here](https://httptoolkit.com/blog/android-14-install-system-ca-certificate/)) :**
     
     ```bash
     # Create a separate temp directory, to hold the current certificates
@@ -150,9 +158,9 @@ Another option is to install Burp certificate as a system CA:
     echo "System certificate injected"
     ```
     
-4. We can then verify that the Burp certificate is now listed under the system CA.
-    
-    ![image.png](/image/writing/research/bypassing-ssl-pinning/7.png)
+We can then verify that the Burp certificate is now listed under the system CA.
+
+![image.png](/image/writing/research/bypassing-ssl-pinning/7.png)
     
 
 ### Option 3: Using HTTP toolkit
@@ -171,7 +179,7 @@ A more secure implementation of SSL pinning is by adding the logic directly into
 
 Rather than building SSL pinning logic from scratch, developers often utilize libraries that provide such functionality. While different libraries have different implementations, the general approach to bypassing it remains the same.
 
-1. Identify the library used to implement SSL pinning
+1. **Identify the library that is used to implement SSL pinning**
     
     To identify the SSL pinning library, we can do static or dynamic analysis. For static analysis, we can decompile the APK file using [jadx](https://github.com/skylot/jadx), and use the search function to search for commonly used library or related keywords such as *checkServerTrusted*, TrustManager, *CertficatePinner* or *Pinning*. 
     
@@ -185,15 +193,16 @@ Rather than building SSL pinning logic from scratch, developers often utilize li
     
     ![image.png](/image/writing/research/bypassing-ssl-pinning/11.png)
     
-2. Check the official documentation to identify which method to hook into.
+2. **Check the official documentation to identify which method to hook into**
     
     Once we identify the library used by the app—in this case, OkHttp3—, we can refer to its [official documentation](https://square.github.io/okhttp/3.x/okhttp/okhttp3/CertificatePinner.html) to determine which method of the library to hook into. Based on the OkHttp3 documentation, the  `certificatePinner()` method is responsible for configuring certificate pinning, so it may be a potential target to hook. 
     
     ![image.png](/image/writing/research/bypassing-ssl-pinning/12.png)
     
-3. Identify the full classname of the method
+3. **Identify the full classname of the method**
     
     To hook into a method using Frida, we need to get the full classname. We can use Java `enumerateMethods()` function to list it down.
+    
     
     ```jsx
     // Start frida
@@ -204,8 +213,7 @@ Rather than building SSL pinning logic from scratch, developers often utilize li
     ```
     
     ![image.png](/image/writing/research/bypassing-ssl-pinning/13.png)
-    
-4. Build the frida script
+4. **Build the Frida script**
     
     Once we get the classname, we can prepare a Frida script to hook into the SSL pinning method and modify the logic. The following script will change the `certificatePinner()` implementation to do nothing, essentially disable the pinning.
     
@@ -221,9 +229,9 @@ Rather than building SSL pinning logic from scratch, developers often utilize li
     })
     ```
     
-5. Run the app with the script attached:
+5. **Run the app with the script attached**
     
-    Then we can  run the app with the Frida script attached, which will hook into the certificatePinner method and effectively disable the certificate pinning implementation.
+    Then we can run the app with the Frida script attached, which will hook into the certificatePinner method and effectively disable the certificate pinning implementation.
     
     ```jsx
     frida -U -l script.js -l okhttp.js FridaTarget
@@ -258,7 +266,7 @@ Flutter is a framework that allows developing both IoS and Android application u
 
 ### Option 1: Patching the app using reFlutter
 
-If we unpack the APK file of a Flutter app and look under the lib folder, we can find 2 native library files,  libapp.so and libflutter.so. libapp.so includes all the application logics, while libflutter.so is a flutter engine responsible for execution and rendering, which also implements the SSL pinning. [reFlutter](https://github.com/Impact-I/reFlutter) is a tool that will replace the libflutter.so file with a patched version that disables SSP pinning.
+If we unpack the APK file of a Flutter app and look under the lib folder, we can find 2 native library files,  **libapp.so** and **libflutter.so**. libapp.so includes all the application logics, while libflutter.so is a flutter engine responsible for execution and rendering, which also implements the SSL pinning. [reFlutter](https://github.com/Impact-I/reFlutter) is a tool that will replace the libflutter.so file with a patched version that disables SSP pinning.
 
 ![image.png](/image/writing/research/bypassing-ssl-pinning/15.png)
 
@@ -286,7 +294,7 @@ There is a Frida script to bypass the Flutter SSL pinning [here](https://github.
 
 This blog explained what SSL pinning is, how it works, and how to bypass it. It may not cover all possible ways of implementing SSL pinning, but the key takeaway is understanding how it is implemented. Based on that, we can narrow our research to bypassing the specific implementation used. If the app is built using a framework, chances are the developer just went with the default SSL implementation, so that’s usually a good place to start.
 
-References:
+### References:
 
 - [https://app.hextree.io/courses/network-interception/ssl-interception](https://app.hextree.io/courses/network-interception/ssl-interception)
 - [https://httptoolkit.com/blog/android-14-install-system-ca-certificate/](https://httptoolkit.com/blog/android-14-install-system-ca-certificate/)
