@@ -98,9 +98,9 @@ function Code({ children, ...props }: { children: string } & React.HTMLAttribute
 
   // Console-like block code styling
   return (
-    <div className="my-4 w-full max-w-full min-w-0 rounded-lg overflow-hidden border border-neutral-700 bg-neutral-900">
+    <div className="my-4 w-full max-w-full min-w-0 overflow-hidden rounded-lg border border-neutral-300 bg-neutral-50 text-neutral-900 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-100">
       {/* Title bar */}
-      <div className="flex items-center justify-between px-4 py-2 bg-neutral-800 border-b border-neutral-700">
+      <div className="flex items-center justify-between border-b border-neutral-200 bg-neutral-100 px-4 py-2 dark:border-neutral-700 dark:bg-neutral-800">
         <div className="flex items-center gap-2">
           <div className="flex gap-1.5">
             <span className="w-3 h-3 rounded-full bg-red-500" />
@@ -114,7 +114,7 @@ function Code({ children, ...props }: { children: string } & React.HTMLAttribute
       <div className="w-full max-w-full overflow-x-hidden">
         <pre className="w-full max-w-full min-w-0 overflow-x-auto overflow-y-hidden p-4">
           <code
-            className="block min-w-0 whitespace-pre font-mono text-xs leading-5 text-white sm:text-sm sm:leading-6"
+            className="block min-w-0 whitespace-pre font-mono text-xs leading-5 text-neutral-900 dark:text-neutral-100 sm:text-sm sm:leading-6"
             dangerouslySetInnerHTML={{ __html: codeHTML }}
             {...props}
           />
