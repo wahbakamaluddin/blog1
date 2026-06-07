@@ -272,7 +272,7 @@ reflutter app.apk
 java -jar uber-apk-signer-1.3.0.jar --apk app.apk 
 ```
 
-Based on my experience, configuring the proxy using the following emulator command worked best for ensuring that traffic from the patched application could be successfully intercepted.
+Based on my experience, configuring the proxy using the following emulator command worked best for ensuring that traffic from the patched application could be successfully intercepted:
 
 ```bash
 emulator -avd <emulator name> -no-snapshot -http-proxy http://<IP Address>
