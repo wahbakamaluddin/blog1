@@ -4,7 +4,7 @@ import TypewriterText from '@/src/components/layout/sidenav/TypewriterText'
 
 export default function TopPart() {
   return (
-        <div className='md:pt-20 flex flex-col items-center justify-start gap-3'> 
+                <div className='flex flex-col items-center justify-center gap-3'> 
             <div className='hover:scale-105 transition-transform duration-200'>
                 <Image 
                 src="/profile1.jpeg" 

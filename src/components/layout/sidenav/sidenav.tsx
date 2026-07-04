@@ -19,18 +19,16 @@ export default function SideNav() {
                     <ThemeToggle />
                 </div>
             </div>
-            <div className="hidden md:flex flex-col h-full items-center justify-start p-4 gap-3">
+            <div className="hidden md:flex relative flex-col h-full items-center p-4">
                 <div className="absolute top-4 right-4">
                     <ThemeToggle />
                 </div>
-               <TopPart />
-                <div className="">
+                <div className="flex flex-1 flex-col items-center justify-center gap-6">
+                    <TopPart />
                     <NavLinks />
-                </div>
-                <div className="h-full flex items-end pb-4">
                     <SocMedIcons />
                 </div>
-                <div className='h-full flex flex-col justify-end'>
+                <div className="pb-4">
                     <p className={typography.caption}>© 2026 Wahba Kamaluddin</p>
                 </div>
             </div>

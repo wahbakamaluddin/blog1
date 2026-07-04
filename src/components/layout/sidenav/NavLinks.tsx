@@ -22,7 +22,7 @@ export default function NavLinks() {
         return pathname === href || pathname.startsWith(`${href}/`);
     };
     return (
-        <>
+        <div className="flex flex-col items-center gap-2">
             {links.map((link) => {
                 const LinkIcon = link.icon;
                 return (
@@ -30,7 +30,7 @@ export default function NavLinks() {
                     key={link.name}
                     href={link.href}
                     className={clsx(
-                    "flex w-full h-[48px] grow items-center justify-center gap-2 rounded-md p-3 text-sm font-medium hover:bg-gray-200 dark:hover:bg-[#2f2f30] hover:text-emerald-500 md:flex-none md:justify-start md:p-2 md:px-3",
+                    "flex h-[48px] w-full items-center justify-center gap-2 rounded-md px-4 text-sm font-medium hover:bg-gray-200 dark:hover:bg-[#2f2f30] hover:text-emerald-500 md:w-fit md:justify-center md:px-5",
                     {
                         'text-emerald-500': isActive(link.href),
                     },
@@ -41,6 +41,6 @@ export default function NavLinks() {
                 </Link>
                 );
             })}
-        </>
+        </div>
     );
 }
