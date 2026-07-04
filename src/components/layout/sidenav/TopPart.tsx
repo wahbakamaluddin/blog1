@@ -21,7 +21,7 @@ export default function TopPart() {
             </div>
             <div className=''>
                 <p className="text-[13px] text-gray-600 dark:text-gray-300">
-                    Cybersecurity <TypewriterText words={['student', 'learner', 'enthusiast']} /> from 🇮🇩
+                    Cybersecurity Consultant
                 </p> 
             </div>
         </div>
